@@ -1,10 +1,25 @@
 # the Pantograph user study
 
-## To Run
+## Setup
 
-First, run the development server:
+Requirements:
+- [npm](https://npmjs.com/)
+- [pnpm](https://pnpm.io/)
 
-```bash
-pnpm dev
+```
+pnpm install
+pnpm pantograph.install
+pnpm fp-in-monaco.install
 ```
 
+## Build
+
+```
+pnpm run build
+```
+
+## Serve
+
+```
+pnpm run serve
+```
