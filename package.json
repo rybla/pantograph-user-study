@@ -6,12 +6,16 @@
     "pantograph.install": "cd packages/pantograph && npm install",
     "pantograph.build": "cd packages/pantograph && npm run build",
     "pantograph.serve": "cd packages/pantograph && npm run serve",
+    "pantograph.bundle": "pnpm pantograph.build && cp -r packages/pantograph/dist/Lib packages/pantograph/dist/Tutorial public/ && cp packages/pantograph/dist/main.css public/pantograph.css && cp packages/pantograph/dist/index.js public/pantograph.js",
     "fp-in-monaco.install": "cd packages/fp-in-monaco && pnpm install",
     "fp-in-monaco.build": "cd packages/fp-in-monaco && pnpm run build",
     "fp-in-monaco.serve": "cd packages/fp-in-monaco && pnpm run serve",
+    "fp-in-monaco.bundle": "pnpm fp-in-monaco.build && rm -rf public/_next && cp -r packages/fp-in-monaco/out/_next public/_next && cp packages/fp-in-monaco/out/index.html public/fp-in-monaco.html",
     "build": "pnpm pantograph.build && pnpm run fp-in-monaco.build",
     "dev": "next dev -p 3000",
-    "serve": "pnpm run build && pnpm run pantograph.serve & pnpm run fp-in-monaco.serve & pnpm run dev"
+    "bundle": "pnpm run pantograph.bundle && pnpm run fp-in-monaco.bundle",
+    "serve": "pnpm run bundle && pnpm run dev",
+    "serve-3": "pnpm run build && pnpm run pantograph.serve & pnpm run fp-in-monaco.serve & pnpm run dev"
   },
   "dependencies": {
     "react": "^18",
