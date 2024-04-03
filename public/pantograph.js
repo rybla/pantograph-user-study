@@ -38406,7 +38406,7 @@
   var bufferSlot = /* @__PURE__ */ function() {
     return $$Proxy.value;
   }();
-  var additionalQueryKeys = /* @__PURE__ */ mapFlipped(functorArray)(["+", "-", ">", "<", "=", "*", "/", "^", "%", "(", ")", "&", "|"])(function(s) {
+  var additionalQueryKeys = /* @__PURE__ */ mapFlipped(functorArray)(["+", "-", ">", "<", "=", "*", "/", "^", "%", "(", ")", "&", "|", "!"])(function(s) {
     return fromJust6(index3(toCodePointArray(s))(0));
   });
   var isQueryKey = function(s) {
@@ -45028,10 +45028,10 @@
     }
     ;
     if (v instanceof ConstNot) {
-      return "not";
+      return "!";
     }
     ;
-    throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 221, column 16 - line 224, column 22): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 221, column 16 - line 224, column 20): " + [v.constructor.name]);
   };
   var sortToType = function(v) {
     if (v.value0 instanceof MInj && (v.value0.value0 instanceof SInj && (v.value0.value0.value0 instanceof DataType && v.value1.length === 0))) {
