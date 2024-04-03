@@ -328,19 +328,19 @@ export const all_biexercises: BiExercise[] = [
           {renderCodeblock(
             [
               "let f : Int -> Int = fun x : Int => 5 / x in",
-              "let m : Int = n + 1 in",
+              "let m : Int = 7 + 1 in",
               "let y : Int = f m in",
-              "y / n"
+              "y / 7"
             ].join("\n")
           )}
-          Then, edit the program to result in this (swap the order of the definitions of {renderCode("f")} and {renderCode("y")}):
+          Then, edit the program to result in this (Move the definitions of {renderCode("f")} and {renderCode("m")} inside the definition of {renderCode("y")}):
           {renderCodeblock(
             [
               "let y : Int =",
               "    let f : Int -> Int = fun x : Int => 5 / x in",
-              "    let m : Int = n + 1 in",
+              "    let m : Int = 7 + 1 in",
               "    f m in",
-              "y / n"
+              "y / 7"
             ].join("\n")
           )}
         </div>
@@ -357,25 +357,20 @@ export const all_biexercises: BiExercise[] = [
         <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
           {renderCodeblock(
             [
-              "let f : Int -> Int = fun x : int => ? in",
-              "let g : Int -> Int = fun x : Int => ? in",
-              "let h : Int -> Int -> Int -> Int =",
-              "    fun x : Int => fun y : Int => fun z : Int =>",
-              "        ? in",
-              "(f (g (h 1 2 3)))"
+              "fun x : Int => ",
+              "    let i : Int = 7 in",
+              "    x / i",
             ]
               .join("\n")
           )}
-          Then, edit the program to result in this:
+          Then, edit the program to result in this (move the function into the definition of a let expression):
           {renderCodeblock(
-
             [
-              "let f : Int -> Int -> Int -> Int =",
-              "    fun x : Int => fun y : Int => fun z : Int =>",
-              "        ? in",
-              "let g : Int -> Int = fun x : Int => ? in",
-              "let h : Int -> Int = fun x : int => ? in",
-              "(f (g (h 1)) 2 3)"
+              "let f : Int -> Int =",
+              "    fun x : Int => ",
+              "        let i : Int = 7 in",
+              "        x / i in",
+              "f 7",
             ]
               .join("\n")
           )}</div>
