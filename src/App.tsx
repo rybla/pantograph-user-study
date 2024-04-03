@@ -370,7 +370,7 @@ export const all_biexercises: BiExercise[] = [
               "    fun x : Int => ",
               "        let i : Int = 7 in",
               "        x / i in",
-              "f 7",
+              "f n",
             ]
               .join("\n")
           )}</div>
