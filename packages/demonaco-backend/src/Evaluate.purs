@@ -120,6 +120,7 @@ eval env {label, dataa, dataa2, kids} =
                 Nil -> eval env nilCase
                 v : vs -> eval (Map.insert dataa (pure (Right v)) (Map.insert dataa2 (pure (Right (ListVal vs))) env)) consCase
           "INTEGER" /\ _ -> pure (IntVal (Util.fromJust (fromString dataa)))
+          "NOT" /\ [b] -> pure $ FunVal (\b -> pure (BoolVal (not (assertValBool b))))
           _ -> Util.bug ("eval case fail: label was " <> label)
 eval _ _ = Util.bug "eval case shouldn't happen"
 
@@ -127,7 +128,7 @@ evalConst :: String -> Maybe Value
 evalConst = case _ of
     "true" -> pure $ BoolVal true
     "false" -> pure $ BoolVal false
-    "not" -> pure $ FunVal (\b -> pure (BoolVal (not (assertValBool b))))
+    -- "not" -> pure $ FunVal (\b -> pure (BoolVal (not (assertValBool b))))
     _ -> Nothing
 
 evalInfix :: String -> (Value -> Value -> Value)

@@ -18,6 +18,7 @@
 * INTEGER := start_pos=@ data='[0-9]+' end_pos=@
 * INFIX_EXPRESSION := start_pos=@ t1=TERM __ data=INFIX_OP __ t2=TERM end_pos=@
 * INFIX_OP := '>=' | '<=' | '\+|\*|\-|\/|\%|\^|<|>|&&|\|\|'
+* NOT := start_pos=@ '!' __ TERM end_pos=@
 * EQUALS := start_pos=@ t1=TERM __ '==' __ t2=TERM end_pos=@
 * MATCH := start_pos=@ 'match' __ l=TERM __ 'with' __ '\|' _ 'nil' _ '=>' _ nilcase=TERM _ '\|' _ 'cons' __ data=NAME __ data2=NAME _ '=>' _ t2=TERM end_pos=@
 * // types
@@ -68,6 +69,7 @@ export enum ASTKinds {
     INFIX_OP_1 = "INFIX_OP_1",
     INFIX_OP_2 = "INFIX_OP_2",
     INFIX_OP_3 = "INFIX_OP_3",
+    NOT = "NOT",
     EQUALS = "EQUALS",
     MATCH = "MATCH",
     TYPE_1 = "TYPE_1",
@@ -191,6 +193,11 @@ export type INFIX_OP = INFIX_OP_1 | INFIX_OP_2 | INFIX_OP_3;
 export type INFIX_OP_1 = string;
 export type INFIX_OP_2 = string;
 export type INFIX_OP_3 = string;
+export interface NOT {
+    kind: ASTKinds.NOT;
+    start_pos: PosInfo;
+    end_pos: PosInfo;
+}
 export interface EQUALS {
     kind: ASTKinds.EQUALS;
     start_pos: PosInfo;
@@ -663,6 +670,24 @@ export class Parser {
     }
     public matchINFIX_OP_3($$dpth: number, $$cr?: ErrorTracker): Nullable<INFIX_OP_3> {
         return this.regexAccept(String.raw`(?:\+|\*|\-|\/|\%|\^|<|>|&&|\|\|)`, "", $$dpth + 1, $$cr);
+    }
+    public matchNOT($$dpth: number, $$cr?: ErrorTracker): Nullable<NOT> {
+        return this.run<NOT>($$dpth,
+            () => {
+                let $scope$start_pos: Nullable<PosInfo>;
+                let $scope$end_pos: Nullable<PosInfo>;
+                let $$res: Nullable<NOT> = null;
+                if (true
+                    && ($scope$start_pos = this.mark()) !== null
+                    && this.regexAccept(String.raw`(?:!)`, "", $$dpth + 1, $$cr) !== null
+                    && this.match__($$dpth + 1, $$cr) !== null
+                    && this.matchTERM($$dpth + 1, $$cr) !== null
+                    && ($scope$end_pos = this.mark()) !== null
+                ) {
+                    $$res = {kind: ASTKinds.NOT, start_pos: $scope$start_pos, end_pos: $scope$end_pos};
+                }
+                return $$res;
+            });
     }
     public matchEQUALS($$dpth: number, $$cr?: ErrorTracker): Nullable<EQUALS> {
         return this.run<EQUALS>($$dpth,

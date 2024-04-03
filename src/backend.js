@@ -2116,12 +2116,12 @@ var $runtime_lazy = function(name2, moduleName, init) {
 var show2 = /* @__PURE__ */ show(showBoolean);
 var show1 = /* @__PURE__ */ show(showInt);
 var foldr3 = /* @__PURE__ */ foldr(foldableList);
-var all2 = /* @__PURE__ */ all(foldableList)(heytingAlgebraBoolean);
 var pure2 = /* @__PURE__ */ pure(applicativeMaybe);
-var pure1 = /* @__PURE__ */ pure(applicativeEither);
+var all2 = /* @__PURE__ */ all(foldableList)(heytingAlgebraBoolean);
 var div2 = /* @__PURE__ */ div(euclideanRingInt);
 var mod2 = /* @__PURE__ */ mod(euclideanRingInt);
 var map4 = /* @__PURE__ */ map(functorArray);
+var pure1 = /* @__PURE__ */ pure(applicativeEither);
 var insert2 = /* @__PURE__ */ insert(ordString);
 var pure22 = /* @__PURE__ */ pure(applicativeLazy);
 var bind2 = /* @__PURE__ */ bind(bindEither);
@@ -2209,7 +2209,18 @@ var printValue = function(val) {
     return "<function>";
   }
   ;
-  throw new Error("Failed pattern match at Evaluate (line 150, column 18 - line 154, column 29): " + [val.constructor.name]);
+  throw new Error("Failed pattern match at Evaluate (line 151, column 18 - line 155, column 29): " + [val.constructor.name]);
+};
+var evalConst = function(v) {
+  if (v === "true") {
+    return pure2(new BoolVal(true));
+  }
+  ;
+  if (v === "false") {
+    return pure2(new BoolVal(false));
+  }
+  ;
+  return Nothing.value;
 };
 var eqValue = function(v1) {
   return function(v2) {
@@ -2258,23 +2269,6 @@ var assertValBool = function(v) {
   }
   ;
   return bug("assertValint failed");
-};
-var evalConst = function(v) {
-  if (v === "true") {
-    return pure2(new BoolVal(true));
-  }
-  ;
-  if (v === "false") {
-    return pure2(new BoolVal(false));
-  }
-  ;
-  if (v === "not") {
-    return pure2(new FunVal(function(b) {
-      return pure1(new BoolVal(!assertValBool(b)));
-    }));
-  }
-  ;
-  return Nothing.value;
 };
 var evalInfix = function(op) {
   if (op === "+") {
@@ -2527,12 +2521,18 @@ var $$eval = function(v) {
         return pure1(new IntVal(fromJust2(fromString(v1.dataa))));
       }
       ;
+      if (v2.value0 === "NOT" && v2.value1.length === 1) {
+        return pure1(new FunVal(function(b1) {
+          return pure1(new BoolVal(!assertValBool(b1)));
+        }));
+      }
+      ;
       return bug("eval case fail: label was " + v1.label);
     };
     if (v2.value0 === "NAME" && v2.value1.length === 0) {
-      var $147 = evalConst(v1.dataa);
-      if ($147 instanceof Just) {
-        return pure1($147.value0);
+      var $150 = evalConst(v1.dataa);
+      if ($150 instanceof Just) {
+        return pure1($150.value0);
       }
       ;
       return v3(true);
@@ -3433,10 +3433,6 @@ var constantType = function(v) {
     return pure3(pureMetaExpr(new DataType(Bool.value))([]));
   }
   ;
-  if (v === "not") {
-    return pure3(pureMetaExpr(Arrow.value)([pureMetaExpr(new DataType(Bool.value))([]), pureMetaExpr(new DataType(Bool.value))([])]));
-  }
-  ;
   return Nothing.value;
 };
 var appendSpaced = function(v) {
@@ -3501,8 +3497,8 @@ var findInCtx = function(sort) {
       var $tco_result;
       function $tco_loop(v) {
         if (v.value0 instanceof MInj && (v.value0.value0 instanceof CtxConsSort && v.value1.length === 2)) {
-          var $210 = name2 === v.value0.value0.value0;
-          if ($210) {
+          var $211 = name2 === v.value0.value0.value0;
+          if ($211) {
             $tco_done = true;
             return pure3(v["value1"][0]);
           }
@@ -3652,6 +3648,18 @@ var language = function(partialSort) {
           }));
         }
         ;
+        if (label === "NOT") {
+          return pure12(makeRule(["gamma"])(function() {
+            return function(v2) {
+              if (v2.length === 1) {
+                return new Tuple([pureMetaExpr(TermSort.value)([v2[0], pureMetaExpr(new DataType(Bool.value))([])])], pureMetaExpr(TermSort.value)([v2[0], pureMetaExpr(new DataType(Bool.value))([])]));
+              }
+              ;
+              throw new Error("Failed pattern match at Language (line 196, column 46 - line 199, column 48): " + [v2.constructor.name]);
+            };
+          }));
+        }
+        ;
         if (label === "BOOL") {
           return pure12(makeRule([])(function() {
             return function(v2) {
@@ -3659,7 +3667,7 @@ var language = function(partialSort) {
                 return new Tuple([], pureMetaExpr(TypeSort.value)([pureMetaExpr(new DataType(Bool.value))([])]));
               }
               ;
-              throw new Error("Failed pattern match at Language (line 206, column 40 - line 209, column 42): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Language (line 211, column 40 - line 214, column 42): " + [v2.constructor.name]);
             };
           }));
         }
@@ -3671,7 +3679,7 @@ var language = function(partialSort) {
                 return new Tuple([], pureMetaExpr(TypeSort.value)([pureMetaExpr(new DataType(Int.value))([])]));
               }
               ;
-              throw new Error("Failed pattern match at Language (line 211, column 39 - line 214, column 41): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Language (line 216, column 39 - line 219, column 41): " + [v2.constructor.name]);
             };
           }));
         }
@@ -3683,7 +3691,7 @@ var language = function(partialSort) {
                 return new Tuple([pureMetaExpr(TypeSort.value)([v2[0]])], pureMetaExpr(TypeSort.value)([pureMetaExpr(List.value)([v2[0]])]));
               }
               ;
-              throw new Error("Failed pattern match at Language (line 216, column 46 - line 219, column 35): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Language (line 221, column 46 - line 224, column 35): " + [v2.constructor.name]);
             };
           }));
         }
@@ -3695,7 +3703,7 @@ var language = function(partialSort) {
                 return new Tuple([pureMetaExpr(TypeSort.value)([v2[0]]), pureMetaExpr(TypeSort.value)([v2[1]])], pureMetaExpr(TypeSort.value)([pureMetaExpr(Arrow.value)([v2[0], v2[1]])]));
               }
               ;
-              throw new Error("Failed pattern match at Language (line 221, column 54 - line 224, column 38): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Language (line 226, column 54 - line 229, column 38): " + [v2.constructor.name]);
             };
           }));
         }
@@ -3707,7 +3715,7 @@ var language = function(partialSort) {
                 return new Tuple([pureMetaExpr(TermSort.value)([v2[0], pureMetaExpr(new DataType(Bool.value))([])]), pureMetaExpr(TermSort.value)([v2[0], v2[1]]), pureMetaExpr(TermSort.value)([v2[0], v2[1]])], pureMetaExpr(TermSort.value)([v2[0], v2[1]]));
               }
               ;
-              throw new Error("Failed pattern match at Language (line 226, column 53 - line 231, column 34): " + [v2.constructor.name]);
+              throw new Error("Failed pattern match at Language (line 231, column 53 - line 236, column 34): " + [v2.constructor.name]);
             };
           }));
         }
@@ -3720,7 +3728,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(new DataType(Int.value))([])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 238, column 50 - line 241, column 47): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 243, column 50 - line 246, column 47): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3733,7 +3741,7 @@ var language = function(partialSort) {
                   return new Tuple([pureMetaExpr(TermSort.value)([v3[0], v2.left]), pureMetaExpr(TermSort.value)([v3[0], v2.right])], pureMetaExpr(TermSort.value)([v3[0], v2.output]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 245, column 39 - line 248, column 35): " + [v3.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 250, column 39 - line 253, column 35): " + [v3.constructor.name]);
               };
             }));
           }
@@ -3745,7 +3753,7 @@ var language = function(partialSort) {
                   return new Tuple([pureMetaExpr(TermSort.value)([v22[0], v22[1]]), pureMetaExpr(TermSort.value)([v22[0], v22[1]])], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(new DataType(Bool.value))([])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 250, column 57 - line 253, column 48): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 255, column 57 - line 258, column 48): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3757,7 +3765,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(List.value)([v22[1]])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 255, column 72 - line 258, column 41): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 260, column 72 - line 263, column 41): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3769,7 +3777,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(Arrow.value)([v22[1], pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), pureMetaExpr(List.value)([v22[1]])])])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 260, column 73 - line 263, column 81): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 265, column 73 - line 268, column 81): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3781,7 +3789,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), v22[1]])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 265, column 73 - line 268, column 56): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 270, column 73 - line 273, column 56): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3793,7 +3801,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), pureMetaExpr(List.value)([v22[1]])])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 270, column 73 - line 273, column 66): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 275, column 73 - line 278, column 66): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3805,7 +3813,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), pureMetaExpr(Arrow.value)([pureMetaExpr(new DataType(Int.value))([]), v22[1]])])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 275, column 74 - line 278, column 87): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 280, column 74 - line 283, column 87): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3817,7 +3825,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), pureMetaExpr(new DataType(Int.value))([])])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 280, column 75 - line 283, column 72): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 285, column 75 - line 288, column 72): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3829,7 +3837,7 @@ var language = function(partialSort) {
                   return new Tuple([], pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), pureMetaExpr(Arrow.value)([pureMetaExpr(List.value)([v22[1]]), pureMetaExpr(List.value)([v22[1]])])])]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 285, column 75 - line 288, column 91): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 290, column 75 - line 293, column 91): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3847,12 +3855,12 @@ var language = function(partialSort) {
                     return new Tuple([], pureMetaExpr(TermSort.value)([v3[0], v2.value0]));
                   }
                   ;
-                  throw new Error("Failed pattern match at Language (line 296, column 21 - line 298, column 59): " + [v3.constructor.name]);
+                  throw new Error("Failed pattern match at Language (line 301, column 21 - line 303, column 59): " + [v3.constructor.name]);
                 };
               }));
             }
             ;
-            throw new Error("Failed pattern match at Language (line 291, column 13 - line 298, column 59): " + [v2.constructor.name]);
+            throw new Error("Failed pattern match at Language (line 296, column 13 - line 303, column 59): " + [v2.constructor.name]);
           }
           ;
           if (label === "MATCH") {
@@ -3862,7 +3870,7 @@ var language = function(partialSort) {
                   return new Tuple([pureMetaExpr(TermSort.value)([v22[0], pureMetaExpr(List.value)([v22[1]])]), pureMetaExpr(TermSort.value)([v22[0], v22[2]]), pureMetaExpr(TermSort.value)([pureMetaExpr(new CtxConsSort(dataa))([v22[1], pureMetaExpr(new CtxConsSort(dataa2))([pureMetaExpr(List.value)([v22[1]]), v22[0]])]), v22[2]])], pureMetaExpr(TermSort.value)([v22[0], v22[2]]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 300, column 65 - line 305, column 34): " + [v22.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 305, column 65 - line 310, column 34): " + [v22.constructor.name]);
               };
             }));
           }
@@ -3870,15 +3878,15 @@ var language = function(partialSort) {
           return bug("language constructor not found: " + label);
         };
         if (label === "NAME") {
-          var $308 = constantType(dataa);
-          if ($308 instanceof Just) {
+          var $311 = constantType(dataa);
+          if ($311 instanceof Just) {
             return pure12(makeRule(["gamma"])(function() {
               return function(v1) {
                 if (v1.length === 1) {
-                  return new Tuple([], pureMetaExpr(TermSort.value)([v1[0], $308.value0]));
+                  return new Tuple([], pureMetaExpr(TermSort.value)([v1[0], $311.value0]));
                 }
                 ;
-                throw new Error("Failed pattern match at Language (line 233, column 79 - line 236, column 30): " + [v1.constructor.name]);
+                throw new Error("Failed pattern match at Language (line 238, column 79 - line 241, column 30): " + [v1.constructor.name]);
               };
             }));
           }
