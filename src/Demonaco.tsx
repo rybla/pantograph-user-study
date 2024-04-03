@@ -153,6 +153,7 @@ export default function Demonaco(
         return (
             <div
                 style={{
+                    height: "1.5em",
                     padding: "0.5em",
                     display: "flex",
                     flexDirection: "row",
