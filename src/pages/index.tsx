@@ -81,7 +81,7 @@ export default function Home() {
 						fontWeight: "bold",
 					}}
 				>
-					the Pantograph user study
+					The Pantograph user study
 				</div>
 				{
 					(() => {
@@ -104,12 +104,18 @@ export default function Home() {
 										<div>
 											<div>
 												Welcome to the exercise section of the Pantograph user study.
-												In this section, you will be presented with {exercises?.length} programming questions that will involve transcribing, writing, and editing programs.
+												In this section, you will be presented with {exercises?.length} programming questions.
 												For half of the questions you will use a text editor and for the other half you will use Pantograph.
 												You will screen-record your session.
-												You may raise your hand in order to ask a question at any time during your session, but please keep the following in mind:
+												<br></br>
+												<br></br>
+												You may ask the users study hosts any questions about the programming language, editors, or what a question is asking.
+												However, they can't help you to solve the question.
+												<br></br>
+												<br></br>
+												Once the study's hosts have announced that you may begin, press the start button.
 											</div>
-											<ul>
+											{/* <ul>
 												<li>We can explain how to do any particular editing action in Pantograph or the text editor.</li>
 												<li>We can explain anything about the programming language.</li>
 												<li>We <b>cannot</b> give you any hints towards how to answer a question.</li>
@@ -124,7 +130,7 @@ export default function Home() {
 												<li>You have experience using some kind of text editor for programming (e.g. VSCode, Sublime Text, etc.).</li>
 												<li>This study&apos;s hosts have announced that you may begin this section (the exercise section) of this study.</li>
 												<li>You have begun screen recording.</li>
-											</ul>
+											</ul> */}
 										</div>
 										<div>
 											<button onClick={next_exercise}>start</button>
@@ -258,12 +264,13 @@ export const all_biexercises: BiExercise[] = [
 					"y / n"
 				].join("\n")
 			)}
-			Then, edit the program to result in this (swap the order of the definitions of <code>f</code> and <code>y</code>):
+			Then, move the definitions of <code>f</code> and <code>m</code> locally inside the definition of <code>y</code> resulting in this:
 			{codeblock(
 				[
-					"let y : Int = f m in",
-					"let f : Int -> Int = fun x : Int => 5 / x in",
-					"let m : Int = n + 1 in",
+					"let y : Int =",
+					"	let f : Int -> Int = fun x : Int => 5 / x in",
+					"	let m : Int = n + 1 in",
+					"	f m in",
 					"y / n"
 				].join("\n")
 			)}
@@ -275,9 +282,9 @@ export const all_biexercises: BiExercise[] = [
 		instructions: (<span><i>(Do not copy text from these instructions to your clipboard)</i> Transcribe the following program into your editor:
 			{codeblock(
 				[
-					"let f : Int -> Int = fun x : ?",
-					"let g : Int -> Int = ?",
-					"let h : Int -> Int -> Int -> Int = ? in",
+					"let f : Int -> Int = fun x : Int => ? in",
+					"let g : Int -> Int = fun x : int => ? in",
+					"let h : Int -> Int -> Int -> Int = fun x : Int => fun y : Int => fun z : Int => ? in",
 					"(f (g (h 1 2 3)))"
 				]
 					.join("\n")
@@ -285,9 +292,9 @@ export const all_biexercises: BiExercise[] = [
 			Then, edit the program to result in this (only the last line has changed):
 			{codeblock(
 				[
-					"let f : Int -> Int = fun x : ?",
-					"let g : Int -> Int = ?",
-					"let h : Int -> Int -> Int -> Int = ? in",
+					"let f : Int -> Int -> Int -> Int = fun x : Int => fun y : Int => fun z : Int => ? in",
+					"let g : Int -> Int = fun x : Int => ? in",
+					"let h : Int -> Int = fun x : int => ? in",
 					"(f (g (h 1)) 2 3)"
 				]
 					.join("\n")
