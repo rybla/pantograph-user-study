@@ -2,7 +2,7 @@ TOP  := _ term=TERM _ $
 
 // terms
 // NOTE: The order in which these appear in the next line affects the order that it tries things when parsing
-TERM := MATCH | LET | IF | FUN | LET_NOANN | FUN_NOANN | EQUALS | INFIX_EXPRESSION | APP | SINGLES | PARENTERM
+TERM := MATCH | LET | IF | FUN | LET_NOANN | FUN_NOANN | EQUALS | INFIX_EXPRESSION | APP | SINGLES | PARENTERM | NOT
 PARENTERM := '\(' _ inside=TERM _ '\)'
 APPRHS := SINGLES | PARENTERM
 
@@ -19,6 +19,7 @@ HOLE := start_pos=@ '\?' end_pos=@
 INTEGER := start_pos=@ data='[0-9]+' end_pos=@
 INFIX_EXPRESSION := start_pos=@ t1=TERM __ data=INFIX_OP __ t2=TERM end_pos=@
 INFIX_OP := '>=' | '<=' | '\+|\*|\-|\/|\%|\^|<|>|&&|\|\|'
+NOT := start_pos=@ '!' __ t=TERM end_pos=@
 EQUALS := start_pos=@ t1=TERM __ '==' __ t2=TERM end_pos=@
 MATCH := start_pos=@ 'match' __ l=TERM __ 'with' __ '\|' _ 'nil' _ '=>' _ nilcase=TERM _ '\|' _ 'cons' __ data=NAME __ data2=NAME _ '=>' _ t2=TERM end_pos=@
 

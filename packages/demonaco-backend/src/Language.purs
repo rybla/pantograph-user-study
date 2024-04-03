@@ -84,7 +84,7 @@ constantType :: String -> Maybe Sort {-type-}
 constantType = case _ of
     "true" -> pure $ DataType Bool %* []
     "false" -> pure $ DataType Bool %* []
-    "not" -> pure $ Arrow %* [DataType Bool %* [], DataType Bool %* []]
+    -- "not" -> pure $ Arrow %* [DataType Bool %* [], DataType Bool %* []]
     _ -> Nothing
 
 infixTypes :: String -> {left :: Sort, right :: Sort, output :: Sort}
@@ -192,6 +192,11 @@ language partialSort label dataa dataa2 = case label of
     , TermSort %* [CtxConsSort dataa %* [a, gamma], b] ]
     /\ --------
     ( TermSort %* [gamma, b])
+  
+  "NOT" -> pure $ Grammar.makeRule ["gamma"] \[gamma] ->
+    [ TermSort %* [gamma, DataType Bool %* []]]
+    /\ -------
+    ( TermSort %* [gamma, DataType Bool %* []])
 
 --  TypeHole -> pure $ Grammar.makeRule ["type"] \[ty] ->
 --    [ ]

@@ -21,6 +21,7 @@ import Util as Util
 import Debug (trace, traceM)
 import Data.Map as Map
 import Data.Map (Map)
+import Data.Array as Array
 
 -- NOTE: you can throw an catchable exceptions using Exception.unsafeThrow
 -- evaluate :: Ast -> Ast
@@ -74,7 +75,8 @@ data Error = HoleError | BoundaryError | FreeVarError
 eval :: (Map String (Lazy (Either Error Value))) -> Ast -> Either Error Value
 -- eval env ((Grammar.DerivLabel r _) % kids) =
 eval env {label, dataa, dataa2, kids} =
-    case label /\ (map ast2IsAst kids) of
+    let children = (map ast2IsAst kids) in
+    case label /\ children of
         --   Zero /\ [] -> force $ Util.fromJust' "eval Zero case" $ List.head env
         --   Suc /\ [x] -> eval (Util.fromJust' "eval suc" (List.tail env)) x
           "TOP" /\ [prog] -> eval env prog
@@ -120,14 +122,17 @@ eval env {label, dataa, dataa2, kids} =
                 Nil -> eval env nilCase
                 v : vs -> eval (Map.insert dataa (pure (Right v)) (Map.insert dataa2 (pure (Right (ListVal vs))) env)) consCase
           "INTEGER" /\ _ -> pure (IntVal (Util.fromJust (fromString dataa)))
-          _ -> Util.bug ("eval case fail: label was " <> label)
+          "NOT" /\ [b] -> do
+            vB <- eval env b
+            pure $ BoolVal (not (assertValBool vB))
+          _ -> Util.bug ("eval case fail: label was " <> label <> " num children was " <> show (Array.length children))
 eval _ _ = Util.bug "eval case shouldn't happen"
 
 evalConst :: String -> Maybe Value
 evalConst = case _ of
     "true" -> pure $ BoolVal true
     "false" -> pure $ BoolVal false
-    "not" -> pure $ FunVal (\b -> pure (BoolVal (not (assertValBool b))))
+    -- "not" -> pure $ FunVal (\b -> pure (BoolVal (not (assertValBool b))))
     _ -> Nothing
 
 evalInfix :: String -> (Value -> Value -> Value)
