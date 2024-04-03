@@ -7,8 +7,8 @@ import assert from "assert";
 
 const do_shuffle = false;
 
-const text_editor_url = "http://localhost:3001/"
-const pantograph_url = "http://localhost:8000/"
+const text_editor_url = "http://localhost:3000/fp-in-monaco.html"
+const pantograph_url = "http://localhost:3000/pantograph.html"
 
 function shuffleArray<A>(array: A[]): A[] {
 	const shuffledArray = [];
