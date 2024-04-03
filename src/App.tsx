@@ -327,20 +327,20 @@ export const all_biexercises: BiExercise[] = [
         <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
           {renderCodeblock(
             [
-              "let f : Int -> Int = fun x : Int => 5 / x in",
-              "let m : Int = 7 + 1 in",
+              "let f : Int -> Int = fun x : Int => 4 * x in",
+              "let m : Int = 1 + 1 in",
               "let y : Int = f m in",
-              "y / 7"
+              "y / 2"
             ].join("\n")
           )}
           Then, edit the program to result in this (Move the definitions of {renderCode("f")} and {renderCode("m")} inside the definition of {renderCode("y")}):
           {renderCodeblock(
             [
               "let y : Int =",
-              "    let f : Int -> Int = fun x : Int => 5 / x in",
-              "    let m : Int = 7 + 1 in",
+              "    let f : Int -> Int = fun x : Int => 4 * x in",
+              "    let m : Int = 1 + 1 in",
               "    f m in",
-              "y / 7"
+              "y / 2"
             ].join("\n")
           )}
         </div>
@@ -370,7 +370,7 @@ export const all_biexercises: BiExercise[] = [
               "    fun x : Int => ",
               "        let i : Int = 7 in",
               "        x / i in",
-              "f n",
+              "f 7",
             ]
               .join("\n")
           )}</div>
@@ -404,7 +404,7 @@ deMorgansLaw false false`,
       <div>
         {renderExerciseTitle("Collatz")}
         <div>
-          You have been provided wth a <i>buggy</i> implementation of {renderCode("collatz")}, which should be a function that take sas input an integer {renderCode("n : Int")} and outputs the number of steps there are in the Collatz sequence starting from {renderCode("n")}.
+          You have been provided wth a <i>buggy</i> implementation of {renderCode("collatz")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs the number of steps there are in the Collatz sequence starting from {renderCode("n")}.
           Recall that the Collatz sequence is defined as follows: given an element of the Collatz sequence {renderCode("n")}, the next element of the Collatz sequence is:
           <ul>
             <li>if {renderCode("n")} is {renderCode("1")}, then this is the end of the Collatz sequence</li>
@@ -412,6 +412,7 @@ deMorgansLaw false false`,
             <li>if {renderCode("n")} is odd, then {renderCode("n * 3 + 1")}</li>
           </ul>
 
+          Fix the implementation so that the example outputs {renderCode("5")}.
         </div>
       </div>
     ),
@@ -421,10 +422,10 @@ deMorgansLaw false false`,
       then 0
       else if (n % 2) == 0
       then collatz (n / 2)
-      else collatz (n + 1) * 3
+      else (collatz (n + 1)) * 3
 in
 
-collatz 16`,
+collatz 5`,
     pantograph_program_index: "collatz",
   },
   {
@@ -438,19 +439,19 @@ collatz 16`,
     let helper : Int -> Bool =
         fun x =>
             if x == 1 then false
-            else if (? % x) == 0 then true
+            else if (? % x) == ? then true
             else helper (x - 1) in
-    fun n => not (helper (n - 1))
+    fun n => ! (helper (n - 1))
 in
 
-not (isPrime 1) &&
+! (isPrime 1) &&
 isPrime 2 &&
 isPrime 3 &&
-not (isPrime 4) &&
+! (isPrime 4) &&
 isPrime 5 &&
-not (isPrime 6) &&
+! (isPrime 6) &&
 isPrime 7 &&
-not (isPrime 8)
+! (isPrime 8)
 `,
     pantograph_program_index: "isPrime",
   },
@@ -493,6 +494,8 @@ filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
           You have also been provided with a stub for a function {renderCode("sum")}, which should compute the sum of a {renderCode("List Int")}.
           Implement {renderCode("sum")} by using {renderCode("fold")}.
           Note that, by using {renderCode("fold")} correctly, you will <i>not</i> need to {renderCode("match")} on the input {renderCode("List")}.
+
+          The correct output should be {renderCode("10")}.
         </div>
       </div>
     ),
