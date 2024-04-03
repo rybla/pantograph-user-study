@@ -10,7 +10,7 @@
     "demonaco.build": "pnpm run demonaco.backend.build && pnpm run demonaco.parser.build",
     "packages.build": "pnpm run pantograph.build && pnpm run demonaco.build",
     "dev": "pnpm run packages.build && vite",
-    "build": "pnpm run packages.build && vite build"
+    "build": "pnpm run packages.build && vite build && cp -r dist docs"
   },
   "devDependencies": {
     "@monaco-editor/react": "^4.6.0",
