@@ -1,0 +1,35 @@
+TOP  := _ term=TERM _ $
+
+// terms
+// NOTE: The order in which these appear in the next line affects the order that it tries things when parsing
+TERM := MATCH | LET | IF | FUN | LET_NOANN | FUN_NOANN | EQUALS | INFIX_EXPRESSION | APP | SINGLES | PARENTERM
+PARENTERM := '\(' _ inside=TERM _ '\)'
+APPRHS := SINGLES | PARENTERM
+
+SINGLES := HOLE | NAME | INTEGER
+
+APP  := start_pos=@ applicant=TERM __ argument=APPRHS end_pos=@
+LET  := start_pos=@ 'let' __ data=NAME __ ':' __ signature=TYPE __ '=' __ implementation=TERM __ 'in' __ body=TERM end_pos=@
+LET_NOANN  := start_pos=@ 'let' __ data=NAME __ '=' __ implementation=TERM __ 'in' __ body=TERM end_pos=@
+FUN  := start_pos=@ 'fun' __ data=NAME __ ':' __ domain=TYPE __ '=>' __ body=TERM end_pos=@
+FUN_NOANN  := start_pos=@ 'fun' __ data=NAME __ '=>' __ body=TERM end_pos=@
+IF := start_pos=@ 'if' __ cond=TERM __ 'then' __ branch1=TERM __ 'else' __ branch2=TERM end_pos=@
+NAME := start_pos=@ !'in\s' !'fun\s' !'let\s' !'match\s' !'with\s' !'if\s' !'then\s' !'else\s' data='[a-zA-Z][a-zA-Z0-9]*' end_pos=@
+HOLE := start_pos=@ '\?' end_pos=@
+INTEGER := start_pos=@ data='[0-9]+' end_pos=@
+INFIX_EXPRESSION := start_pos=@ t1=TERM __ data=INFIX_OP __ t2=TERM end_pos=@
+INFIX_OP := '>=' | '<=' | '\+|\*|\-|\/|\%|\^|<|>|&&|\|\|'
+EQUALS := start_pos=@ t1=TERM __ '==' __ t2=TERM end_pos=@
+MATCH := start_pos=@ 'match' __ l=TERM __ 'with' __ '\|' _ 'nil' _ '=>' _ nilcase=TERM _ '\|' _ 'cons' __ data=NAME __ data2=NAME _ '=>' _ t2=TERM end_pos=@
+
+// types
+TYPE := ARROW_TYPE | BOOL | INT | LIST | PARENTYPE
+PARENTYPE := '\(' _ inside=TYPE _ '\)'
+BASE_TYPE := BOOL | INT | LIST | PARENTYPE
+ARROW_TYPE := start_pos=@ domain=BASE_TYPE _ '->' _ codomain=TYPE end_pos=@
+BOOL := start_pos=@ 'Bool' end_pos=@
+INT := start_pos=@ 'Int' end_pos=@
+LIST := start_pos=@ 'List' __ domain=BASE_TYPE end_pos=@
+
+_ := '\s*'
+__ := '\s+'

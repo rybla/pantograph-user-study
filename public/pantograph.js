@@ -1176,12 +1176,12 @@
   };
   var ap = function(dictMonad) {
     var bind35 = bind(dictMonad.Bind1());
-    var pure37 = pure(dictMonad.Applicative0());
+    var pure38 = pure(dictMonad.Applicative0());
     return function(f) {
       return function(a2) {
         return bind35(f)(function(f$prime) {
           return bind35(a2)(function(a$prime) {
-            return pure37(f$prime(a$prime));
+            return pure38(f$prime(a$prime));
           });
         });
       };
@@ -2478,10 +2478,10 @@
     var catchError1 = catchError(dictMonadError);
     var Monad0 = dictMonadError.MonadThrow0().Monad0();
     var map68 = map(Monad0.Bind1().Apply0().Functor0());
-    var pure37 = pure(Monad0.Applicative0());
+    var pure38 = pure(Monad0.Applicative0());
     return function(a2) {
       return catchError1(map68(Right.create)(a2))(function($52) {
-        return pure37(Left.create($52));
+        return pure38(Left.create($52));
       });
     };
   };
@@ -3076,10 +3076,10 @@
   var monadTransExceptT = {
     lift: function(dictMonad) {
       var bind35 = bind(dictMonad.Bind1());
-      var pure37 = pure(dictMonad.Applicative0());
+      var pure38 = pure(dictMonad.Applicative0());
       return function(m) {
         return bind35(m)(function(a2) {
-          return pure37(new Right(a2));
+          return pure38(new Right(a2));
         });
       };
     }
@@ -3110,12 +3110,12 @@
   };
   var bindExceptT = function(dictMonad) {
     var bind35 = bind(dictMonad.Bind1());
-    var pure37 = pure(dictMonad.Applicative0());
+    var pure38 = pure(dictMonad.Applicative0());
     return {
       bind: function(v) {
         return function(k) {
           return bind35(v)(either(function($187) {
-            return pure37(Left.create($187));
+            return pure38(Left.create($187));
           })(function(a2) {
             var v1 = k(a2);
             return v1;
@@ -3293,11 +3293,11 @@
     var mempty5 = mempty(dictMonoid);
     var applyWriterT1 = applyWriterT(dictMonoid.Semigroup0());
     return function(dictApplicative) {
-      var pure37 = pure(dictApplicative);
+      var pure38 = pure(dictApplicative);
       var applyWriterT2 = applyWriterT1(dictApplicative.Apply0());
       return {
         pure: function(a2) {
-          return pure37(new Tuple(a2, mempty5));
+          return pure38(new Tuple(a2, mempty5));
         },
         Apply0: function() {
           return applyWriterT2;
@@ -3483,13 +3483,13 @@
   };
   var traverse_ = function(dictApplicative) {
     var applySecond3 = applySecond(dictApplicative.Apply0());
-    var pure37 = pure(dictApplicative);
+    var pure38 = pure(dictApplicative);
     return function(dictFoldable) {
       var foldr22 = foldr(dictFoldable);
       return function(f) {
         return foldr22(function($454) {
           return applySecond3(f($454));
-        })(pure37(unit));
+        })(pure38(unit));
       };
     };
   };
@@ -3741,13 +3741,13 @@
     }
     return function(apply6) {
       return function(map68) {
-        return function(pure37) {
+        return function(pure38) {
           return function(f) {
             return function(array) {
               function go2(bot, top3) {
                 switch (top3 - bot) {
                   case 0:
-                    return pure37([]);
+                    return pure38([]);
                   case 1:
                     return map68(array1)(f(array[bot]));
                   case 2:
@@ -4330,11 +4330,11 @@
 
   // output/Control.Alternative/index.js
   var guard = function(dictAlternative) {
-    var pure37 = pure(dictAlternative.Applicative0());
+    var pure38 = pure(dictAlternative.Applicative0());
     var empty13 = empty(dictAlternative.Plus1());
     return function(v) {
       if (v) {
-        return pure37(unit);
+        return pure38(unit);
       }
       ;
       if (!v) {
@@ -4786,9 +4786,9 @@
   };
   var oneOf2 = function(dictAlternative) {
     var alt6 = alt(dictAlternative.Plus1().Alt0());
-    var pure37 = pure(dictAlternative.Applicative0());
+    var pure38 = pure(dictAlternative.Applicative0());
     return function(v) {
-      return alt6(pure37(v.value0))(v.value1);
+      return alt6(pure38(v.value0))(v.value1);
     };
   };
   var functorNonEmpty = function(dictFunctor) {
@@ -9326,7 +9326,7 @@
     return Lift.create;
   }();
   var goLeft = function(dictApplicative) {
-    var pure37 = pure(dictApplicative);
+    var pure38 = pure(dictApplicative);
     return function(fStack) {
       return function(valStack) {
         return function(nat) {
@@ -9334,7 +9334,7 @@
             return function(count) {
               if (func instanceof Pure) {
                 return new Tuple(new Cons({
-                  func: pure37(func.value0),
+                  func: pure38(func.value0),
                   count
                 }, fStack), valStack);
               }
@@ -9405,7 +9405,7 @@
   };
   var foldFreeAp = function(dictApplicative) {
     var goApply1 = goApply(dictApplicative);
-    var pure37 = pure(dictApplicative);
+    var pure38 = pure(dictApplicative);
     var goLeft1 = goLeft(dictApplicative);
     return function(nat) {
       return function(z) {
@@ -9414,7 +9414,7 @@
           var $tco_result;
           function $tco_loop(v) {
             if (v.value1.value0 instanceof Pure) {
-              var v1 = goApply1(v.value0)(v.value1.value1)(pure37(v.value1.value0.value0));
+              var v1 = goApply1(v.value0)(v.value1.value1)(pure38(v.value1.value0.value0));
               if (v1 instanceof Left) {
                 $tco_done = true;
                 return v1.value0;
@@ -9932,11 +9932,11 @@
     };
   };
   var applicativeStateT = function(dictMonad) {
-    var pure37 = pure(dictMonad.Applicative0());
+    var pure38 = pure(dictMonad.Applicative0());
     return {
       pure: function(a2) {
         return function(s) {
-          return pure37(new Tuple(a2, s));
+          return pure38(new Tuple(a2, s));
         };
       },
       Apply0: function() {
@@ -9945,12 +9945,12 @@
     };
   };
   var monadStateStateT = function(dictMonad) {
-    var pure37 = pure(dictMonad.Applicative0());
+    var pure38 = pure(dictMonad.Applicative0());
     var monadStateT1 = monadStateT(dictMonad);
     return {
       state: function(f) {
         return function($200) {
-          return pure37(f($200));
+          return pure38(f($200));
         };
       },
       Monad0: function() {
@@ -10737,7 +10737,6 @@
                 if (otherwise) {
                   return discard1(liftEffect4(write({
                     component: v2.component,
-                    state: v3.value1,
                     refs: v2.refs,
                     children: v2.children,
                     childrenIn: v2.childrenIn,
@@ -10751,7 +10750,8 @@
                     fresh: v2.fresh,
                     subscriptions: v2.subscriptions,
                     forks: v2.forks,
-                    lifecycleHandlers: v2.lifecycleHandlers
+                    lifecycleHandlers: v2.lifecycleHandlers,
+                    state: v3.value1
                   })(ref3)))(function() {
                     return discard1(handleLifecycle(v2.lifecycleHandlers)(render2(v2.lifecycleHandlers)(ref3)))(function() {
                       return pure6(v3.value0);
@@ -10868,7 +10868,6 @@
             return {
               component: st.component,
               state: st.state,
-              refs: alter2($$const(v.value1))(v.value0)(st.refs),
               children: st.children,
               childrenIn: st.childrenIn,
               childrenOut: st.childrenOut,
@@ -10881,7 +10880,8 @@
               fresh: st.fresh,
               subscriptions: st.subscriptions,
               forks: st.forks,
-              lifecycleHandlers: st.lifecycleHandlers
+              lifecycleHandlers: st.lifecycleHandlers,
+              refs: alter2($$const(v.value1))(v.value0)(st.refs)
             };
           })));
         }
@@ -11099,7 +11099,6 @@
                   component: ds$prime.component,
                   state: ds$prime.state,
                   refs: ds$prime.refs,
-                  children: children2,
                   childrenIn: ds$prime.childrenIn,
                   childrenOut: ds$prime.childrenOut,
                   selfRef: ds$prime.selfRef,
@@ -11107,11 +11106,12 @@
                   pendingQueries: ds$prime.pendingQueries,
                   pendingOuts: ds$prime.pendingOuts,
                   pendingHandlers: ds$prime.pendingHandlers,
-                  rendering: new Just(rendering),
                   fresh: ds$prime.fresh,
                   subscriptions: ds$prime.subscriptions,
                   forks: ds$prime.forks,
-                  lifecycleHandlers: ds$prime.lifecycleHandlers
+                  lifecycleHandlers: ds$prime.lifecycleHandlers,
+                  rendering: new Just(rendering),
+                  children: children2
                 };
               }))();
               return when3(shouldProcessHandlers)(flip(tailRecM3)(unit)(function(v1) {
@@ -12601,10 +12601,10 @@
     };
   };
   var assertM = function(dictApplicative) {
-    var pure37 = pure(dictApplicative);
+    var pure38 = pure(dictApplicative);
     return function(v) {
       if (v.result instanceof Right) {
-        return pure37(v.result.value0);
+        return pure38(v.result.value0);
       }
       ;
       if (v.result instanceof Left) {
@@ -12657,6 +12657,7 @@
   function id3(x) {
     return x;
   }
+  var jsonNull = null;
   function stringify(j) {
     return JSON.stringify(j);
   }
@@ -12843,105 +12844,6 @@
   };
   var toArray = /* @__PURE__ */ toJsonType(caseJsonArray);
 
-  // output/Data.Argonaut.Decode.Error/index.js
-  var show4 = /* @__PURE__ */ show(showString);
-  var show1 = /* @__PURE__ */ show(showInt);
-  var TypeMismatch2 = /* @__PURE__ */ function() {
-    function TypeMismatch3(value0) {
-      this.value0 = value0;
-    }
-    ;
-    TypeMismatch3.create = function(value0) {
-      return new TypeMismatch3(value0);
-    };
-    return TypeMismatch3;
-  }();
-  var UnexpectedValue = /* @__PURE__ */ function() {
-    function UnexpectedValue2(value0) {
-      this.value0 = value0;
-    }
-    ;
-    UnexpectedValue2.create = function(value0) {
-      return new UnexpectedValue2(value0);
-    };
-    return UnexpectedValue2;
-  }();
-  var AtIndex = /* @__PURE__ */ function() {
-    function AtIndex2(value0, value14) {
-      this.value0 = value0;
-      this.value1 = value14;
-    }
-    ;
-    AtIndex2.create = function(value0) {
-      return function(value14) {
-        return new AtIndex2(value0, value14);
-      };
-    };
-    return AtIndex2;
-  }();
-  var AtKey = /* @__PURE__ */ function() {
-    function AtKey2(value0, value14) {
-      this.value0 = value0;
-      this.value1 = value14;
-    }
-    ;
-    AtKey2.create = function(value0) {
-      return function(value14) {
-        return new AtKey2(value0, value14);
-      };
-    };
-    return AtKey2;
-  }();
-  var Named = /* @__PURE__ */ function() {
-    function Named2(value0, value14) {
-      this.value0 = value0;
-      this.value1 = value14;
-    }
-    ;
-    Named2.create = function(value0) {
-      return function(value14) {
-        return new Named2(value0, value14);
-      };
-    };
-    return Named2;
-  }();
-  var MissingValue = /* @__PURE__ */ function() {
-    function MissingValue2() {
-    }
-    ;
-    MissingValue2.value = new MissingValue2();
-    return MissingValue2;
-  }();
-  var showJsonDecodeError = {
-    show: function(v) {
-      if (v instanceof TypeMismatch2) {
-        return "(TypeMismatch " + (show4(v.value0) + ")");
-      }
-      ;
-      if (v instanceof UnexpectedValue) {
-        return "(UnexpectedValue " + (stringify(v.value0) + ")");
-      }
-      ;
-      if (v instanceof AtIndex) {
-        return "(AtIndex " + (show1(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
-      }
-      ;
-      if (v instanceof AtKey) {
-        return "(AtKey " + (show4(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
-      }
-      ;
-      if (v instanceof Named) {
-        return "(Named " + (show4(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
-      }
-      ;
-      if (v instanceof MissingValue) {
-        return "MissingValue";
-      }
-      ;
-      throw new Error("Failed pattern match at Data.Argonaut.Decode.Error (line 24, column 10 - line 30, column 35): " + [v.constructor.name]);
-    }
-  };
-
   // output/Data.Set/index.js
   var foldMap4 = /* @__PURE__ */ foldMap(foldableList);
   var foldl4 = /* @__PURE__ */ foldl(foldableList);
@@ -13062,8 +12964,246 @@
     };
   };
 
+  // output/Data.Argonaut.Encode.Encoders/index.js
+  var map32 = /* @__PURE__ */ map(functorArray);
+  var toUnfoldable5 = /* @__PURE__ */ toUnfoldable(unfoldableArray);
+  var toUnfoldable12 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
+  var encodeTuple = function(encoderA) {
+    return function(encoderB) {
+      return function(v) {
+        return id3([encoderA(v.value0), encoderB(v.value1)]);
+      };
+    };
+  };
+  var encodeString = id3;
+  var encodeMaybe = function(encoder) {
+    return function(v) {
+      if (v instanceof Nothing) {
+        return jsonNull;
+      }
+      ;
+      if (v instanceof Just) {
+        return encoder(v.value0);
+      }
+      ;
+      throw new Error("Failed pattern match at Data.Argonaut.Encode.Encoders (line 31, column 23 - line 33, column 22): " + [v.constructor.name]);
+    };
+  };
+  var encodeList = function(encoder) {
+    var $45 = map32(encoder);
+    return function($46) {
+      return id3($45(toUnfoldable5($46)));
+    };
+  };
+  var encodeMap = function(dictOrd) {
+    return function(encoderA) {
+      return function(encoderB) {
+        var $47 = encodeList(encodeTuple(encoderA)(encoderB));
+        return function($48) {
+          return $47(toUnfoldable12($48));
+        };
+      };
+    };
+  };
+  var encodeInt = function($53) {
+    return id3(toNumber($53));
+  };
+  var encodeArray = function(encoder) {
+    var $58 = map32(encoder);
+    return function($59) {
+      return id3($58($59));
+    };
+  };
+
+  // output/Record/index.js
+  var get2 = function(dictIsSymbol) {
+    var reflectSymbol2 = reflectSymbol(dictIsSymbol);
+    return function() {
+      return function(l) {
+        return function(r) {
+          return unsafeGet(reflectSymbol2(l))(r);
+        };
+      };
+    };
+  };
+
+  // output/Data.Argonaut.Encode.Class/index.js
+  var gEncodeJsonNil = {
+    gEncodeJson: function(v) {
+      return function(v1) {
+        return empty4;
+      };
+    }
+  };
+  var gEncodeJson = function(dict) {
+    return dict.gEncodeJson;
+  };
+  var encodeRecord = function(dictGEncodeJson) {
+    var gEncodeJson1 = gEncodeJson(dictGEncodeJson);
+    return function() {
+      return {
+        encodeJson: function(rec) {
+          return id3(gEncodeJson1(rec)($$Proxy.value));
+        }
+      };
+    };
+  };
+  var encodeJsonJString = {
+    encodeJson: encodeString
+  };
+  var encodeJsonInt = {
+    encodeJson: encodeInt
+  };
+  var encodeJson = function(dict) {
+    return dict.encodeJson;
+  };
+  var encodeJsonArray = function(dictEncodeJson) {
+    return {
+      encodeJson: encodeArray(encodeJson(dictEncodeJson))
+    };
+  };
+  var encodeJsonList = function(dictEncodeJson) {
+    return {
+      encodeJson: encodeList(encodeJson(dictEncodeJson))
+    };
+  };
+  var encodeJsonMaybe = function(dictEncodeJson) {
+    return {
+      encodeJson: encodeMaybe(encodeJson(dictEncodeJson))
+    };
+  };
+  var encodeMap2 = function(dictOrd) {
+    var encodeMap1 = encodeMap(dictOrd);
+    return function(dictEncodeJson) {
+      var encodeJson1 = encodeJson(dictEncodeJson);
+      return function(dictEncodeJson1) {
+        return {
+          encodeJson: encodeMap1(encodeJson1)(encodeJson(dictEncodeJson1))
+        };
+      };
+    };
+  };
+  var gEncodeJsonCons = function(dictEncodeJson) {
+    var encodeJson1 = encodeJson(dictEncodeJson);
+    return function(dictGEncodeJson) {
+      var gEncodeJson1 = gEncodeJson(dictGEncodeJson);
+      return function(dictIsSymbol) {
+        var reflectSymbol2 = reflectSymbol(dictIsSymbol);
+        var get8 = get2(dictIsSymbol)();
+        return function() {
+          return {
+            gEncodeJson: function(row2) {
+              return function(v) {
+                return insert3(reflectSymbol2($$Proxy.value))(encodeJson1(get8($$Proxy.value)(row2)))(gEncodeJson1(row2)($$Proxy.value));
+              };
+            }
+          };
+        };
+      };
+    };
+  };
+
+  // output/Data.Argonaut.Decode.Error/index.js
+  var show4 = /* @__PURE__ */ show(showString);
+  var show1 = /* @__PURE__ */ show(showInt);
+  var TypeMismatch2 = /* @__PURE__ */ function() {
+    function TypeMismatch3(value0) {
+      this.value0 = value0;
+    }
+    ;
+    TypeMismatch3.create = function(value0) {
+      return new TypeMismatch3(value0);
+    };
+    return TypeMismatch3;
+  }();
+  var UnexpectedValue = /* @__PURE__ */ function() {
+    function UnexpectedValue2(value0) {
+      this.value0 = value0;
+    }
+    ;
+    UnexpectedValue2.create = function(value0) {
+      return new UnexpectedValue2(value0);
+    };
+    return UnexpectedValue2;
+  }();
+  var AtIndex = /* @__PURE__ */ function() {
+    function AtIndex2(value0, value14) {
+      this.value0 = value0;
+      this.value1 = value14;
+    }
+    ;
+    AtIndex2.create = function(value0) {
+      return function(value14) {
+        return new AtIndex2(value0, value14);
+      };
+    };
+    return AtIndex2;
+  }();
+  var AtKey = /* @__PURE__ */ function() {
+    function AtKey2(value0, value14) {
+      this.value0 = value0;
+      this.value1 = value14;
+    }
+    ;
+    AtKey2.create = function(value0) {
+      return function(value14) {
+        return new AtKey2(value0, value14);
+      };
+    };
+    return AtKey2;
+  }();
+  var Named = /* @__PURE__ */ function() {
+    function Named2(value0, value14) {
+      this.value0 = value0;
+      this.value1 = value14;
+    }
+    ;
+    Named2.create = function(value0) {
+      return function(value14) {
+        return new Named2(value0, value14);
+      };
+    };
+    return Named2;
+  }();
+  var MissingValue = /* @__PURE__ */ function() {
+    function MissingValue2() {
+    }
+    ;
+    MissingValue2.value = new MissingValue2();
+    return MissingValue2;
+  }();
+  var showJsonDecodeError = {
+    show: function(v) {
+      if (v instanceof TypeMismatch2) {
+        return "(TypeMismatch " + (show4(v.value0) + ")");
+      }
+      ;
+      if (v instanceof UnexpectedValue) {
+        return "(UnexpectedValue " + (stringify(v.value0) + ")");
+      }
+      ;
+      if (v instanceof AtIndex) {
+        return "(AtIndex " + (show1(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
+      }
+      ;
+      if (v instanceof AtKey) {
+        return "(AtKey " + (show4(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
+      }
+      ;
+      if (v instanceof Named) {
+        return "(Named " + (show4(v.value0) + (" " + (show(showJsonDecodeError)(v.value1) + ")")));
+      }
+      ;
+      if (v instanceof MissingValue) {
+        return "MissingValue";
+      }
+      ;
+      throw new Error("Failed pattern match at Data.Argonaut.Decode.Error (line 24, column 10 - line 30, column 35): " + [v.constructor.name]);
+    }
+  };
+
   // output/Data.Argonaut.Decode.Decoders/index.js
-  var map32 = /* @__PURE__ */ map(functorEither);
+  var map33 = /* @__PURE__ */ map(functorEither);
   var lmap2 = /* @__PURE__ */ lmap(bifunctorEither);
   var composeKleisliFlipped3 = /* @__PURE__ */ composeKleisliFlipped(bindEither);
   var bind10 = /* @__PURE__ */ bind(bindEither);
@@ -13100,11 +13240,11 @@
             return bind10(note(new AtKey("value", MissingValue.value))(lookup4("value")(obj)))(function(val) {
               var v = toString(tag);
               if (v instanceof Just && v.value0 === "Right") {
-                return map32(Right.create)(decoderB(val));
+                return map33(Right.create)(decoderB(val));
               }
               ;
               if (v instanceof Just && v.value0 === "Left") {
-                return map32(Left.create)(decoderA(val));
+                return map33(Left.create)(decoderA(val));
               }
               ;
               return new Left(new AtKey("tag", new UnexpectedValue(tag)));
@@ -13165,7 +13305,7 @@
   var discard5 = /* @__PURE__ */ discard(discardUnit)(bindEither);
   var when5 = /* @__PURE__ */ when(applicativeEither);
   var pure9 = /* @__PURE__ */ pure(applicativeEither);
-  var map33 = /* @__PURE__ */ map(functorEither);
+  var map34 = /* @__PURE__ */ map(functorEither);
   var alt5 = /* @__PURE__ */ alt(altEither);
   var lmap3 = /* @__PURE__ */ lmap(bifunctorEither);
   var notEq1 = /* @__PURE__ */ notEq(/* @__PURE__ */ eqArray(eqJson));
@@ -13213,7 +13353,7 @@
     return function(dictDecodeRep) {
       var decodeRepWith1 = decodeRepWith(dictDecodeRep);
       return function(e) {
-        var $101 = map33(to2);
+        var $101 = map34(to2);
         var $102 = decodeRepWith1(e);
         return function($103) {
           return $101($102($103));
@@ -13234,7 +13374,7 @@
       return {
         decodeRepWith: function(e) {
           return function(j) {
-            return alt5(map33(Inl.create)(decodeRepWith1(e)(j)))(map33(Inr.create)(decodeRepWith2(e)(j)));
+            return alt5(map34(Inl.create)(decodeRepWith1(e)(j)))(map34(Inr.create)(decodeRepWith2(e)(j)));
           };
         }
       };
@@ -13253,7 +13393,7 @@
     return {
       decodeRepArgs: function(js) {
         return bind11(note(new TypeMismatch2("NonEmptyArray"))(uncons2(js)))(function(v) {
-          return map33(function($104) {
+          return map34(function($104) {
             return function(v1) {
               return {
                 init: v1,
@@ -13352,56 +13492,6 @@
           });
         };
       }
-    };
-  };
-
-  // output/Data.Argonaut.Encode.Encoders/index.js
-  var map34 = /* @__PURE__ */ map(functorArray);
-  var fromFoldable7 = /* @__PURE__ */ fromFoldable4(foldableList);
-  var encodeString = id3;
-  var encodeInt = function($53) {
-    return id3(toNumber($53));
-  };
-  var encodeEither = function(encoderA) {
-    return function(encoderB) {
-      var obj = function(encoder) {
-        return function(tag) {
-          return function(x) {
-            return id3(fromFoldable7(new Cons(new Tuple("tag", id3(tag)), new Cons(new Tuple("value", encoder(x)), Nil.value))));
-          };
-        };
-      };
-      return either(obj(encoderA)("Left"))(obj(encoderB)("Right"));
-    };
-  };
-  var encodeArray = function(encoder) {
-    var $58 = map34(encoder);
-    return function($59) {
-      return id3($58($59));
-    };
-  };
-
-  // output/Data.Argonaut.Encode.Class/index.js
-  var encodeJsonJString = {
-    encodeJson: encodeString
-  };
-  var encodeJsonInt = {
-    encodeJson: encodeInt
-  };
-  var encodeJson = function(dict) {
-    return dict.encodeJson;
-  };
-  var encodeJsonArray = function(dictEncodeJson) {
-    return {
-      encodeJson: encodeArray(encodeJson(dictEncodeJson))
-    };
-  };
-  var encodeJsonEither = function(dictEncodeJson) {
-    var encodeJson1 = encodeJson(dictEncodeJson);
-    return function(dictEncodeJson1) {
-      return {
-        encodeJson: encodeEither(encodeJson1)(encodeJson(dictEncodeJson1))
-      };
     };
   };
 
@@ -13580,6 +13670,12 @@
   };
 
   // output/Data.List.Rev/index.js
+  var RevIsSymbol = {
+    reflectSymbol: function() {
+      return "Rev";
+    }
+  };
+  var encodeRepConstructor2 = /* @__PURE__ */ encodeRepConstructor(RevIsSymbol);
   var foldr6 = /* @__PURE__ */ foldr(foldableList);
   var foldl5 = /* @__PURE__ */ foldl(foldableList);
   var foldMap5 = /* @__PURE__ */ foldMap(foldableList);
@@ -13595,9 +13691,26 @@
     return ordList(dictOrd);
   };
   var monoidRevList = monoidList;
+  var genericRevList_ = {
+    to: function(x) {
+      return x;
+    },
+    from: function(x) {
+      return x;
+    }
+  };
+  var genericEncodeJson2 = /* @__PURE__ */ genericEncodeJson(genericRevList_);
   var functorRevList = functorList;
   var eqRevList = function(dictEq) {
     return eqList(dictEq);
+  };
+  var encodeJsonRevList = function(dictEncodeJson) {
+    var genericEncodeJson15 = genericEncodeJson2(encodeRepConstructor2(encodeRepArgsArgument(encodeJsonList(dictEncodeJson))));
+    return {
+      encodeJson: function(a2) {
+        return genericEncodeJson15(a2);
+      }
+    };
   };
   var wrap3 = Rev;
   var unwrap8 = function(v) {
@@ -13777,7 +13890,7 @@
   var intercalate8 = /* @__PURE__ */ intercalate3(monoidString);
   var map35 = /* @__PURE__ */ map(functorArray);
   var mapFlipped2 = /* @__PURE__ */ mapFlipped(functorArray);
-  var toUnfoldable5 = /* @__PURE__ */ toUnfoldable2(unfoldableArray);
+  var toUnfoldable6 = /* @__PURE__ */ toUnfoldable2(unfoldableArray);
   var prettyString = {
     pretty: /* @__PURE__ */ identity(categoryFn)
   };
@@ -13845,7 +13958,7 @@
       var pretty23 = pretty(dictPretty1);
       return {
         pretty: function(m) {
-          return "map:" + indent(bullets(mapFlipped2(toUnfoldable5(m))(function(v) {
+          return "map:" + indent(bullets(mapFlipped2(toUnfoldable6(m))(function(v) {
             return pretty13(v.value0) + (" \u21A6 " + pretty23(v.value1));
           })));
         }
@@ -13900,6 +14013,7 @@
   var traverse3 = /* @__PURE__ */ traverse(traversableRevList);
   var traverse12 = /* @__PURE__ */ traverse(traversableList);
   var identity16 = /* @__PURE__ */ identity(categoryFn);
+  var encodeRepConstructor3 = /* @__PURE__ */ encodeRepConstructor(PathIsSymbol);
   var genericPath_ = {
     to: function(x) {
       return x;
@@ -13909,6 +14023,7 @@
     }
   };
   var genericShow1 = /* @__PURE__ */ genericShow(genericPath_);
+  var genericEncodeJson1 = /* @__PURE__ */ genericEncodeJson(genericPath_);
   var showPath1 = function(dictShow) {
     var genericShow24 = genericShow1(genericShowConstructor(genericShowArgsArgument(showRecord2(showRecordFieldsCons2(showRecordFieldsConsNil2(showList(dictShow)))(showRevList(dictShow)))))(PathIsSymbol));
     return {
@@ -14017,6 +14132,14 @@
       },
       Eq0: function() {
         return eqPath1;
+      }
+    };
+  };
+  var encodeJsonPath = function(dictEncodeJson) {
+    var genericEncodeJson25 = genericEncodeJson1(encodeRepConstructor3(encodeRepArgsArgument(encodeRecord(gEncodeJsonCons(encodeJsonRevList(dictEncodeJson))(gEncodeJsonCons(encodeJsonList(dictEncodeJson))(gEncodeJsonNil)(rightIsSymbol)())(leftIsSymbol)())())));
+    return {
+      encodeJson: function(a2) {
+        return genericEncodeJson25(a2);
       }
     };
   };
@@ -14189,11 +14312,11 @@
   var makeTotalMap = function(dictEnum) {
     var enumFromTo2 = enumFromTo(dictEnum)(unfoldable1Array);
     return function(dictBounded) {
-      var fromFoldable23 = fromFoldable2(dictBounded.Ord0())(foldableArray);
+      var fromFoldable21 = fromFoldable2(dictBounded.Ord0())(foldableArray);
       var bottom3 = bottom(dictBounded);
       var top3 = top(dictBounded);
       return function(f) {
-        return fromFoldable23(mapFlipped3(enumFromTo2(bottom3)(top3))(function(k) {
+        return fromFoldable21(mapFlipped3(enumFromTo2(bottom3)(top3))(function(k) {
           return new Tuple(k, f(k));
         }));
       };
@@ -14705,11 +14828,11 @@
   var traceM = function() {
     return function(dictMonad) {
       var discard19 = discard6(dictMonad.Bind1());
-      var pure37 = pure(dictMonad.Applicative0());
+      var pure38 = pure(dictMonad.Applicative0());
       return function(s) {
-        return discard19(pure37(unit))(function() {
+        return discard19(pure38(unit))(function() {
           return trace1(s)(function(v) {
-            return pure37(unit);
+            return pure38(unit);
           });
         });
       };
@@ -14996,6 +15119,11 @@
       return "Tooth";
     }
   };
+  var ZipperIsSymbol = {
+    reflectSymbol: function() {
+      return "Zipper";
+    }
+  };
   var PlusIsSymbol = {
     reflectSymbol: function() {
       return "Plus";
@@ -15022,7 +15150,10 @@
   var identity18 = /* @__PURE__ */ identity(categoryFn);
   var foldl7 = /* @__PURE__ */ foldl(foldableArray);
   var foldl22 = /* @__PURE__ */ foldl(foldableList);
+  var encodeRepConstructor4 = /* @__PURE__ */ encodeRepConstructor(MInjIsSymbol);
   var encodeRepConstructor1 = /* @__PURE__ */ encodeRepConstructor(ExprIsSymbol);
+  var encodeRepConstructor22 = /* @__PURE__ */ encodeRepConstructor(ToothIsSymbol);
+  var encodeRepConstructor32 = /* @__PURE__ */ encodeRepConstructor(ZipperIsSymbol);
   var decodeRepConstructor2 = /* @__PURE__ */ decodeRepConstructor(ExprIsSymbol);
   var unwrap9 = /* @__PURE__ */ unwrap();
   var discard7 = /* @__PURE__ */ discard(discardUnit)(bindMaybe);
@@ -15031,7 +15162,7 @@
   var bind17 = /* @__PURE__ */ bind(bindMaybe);
   var pure11 = /* @__PURE__ */ pure(applicativeMaybe);
   var compare5 = /* @__PURE__ */ compare(ordInt);
-  var fromFoldable8 = /* @__PURE__ */ fromFoldable3(foldableList);
+  var fromFoldable7 = /* @__PURE__ */ fromFoldable3(foldableList);
   var mempty1 = /* @__PURE__ */ mempty(monoidRevList);
   var fromFoldable1 = /* @__PURE__ */ fromFoldable(foldableArray);
   var mapFlipped4 = /* @__PURE__ */ mapFlipped(functorMaybe);
@@ -15278,6 +15409,15 @@
     };
   }();
   var mempty22 = /* @__PURE__ */ mempty(monoidPath);
+  var genericZipper_ = {
+    to: function(x) {
+      return new Zipper(x.value0, x.value1);
+    },
+    from: function(x) {
+      return new Product(x.value0, x.value1);
+    }
+  };
+  var genericEncodeJson3 = /* @__PURE__ */ genericEncodeJson(genericZipper_);
   var genericTooth_ = {
     to: function(x) {
       return new Tooth(x.value0, x.value1);
@@ -15289,6 +15429,7 @@
   var genericShow2 = /* @__PURE__ */ genericShow(genericTooth_);
   var genericEq2 = /* @__PURE__ */ genericEq(genericTooth_);
   var genericCompare2 = /* @__PURE__ */ genericCompare(genericTooth_);
+  var genericEncodeJson12 = /* @__PURE__ */ genericEncodeJson(genericTooth_);
   var genericMeta_ = {
     to: function(x) {
       if (x instanceof Inl) {
@@ -15316,6 +15457,7 @@
   var genericShow3 = /* @__PURE__ */ genericShow(genericMeta_);
   var genericEq1 = /* @__PURE__ */ genericEq(genericMeta_);
   var genericCompare1 = /* @__PURE__ */ genericCompare(genericMeta_);
+  var genericEncodeJson22 = /* @__PURE__ */ genericEncodeJson(genericMeta_);
   var genericMetaVar_ = {
     to: function(x) {
       if (x instanceof Inl) {
@@ -15343,6 +15485,7 @@
   var genericShow4 = /* @__PURE__ */ genericShow(genericMetaVar_)(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor(/* @__PURE__ */ genericShowArgsProduct(/* @__PURE__ */ genericShowArgsArgument(/* @__PURE__ */ showMaybe(showString)))(/* @__PURE__ */ genericShowArgsArgument(showInt)))(MetaVarIsSymbol))(/* @__PURE__ */ genericShowConstructor(/* @__PURE__ */ genericShowArgsArgument(showString))(RuleMetaVarIsSymbol)));
   var genericEq22 = /* @__PURE__ */ genericEq(genericMetaVar_)(/* @__PURE__ */ genericEqSum(/* @__PURE__ */ genericEqConstructor(/* @__PURE__ */ genericEqProduct(/* @__PURE__ */ genericEqArgument(/* @__PURE__ */ eqMaybe(eqString)))(/* @__PURE__ */ genericEqArgument(eqInt))))(/* @__PURE__ */ genericEqConstructor(/* @__PURE__ */ genericEqArgument(eqString))));
   var genericCompare22 = /* @__PURE__ */ genericCompare(genericMetaVar_)(/* @__PURE__ */ genericOrdSum(/* @__PURE__ */ genericOrdConstructor(/* @__PURE__ */ genericOrdProduct(/* @__PURE__ */ genericOrdArgument(/* @__PURE__ */ ordMaybe(ordString)))(/* @__PURE__ */ genericOrdArgument(ordInt))))(/* @__PURE__ */ genericOrdConstructor(/* @__PURE__ */ genericOrdArgument(ordString))));
+  var genericEncodeJson32 = /* @__PURE__ */ genericEncodeJson(genericMetaVar_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(MetaVarIsSymbol)(/* @__PURE__ */ encodeRepArgsProduct(/* @__PURE__ */ encodeRepArgsArgument(/* @__PURE__ */ encodeJsonMaybe(encodeJsonJString)))(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonInt))))(/* @__PURE__ */ encodeRepConstructor(RuleMetaVarIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonJString))));
   var showMetaVar = {
     show: function(x) {
       return genericShow4(x);
@@ -15672,11 +15815,44 @@
       }
     };
   };
+  var encodeJsonMetaVar = {
+    encodeJson: function(a2) {
+      return genericEncodeJson32(a2);
+    }
+  };
+  var encodeRepSum2 = /* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(MVIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonMetaVar)));
+  var encodeJsonMeta = function(dictEncodeJson) {
+    var genericEncodeJson52 = genericEncodeJson22(encodeRepSum2(encodeRepConstructor4(encodeRepArgsArgument(dictEncodeJson))));
+    return {
+      encodeJson: function(a2) {
+        return genericEncodeJson52(a2);
+      }
+    };
+  };
   var encodeJsonExpr = function(dictEncodeJson) {
     var encodeRepArgsProduct2 = encodeRepArgsProduct(encodeRepArgsArgument(dictEncodeJson));
     return {
       encodeJson: function(a2) {
         return genericEncodeJson4(encodeRepConstructor1(encodeRepArgsProduct2(encodeRepArgsArgument(encodeJsonArray(encodeJsonExpr(dictEncodeJson))))))(a2);
+      }
+    };
+  };
+  var encodeJsonTooth = function(dictEncodeJson) {
+    var genericEncodeJson52 = genericEncodeJson12(encodeRepConstructor22(encodeRepArgsProduct(encodeRepArgsArgument(dictEncodeJson))(encodeRepArgsArgument(encodeJsonPath(encodeJsonExpr(dictEncodeJson))))));
+    return {
+      encodeJson: function(a2) {
+        return genericEncodeJson52(a2);
+      }
+    };
+  };
+  var encodeJsonPath2 = function(dictEncodeJson) {
+    return encodeJsonList(encodeJsonTooth(dictEncodeJson));
+  };
+  var encodeJsonZipper = function(dictEncodeJson) {
+    var genericEncodeJson52 = genericEncodeJson3(encodeRepConstructor32(encodeRepArgsProduct(encodeRepArgsArgument(encodeJsonPath2(dictEncodeJson)))(encodeRepArgsArgument(encodeJsonExpr(dictEncodeJson)))));
+    return {
+      encodeJson: function(a2) {
+        return genericEncodeJson52(a2);
       }
     };
   };
@@ -15775,7 +15951,7 @@
   };
   var unTooth = function(v) {
     return function(g) {
-      return new Expr(v.value0, fromFoldable8(unpathAround(g)(v.value1)));
+      return new Expr(v.value0, fromFoldable7(unpathAround(g)(v.value1)));
     };
   };
   var zipUp2 = function(v) {
@@ -16401,7 +16577,7 @@
     var pretty23 = pretty(prettyExpr(dictIsExprLabel));
     return function(v) {
       return function(str) {
-        return prettyExprF1(new Tuple(v.value0, fromFoldable8(unpathAround(str)(map114(pretty23)(v.value1)))));
+        return prettyExprF1(new Tuple(v.value0, fromFoldable7(unpathAround(str)(map114(pretty23)(v.value1)))));
       };
     };
   };
@@ -17116,15 +17292,15 @@
                 var runQueue = unsafePerformEffect(function __do2() {
                   modify_(function(v1) {
                     return {
-                      evalQueue: [],
-                      stateDirty: false,
                       componentRef: v1.componentRef,
                       effectCells: v1.effectCells,
                       input: v1.input,
                       memoCells: v1.memoCells,
                       queryFn: v1.queryFn,
                       refCells: v1.refCells,
-                      stateCells: v1.stateCells
+                      stateCells: v1.stateCells,
+                      evalQueue: [],
+                      stateDirty: false
                     };
                   })(stateRef)();
                   return sequence_2(v.evalQueue);
@@ -17189,7 +17365,6 @@
                 var execute = unsafePerformEffect(function __do2() {
                   modify_(function(v3) {
                     return {
-                      input: v.value0,
                       componentRef: v3.componentRef,
                       effectCells: v3.effectCells,
                       evalQueue: v3.evalQueue,
@@ -17197,7 +17372,8 @@
                       queryFn: v3.queryFn,
                       refCells: v3.refCells,
                       stateCells: v3.stateCells,
-                      stateDirty: v3.stateDirty
+                      stateDirty: v3.stateDirty,
+                      input: v.value0
                     };
                   })(v1.stateRef)();
                   return executeHooksAndEffects(v1.stateRef)(Step3.value);
@@ -17250,18 +17426,18 @@
                 var runHooks$prime = unsafePerformEffect(function __do2() {
                   modify_(function(s) {
                     return {
-                      stateCells: {
-                        queue: newQueue(s.stateCells.queue),
-                        index: s.stateCells.index
-                      },
-                      stateDirty: true,
                       componentRef: s.componentRef,
                       effectCells: s.effectCells,
                       evalQueue: s.evalQueue,
                       input: s.input,
                       memoCells: s.memoCells,
                       queryFn: s.queryFn,
-                      refCells: s.refCells
+                      refCells: s.refCells,
+                      stateCells: {
+                        index: s.stateCells.index,
+                        queue: newQueue(s.stateCells.queue)
+                      },
+                      stateDirty: true
                     };
                   })(v3.stateRef)();
                   return v;
@@ -17330,10 +17506,6 @@
                 var identifier = unsafePerformEffect(function __do2() {
                   var v12 = modify(function(s) {
                     return {
-                      stateCells: {
-                        queue: snoc(s.stateCells.queue)(v.value0),
-                        index: s.stateCells.index
-                      },
                       componentRef: s.componentRef,
                       effectCells: s.effectCells,
                       evalQueue: s.evalQueue,
@@ -17341,7 +17513,11 @@
                       memoCells: s.memoCells,
                       queryFn: s.queryFn,
                       refCells: s.refCells,
-                      stateDirty: s.stateDirty
+                      stateDirty: s.stateDirty,
+                      stateCells: {
+                        index: s.stateCells.index,
+                        queue: snoc(s.stateCells.queue)(v.value0)
+                      }
                     };
                   })(stateRef)();
                   return new Tuple(v12.componentRef, length5(v12.stateCells.queue) - 1 | 0);
@@ -17353,10 +17529,6 @@
                 var v2 = read(stateRef)();
                 modify_(function(v3) {
                   return {
-                    stateCells: {
-                      index: stepIndex(v2.stateCells.index)(v2.stateCells.queue),
-                      queue: v3.stateCells.queue
-                    },
                     componentRef: v3.componentRef,
                     effectCells: v3.effectCells,
                     evalQueue: v3.evalQueue,
@@ -17364,7 +17536,11 @@
                     memoCells: v3.memoCells,
                     queryFn: v3.queryFn,
                     refCells: v3.refCells,
-                    stateDirty: v3.stateDirty
+                    stateDirty: v3.stateDirty,
+                    stateCells: {
+                      queue: v3.stateCells.queue,
+                      index: stepIndex(v2.stateCells.index)(v2.stateCells.queue)
+                    }
                   };
                 })(stateRef)();
                 return {
@@ -17382,7 +17558,6 @@
               return pure23(unsafePerformEffect(function __do2() {
                 modify_(function(v12) {
                   return {
-                    queryFn: new Just(toQueryFn(handler$prime)),
                     componentRef: v12.componentRef,
                     effectCells: v12.effectCells,
                     evalQueue: v12.evalQueue,
@@ -17390,7 +17565,8 @@
                     memoCells: v12.memoCells,
                     refCells: v12.refCells,
                     stateCells: v12.stateCells,
-                    stateDirty: v12.stateDirty
+                    stateDirty: v12.stateDirty,
+                    queryFn: new Just(toQueryFn(handler$prime))
                   };
                 })(stateRef)();
                 return v.value2;
@@ -17408,10 +17584,6 @@
                       };
                       return pure15(unsafePerformEffect(modify_(function(s) {
                         return {
-                          effectCells: {
-                            queue: updateQueue(s.effectCells.queue),
-                            index: s.effectCells.index
-                          },
                           componentRef: s.componentRef,
                           evalQueue: s.evalQueue,
                           input: s.input,
@@ -17419,7 +17591,11 @@
                           queryFn: s.queryFn,
                           refCells: s.refCells,
                           stateCells: s.stateCells,
-                          stateDirty: s.stateDirty
+                          stateDirty: s.stateDirty,
+                          effectCells: {
+                            index: s.effectCells.index,
+                            queue: updateQueue(s.effectCells.queue)
+                          }
                         };
                       })(stateRef)));
                     });
@@ -17429,15 +17605,15 @@
                       input: st.input,
                       componentRef: st.componentRef,
                       queryFn: st.queryFn,
-                      evalQueue: snoc(st.evalQueue)($$eval2(length5(st.effectCells.queue))),
                       stateCells: st.stateCells,
-                      effectCells: {
-                        queue: snoc(st.effectCells.queue)(new Tuple(v.value0, pure32(unit))),
-                        index: st.effectCells.index
-                      },
                       memoCells: st.memoCells,
                       refCells: st.refCells,
-                      stateDirty: st.stateDirty
+                      stateDirty: st.stateDirty,
+                      evalQueue: snoc(st.evalQueue)($$eval2(length5(st.effectCells.queue))),
+                      effectCells: {
+                        index: st.effectCells.index,
+                        queue: snoc(st.effectCells.queue)(new Tuple(v.value0, pure32(unit)))
+                      }
                     };
                   };
                   return function __do2() {
@@ -17470,10 +17646,6 @@
                         var newQueue = unsafeSetCell(v12.effectCells.index)(newValue)(v3.effectCells.queue);
                         return pure15(unsafePerformEffect(modify_(function(v4) {
                           return {
-                            effectCells: {
-                              queue: newQueue,
-                              index: v4.effectCells.index
-                            },
                             componentRef: v4.componentRef,
                             evalQueue: v4.evalQueue,
                             input: v4.input,
@@ -17481,24 +17653,28 @@
                             queryFn: v4.queryFn,
                             refCells: v4.refCells,
                             stateCells: v4.stateCells,
-                            stateDirty: v4.stateDirty
+                            stateDirty: v4.stateDirty,
+                            effectCells: {
+                              index: v4.effectCells.index,
+                              queue: newQueue
+                            }
                           };
                         })(stateRef)));
                       });
                       modify_(function(s) {
                         return {
-                          evalQueue: snoc(s.evalQueue)($$eval2),
-                          effectCells: {
-                            index: nextIndex,
-                            queue: s.effectCells.queue
-                          },
                           componentRef: s.componentRef,
                           input: s.input,
                           memoCells: s.memoCells,
                           queryFn: s.queryFn,
                           refCells: s.refCells,
                           stateCells: s.stateCells,
-                          stateDirty: s.stateDirty
+                          stateDirty: s.stateDirty,
+                          evalQueue: snoc(s.evalQueue)($$eval2),
+                          effectCells: {
+                            queue: s.effectCells.queue,
+                            index: nextIndex
+                          }
                         };
                       })(stateRef)();
                       return v.value2;
@@ -17506,10 +17682,6 @@
                     ;
                     modify_(function(v3) {
                       return {
-                        effectCells: {
-                          index: nextIndex,
-                          queue: v3.effectCells.queue
-                        },
                         componentRef: v3.componentRef,
                         evalQueue: v3.evalQueue,
                         input: v3.input,
@@ -17517,7 +17689,11 @@
                         queryFn: v3.queryFn,
                         refCells: v3.refCells,
                         stateCells: v3.stateCells,
-                        stateDirty: v3.stateDirty
+                        stateDirty: v3.stateDirty,
+                        effectCells: {
+                          queue: v3.effectCells.queue,
+                          index: nextIndex
+                        }
                       };
                     })(stateRef)();
                     return v.value2;
@@ -17525,10 +17701,6 @@
                   ;
                   modify_(function(v3) {
                     return {
-                      effectCells: {
-                        index: nextIndex,
-                        queue: v3.effectCells.queue
-                      },
                       componentRef: v3.componentRef,
                       evalQueue: v3.evalQueue,
                       input: v3.input,
@@ -17536,7 +17708,11 @@
                       queryFn: v3.queryFn,
                       refCells: v3.refCells,
                       stateCells: v3.stateCells,
-                      stateDirty: v3.stateDirty
+                      stateDirty: v3.stateDirty,
+                      effectCells: {
+                        queue: v3.effectCells.queue,
+                        index: nextIndex
+                      }
                     };
                   })(stateRef)();
                   return v.value2;
@@ -17550,18 +17726,18 @@
                   var finalizeHook = _evalHookM(_evalHook(Queued.value))(v2.value1);
                   modify_(function(s) {
                     return {
-                      evalQueue: snoc(s.evalQueue)(finalizeHook),
-                      effectCells: {
-                        index: stepIndex(v12.effectCells.index)(v12.effectCells.queue),
-                        queue: s.effectCells.queue
-                      },
                       componentRef: s.componentRef,
                       input: s.input,
                       memoCells: s.memoCells,
                       queryFn: s.queryFn,
                       refCells: s.refCells,
                       stateCells: s.stateCells,
-                      stateDirty: s.stateDirty
+                      stateDirty: s.stateDirty,
+                      evalQueue: snoc(s.evalQueue)(finalizeHook),
+                      effectCells: {
+                        queue: s.effectCells.queue,
+                        index: stepIndex(v12.effectCells.index)(v12.effectCells.queue)
+                      }
                     };
                   })(stateRef)();
                   return v.value2;
@@ -17578,10 +17754,6 @@
                   var newValue = v.value1(unit);
                   modify_(function(v2) {
                     return {
-                      memoCells: {
-                        queue: snoc(v12.memoCells.queue)(new Tuple(v.value0, newValue)),
-                        index: v2.memoCells.index
-                      },
                       componentRef: v2.componentRef,
                       effectCells: v2.effectCells,
                       evalQueue: v2.evalQueue,
@@ -17589,7 +17761,11 @@
                       queryFn: v2.queryFn,
                       refCells: v2.refCells,
                       stateCells: v2.stateCells,
-                      stateDirty: v2.stateDirty
+                      stateDirty: v2.stateDirty,
+                      memoCells: {
+                        index: v2.memoCells.index,
+                        queue: snoc(v12.memoCells.queue)(new Tuple(v.value0, newValue))
+                      }
                     };
                   })(stateRef)();
                   return v.value2(newValue);
@@ -17613,10 +17789,6 @@
                   var newQueue = unsafeSetCell(v12.memoCells.index)(new Tuple(v.value0, newValue))(v12.memoCells.queue);
                   modify_(function(v3) {
                     return {
-                      memoCells: {
-                        index: nextIndex,
-                        queue: newQueue
-                      },
                       componentRef: v3.componentRef,
                       effectCells: v3.effectCells,
                       evalQueue: v3.evalQueue,
@@ -17624,7 +17796,11 @@
                       queryFn: v3.queryFn,
                       refCells: v3.refCells,
                       stateCells: v3.stateCells,
-                      stateDirty: v3.stateDirty
+                      stateDirty: v3.stateDirty,
+                      memoCells: {
+                        index: nextIndex,
+                        queue: newQueue
+                      }
                     };
                   })(stateRef)();
                   return v.value2(newValue);
@@ -17632,10 +17808,6 @@
                 ;
                 modify_(function(v3) {
                   return {
-                    memoCells: {
-                      index: nextIndex,
-                      queue: v3.memoCells.queue
-                    },
                     componentRef: v3.componentRef,
                     effectCells: v3.effectCells,
                     evalQueue: v3.evalQueue,
@@ -17643,7 +17815,11 @@
                     queryFn: v3.queryFn,
                     refCells: v3.refCells,
                     stateCells: v3.stateCells,
-                    stateDirty: v3.stateDirty
+                    stateDirty: v3.stateDirty,
+                    memoCells: {
+                      queue: v3.memoCells.queue,
+                      index: nextIndex
+                    }
                   };
                 })(stateRef)();
                 return v.value2(m.value);
@@ -17657,10 +17833,6 @@
                   var ref3 = $$new(v.value0)();
                   modify_(function(v2) {
                     return {
-                      refCells: {
-                        queue: snoc(v12.refCells.queue)(ref3),
-                        index: v2.refCells.index
-                      },
                       componentRef: v2.componentRef,
                       effectCells: v2.effectCells,
                       evalQueue: v2.evalQueue,
@@ -17668,7 +17840,11 @@
                       memoCells: v2.memoCells,
                       queryFn: v2.queryFn,
                       stateCells: v2.stateCells,
-                      stateDirty: v2.stateDirty
+                      stateDirty: v2.stateDirty,
+                      refCells: {
+                        index: v2.refCells.index,
+                        queue: snoc(v12.refCells.queue)(ref3)
+                      }
                     };
                   })(stateRef)();
                   return v.value1(new Tuple(v.value0, ref3));
@@ -17681,10 +17857,6 @@
                 var value14 = read(ref3)();
                 modify_(function(v2) {
                   return {
-                    refCells: {
-                      index: stepIndex(v12.refCells.index)(v12.refCells.queue),
-                      queue: v2.refCells.queue
-                    },
                     componentRef: v2.componentRef,
                     effectCells: v2.effectCells,
                     evalQueue: v2.evalQueue,
@@ -17692,7 +17864,11 @@
                     memoCells: v2.memoCells,
                     queryFn: v2.queryFn,
                     stateCells: v2.stateCells,
-                    stateDirty: v2.stateDirty
+                    stateDirty: v2.stateDirty,
+                    refCells: {
+                      queue: v2.refCells.queue,
+                      index: stepIndex(v12.refCells.index)(v12.refCells.queue)
+                    }
                   };
                 })(stateRef)();
                 return v.value1(new Tuple(value14, ref3));
@@ -17759,8 +17935,8 @@
           return bind21(substFree($$eval2)(hookF))(function(a2) {
             return discard10(modify_4(over4(HookState)(function(v2) {
               return {
-                result: a2,
-                stateRef: v2.stateRef
+                stateRef: v2.stateRef,
+                result: a2
               };
             })))(function() {
               return pure16(a2);
@@ -17837,8 +18013,9 @@
   // output/Halogen.Utilities/foreign.js
   var fromInputEventToTargetValue = (event) => () => event.target.value;
   var get_url_search_param = (name15) => () => {
+    var _a;
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name15) ?? "";
+    return (_a = urlParams.get(name15)) != null ? _a : "";
   };
   var encode_uri_string = (str) => encodeURIComponent(str);
 
@@ -17986,12 +18163,12 @@
   var map311 = /* @__PURE__ */ map(functorArray);
   var sequence32 = /* @__PURE__ */ sequence(traversableList)(applicativeStateT2);
   var map44 = /* @__PURE__ */ map(functorList);
-  var toUnfoldable6 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
+  var toUnfoldable7 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
   var union$prime2 = /* @__PURE__ */ union$prime(ordMetaVar);
   var map53 = /* @__PURE__ */ map(functorMap);
   var bind23 = /* @__PURE__ */ bind(bindMaybe);
   var pure24 = /* @__PURE__ */ pure(applicativeMaybe);
-  var fromFoldable9 = /* @__PURE__ */ fromFoldable(foldableArray);
+  var fromFoldable8 = /* @__PURE__ */ fromFoldable(foldableArray);
   var fromFoldable12 = /* @__PURE__ */ fromFoldable3(foldableList);
   var occurs = function(dictIsExprLabel) {
     return function(x) {
@@ -18159,7 +18336,7 @@
     return function(original) {
       return bind111(sequence32(map44(function(v) {
         return flattenHelperInsertVar1(original)(v.value0);
-      })(toUnfoldable6(original))))(function() {
+      })(toUnfoldable7(original))))(function() {
         return pure18(unit);
       });
     };
@@ -18235,7 +18412,7 @@
         }
         ;
         if (v2.value0 instanceof MInj && (v2.value1 instanceof MInj && eq15(v2.value0.value0)(v2.value1.value0))) {
-          return bind23(unifyLists(dictIsExprLabel)(fromFoldable9(v.value1))(fromFoldable9(v1.value1)))(function(v3) {
+          return bind23(unifyLists(dictIsExprLabel)(fromFoldable8(v.value1))(fromFoldable8(v1.value1)))(function(v3) {
             return pure24(new Tuple(new Expr(new MInj(v2.value0.value0), fromFoldable12(v3.value0)), v3.value1));
           });
         }
@@ -18251,7 +18428,7 @@
   var map212 = /* @__PURE__ */ map(functorExpr);
   var findMap3 = /* @__PURE__ */ findMap(foldableArray);
   var bind24 = /* @__PURE__ */ bind(bindMaybe);
-  var fromFoldable10 = /* @__PURE__ */ fromFoldable(foldableArray);
+  var fromFoldable9 = /* @__PURE__ */ fromFoldable(foldableArray);
   var map312 = /* @__PURE__ */ map(functorMaybe);
   var sequence5 = /* @__PURE__ */ sequence(traversableArray)(applicativeMaybe);
   var map46 = /* @__PURE__ */ map(functorArray);
@@ -18311,8 +18488,8 @@
         return findMap3(function(v2) {
           return bind24(isPostfix(dictEq)(v2.value1.value0)(v1))(function(innerCh) {
             return new Just(new Expr(new Minus(new Tooth(v.value0, {
-              left: reverse3(fromFoldable10(v2.value0)),
-              right: fromFoldable10(v2.value1.value1)
+              left: reverse3(fromFoldable9(v2.value0)),
+              right: fromFoldable9(v2.value1.value1)
             })), [innerCh]));
           });
         })(splits);
@@ -18557,7 +18734,7 @@
           if (v.value0.value0 instanceof CInj && (v.value1.value0 instanceof Minus && v.value1.value1.length === 1)) {
             var $332 = eq15(v.value1.value0.value0.value0)(v.value0.value0.value0);
             if ($332) {
-              var $333 = fromJust$prime("compose")(zipAt(leftLength(v.value1.value0.value0.value1))(fromFoldable10(v.value0.value1)));
+              var $333 = fromJust$prime("compose")(zipAt(leftLength(v.value1.value0.value0.value1))(fromFoldable9(v.value0.value1)));
               var $334 = and2(zipWith(function(e) {
                 return function(c) {
                   return eq24(inject(e))(c);
@@ -18578,7 +18755,7 @@
         if (v.value0.value0 instanceof Plus && (v.value0.value1.length === 1 && v.value1.value0 instanceof CInj)) {
           var $349 = eq15(v.value0.value0.value0.value0)(v.value1.value0.value0);
           if ($349) {
-            var $350 = fromJust$prime("compose")(zipAt(leftLength(v.value0.value0.value0.value1))(fromFoldable10(v.value1.value1)));
+            var $350 = fromJust$prime("compose")(zipAt(leftLength(v.value0.value0.value0.value1))(fromFoldable9(v.value1.value1)));
             var $351 = and2(zipWith(function(e) {
               return function(c) {
                 return eq24(inject(e))(c);
@@ -18705,12 +18882,15 @@
   var intercalate9 = /* @__PURE__ */ intercalate(foldableList)(monoidString);
   var map48 = /* @__PURE__ */ map(functorList);
   var pretty3 = /* @__PURE__ */ pretty(prettyMetaVar);
-  var toUnfoldable7 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
+  var toUnfoldable8 = /* @__PURE__ */ toUnfoldable2(unfoldableList);
   var eqMap2 = /* @__PURE__ */ eqMap(eqMetaVar);
   var ordMap2 = /* @__PURE__ */ ordMap(ordMetaVar);
+  var encodeRepConstructor5 = /* @__PURE__ */ encodeRepConstructor(SInjIsSymbol);
+  var encodeRepConstructor12 = /* @__PURE__ */ encodeRepConstructor(DerivLabelIsSymbol);
+  var encodeMap3 = /* @__PURE__ */ encodeMap2(ordMetaVar)(encodeJsonMetaVar);
   var map55 = /* @__PURE__ */ map(functorMap);
   var mapFlipped5 = /* @__PURE__ */ mapFlipped(functorList);
-  var fromFoldable11 = /* @__PURE__ */ fromFoldable3(foldableList);
+  var fromFoldable10 = /* @__PURE__ */ fromFoldable3(foldableList);
   var encodeJson2 = /* @__PURE__ */ encodeJson(/* @__PURE__ */ encodeJsonArray(encodeJsonInt));
   var show12 = /* @__PURE__ */ show(/* @__PURE__ */ showArray(showString));
   var fromFoldable14 = /* @__PURE__ */ fromFoldable6(foldableArray)(ordMetaVar);
@@ -18723,7 +18903,7 @@
   var prettyTuple2 = /* @__PURE__ */ prettyTuple(prettyString);
   var empty10 = /* @__PURE__ */ empty(plusMaybe);
   var pure20 = /* @__PURE__ */ pure(applicativeMaybe);
-  var toUnfoldable12 = /* @__PURE__ */ toUnfoldable4(unfoldableArray);
+  var toUnfoldable13 = /* @__PURE__ */ toUnfoldable4(unfoldableArray);
   var map63 = /* @__PURE__ */ map31(/* @__PURE__ */ ordTuple3(ordMetaVar));
   var lookup$prime2 = /* @__PURE__ */ lookup$prime(ordMetaVar);
   var union6 = /* @__PURE__ */ union(ordMetaVar);
@@ -18905,6 +19085,7 @@
     }
   };
   var genericShow5 = /* @__PURE__ */ genericShow(genericSortType_)(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor2(SortStringIsSymbol))(/* @__PURE__ */ genericShowConstructor2(SortIntIsSymbol)));
+  var genericEncodeJson5 = /* @__PURE__ */ genericEncodeJson(genericSortType_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(SortStringIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(SortIntIsSymbol)(encodeRepArgsNoArguments)));
   var showSortType = {
     show: function(x) {
       return genericShow5(x);
@@ -18968,6 +19149,7 @@
     }
   };
   var genericShow12 = /* @__PURE__ */ genericShow(genericSortLabel_);
+  var genericEncodeJson13 = /* @__PURE__ */ genericEncodeJson(genericSortLabel_);
   var genericSortData_ = {
     to: function(x) {
       if (x instanceof Inl) {
@@ -18993,7 +19175,7 @@
     }
   };
   var genericShow22 = /* @__PURE__ */ genericShow(genericSortData_)(/* @__PURE__ */ genericShowSum(/* @__PURE__ */ genericShowConstructor(/* @__PURE__ */ genericShowArgsArgument(showString))(DataStringIsSymbol))(/* @__PURE__ */ genericShowConstructor(/* @__PURE__ */ genericShowArgsArgument(showInt))(DataIntIsSymbol)));
-  var genericEncodeJson2 = /* @__PURE__ */ genericEncodeJson(genericSortData_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(DataStringIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonJString)))(/* @__PURE__ */ encodeRepConstructor(DataIntIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonInt))));
+  var genericEncodeJson23 = /* @__PURE__ */ genericEncodeJson(genericSortData_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(DataStringIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonJString)))(/* @__PURE__ */ encodeRepConstructor(DataIntIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonInt))));
   var genericDecodeJson2 = /* @__PURE__ */ genericDecodeJson(genericSortData_)(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorArg(DataStringIsSymbol)(decodeJsonString))(/* @__PURE__ */ decodeRepConstructorArg(DataIntIsSymbol)(decodeJsonInt)));
   var showSortData = {
     show: function(x) {
@@ -19036,6 +19218,7 @@
     }
   };
   var genericShow32 = /* @__PURE__ */ genericShow(genericDerivLabel_);
+  var genericEncodeJson33 = /* @__PURE__ */ genericEncodeJson(genericDerivLabel_);
   var showDerivLabel = function(dictShow) {
     var genericShowArgsArgument2 = genericShowArgsArgument(showMap2(showExpr(showMeta(showSortLabel(dictShow)))));
     return function(dictShow1) {
@@ -19265,7 +19448,7 @@
           if (v instanceof DerivLabel) {
             return pretty23(v.value0) + ("(" + (intercalate9(", ")(map48(function(v1) {
               return pretty3(v1.value0) + (" : " + pretty13(v1.value1));
-            })(toUnfoldable7(v.value1))) + ")"));
+            })(toUnfoldable8(v.value1))) + ")"));
           }
           ;
           if (v instanceof DerivLiteral && v.value0 instanceof DataString) {
@@ -19348,10 +19531,37 @@
   var eqAsExprLabel = function(dictEq) {
     return dictEq;
   };
+  var encodeJsonSortType = {
+    encodeJson: function(a2) {
+      return genericEncodeJson5(a2);
+    }
+  };
   var encodeJsonSortData = {
     encodeJson: function(a2) {
-      return genericEncodeJson2(a2);
+      return genericEncodeJson23(a2);
     }
+  };
+  var encodeRepArgsArgument2 = /* @__PURE__ */ encodeRepArgsArgument(encodeJsonSortData);
+  var encodeRepSum3 = /* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TypeOfLabelIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonSortType)))(/* @__PURE__ */ encodeRepConstructor(DataLabelIsSymbol)(encodeRepArgsArgument2));
+  var encodeRepConstructor23 = /* @__PURE__ */ encodeRepConstructor(DerivLiteralIsSymbol)(encodeRepArgsArgument2);
+  var encodeJsonSortLabel = function(dictEncodeJson) {
+    var genericEncodeJson43 = genericEncodeJson13(encodeRepSum(encodeRepConstructor5(encodeRepArgsArgument(dictEncodeJson)))(encodeRepSum3));
+    return {
+      encodeJson: function(a2) {
+        return genericEncodeJson43(a2);
+      }
+    };
+  };
+  var encodeJsonDerivLabel = function(dictEncodeJson) {
+    var encodeRepArgsArgument1 = encodeRepArgsArgument(encodeMap3(encodeJsonExpr(encodeJsonMeta(encodeJsonSortLabel(dictEncodeJson)))));
+    return function(dictEncodeJson1) {
+      var genericEncodeJson43 = genericEncodeJson33(encodeRepSum(encodeRepConstructor12(encodeRepArgsProduct(encodeRepArgsArgument(dictEncodeJson1))(encodeRepArgsArgument1)))(encodeRepConstructor23));
+      return {
+        encodeJson: function(a2) {
+          return genericEncodeJson43(a2);
+        }
+      };
+    };
   };
   var decodeJsonSortData = {
     decodeJson: function(a2) {
@@ -19389,7 +19599,7 @@
       var nums = mapFlipped5(v)(function(v1) {
         return leftLength(v1.value1);
       });
-      var numsGoingDown = reverse2(fromFoldable11(nums));
+      var numsGoingDown = reverse2(fromFoldable10(nums));
       return stringify(encodeJson2(numsGoingDown));
     };
   };
@@ -19583,7 +19793,7 @@
     };
   };
   var freshenRuleMetaVars = function(mvars) {
-    return fromFoldable42(flip(map47)(toUnfoldable12(mvars))(function(v) {
+    return fromFoldable42(flip(map47)(toUnfoldable13(mvars))(function(v) {
       if (v instanceof RuleMetaVar) {
         return new Tuple(new RuleMetaVar(v.value0), fromMetaVar(freshMetaVar(v.value0)));
       }
@@ -19746,25 +19956,6 @@
       }
     };
   };
-  var printSerializedDerivZipper2 = function(dictIsRuleLabel) {
-    var unzipper2 = unzipper(isExprLabelDerivLabel(dictIsRuleLabel));
-    var encodeJson1 = encodeJson(encodeJsonExpr(encodeJsonEither(dictIsRuleLabel.EncodeJson7())(encodeJsonSortData)));
-    return function(dzipper) {
-      var simplifyDerivLabel = function(v) {
-        if (v instanceof DerivLabel) {
-          return new Left(v.value0);
-        }
-        ;
-        if (v instanceof DerivLiteral) {
-          return new Right(v.value0);
-        }
-        ;
-        throw new Error("Failed pattern match at Language.Pantograph.Generic.Grammar (line 683, column 31 - line 685, column 40): " + [v.constructor.name]);
-      };
-      var justLabels = map116(simplifyDerivLabel)(unzipper2(dzipper));
-      return stringify(encodeJson1(justLabels));
-    };
-  };
   var derivZipperLabel = function(v) {
     return v.value1.value0;
   };
@@ -19915,7 +20106,7 @@
                   return function(kidTop) {
                     return unifyFImpl2(parentBottom)(kidTop);
                   };
-                })(parentBottomSorts)(fromFoldable11(kidTopSorts))))(function() {
+                })(parentBottomSorts)(fromFoldable10(kidTopSorts))))(function() {
                   return bind25(inferPathFImpl(dictIsExprLabel)(dictIsRuleLabel)(derivLabelSort1(v1.value0.value0))(v1.value1))(function() {
                     return pure110(unit);
                   });
@@ -20266,7 +20457,7 @@
 
   // output/Language.Pantograph.Generic.Edit/index.js
   var map49 = /* @__PURE__ */ map(functorArray);
-  var fromFoldable15 = /* @__PURE__ */ fromFoldable(foldableArray);
+  var fromFoldable11 = /* @__PURE__ */ fromFoldable(foldableArray);
   var sequence7 = /* @__PURE__ */ sequence(traversablePath)(applicativeMaybe);
   var map118 = /* @__PURE__ */ map(functorPath);
   var FillAction = /* @__PURE__ */ function() {
@@ -20312,7 +20503,7 @@
         var v = lookup20(r)(language4);
         var sigma = freshenRuleMetaVars(v.value0);
         var hyps = map49(subMetaExprPartially3(sigma))(v.value1);
-        var v1 = assertI(just("newPathFromRule.hpySortPath")(zipAt(kidIx)(fromFoldable15(hyps))));
+        var v1 = assertI(just("newPathFromRule.hpySortPath")(zipAt(kidIx)(fromFoldable11(hyps))));
         var defaultHypDerivPath = assertI(just("newPathFromRule.defaultHypDerivPath")(sequence7(map118(defaultDerivTerm3)(v1.value0))));
         var tooth = new Tooth(new DerivLabel(r, sigma), defaultHypDerivPath);
         var path1 = singleton3(tooth);
@@ -36394,11 +36585,11 @@
   var map56 = /* @__PURE__ */ map(functorList);
   var max7 = /* @__PURE__ */ max(ordInt);
   var identity20 = /* @__PURE__ */ identity(categoryFn);
-  var fromFoldable16 = /* @__PURE__ */ fromFoldable(foldableArray);
+  var fromFoldable15 = /* @__PURE__ */ fromFoldable(foldableArray);
   var map64 = /* @__PURE__ */ map(functorMap);
   var union7 = /* @__PURE__ */ union(ordMetaVar);
   var append16 = /* @__PURE__ */ append(semigroupArray);
-  var fromFoldable17 = /* @__PURE__ */ fromFoldable3(foldableList);
+  var fromFoldable16 = /* @__PURE__ */ fromFoldable3(foldableList);
   var prettyMap2 = /* @__PURE__ */ prettyMap(prettyMetaVar);
   var append25 = /* @__PURE__ */ append(semigroupList);
   var apply5 = /* @__PURE__ */ apply(applyMaybe);
@@ -37025,7 +37216,7 @@
                 ;
                 return Nothing.value;
               };
-              return bind26(getFirst(fromFoldable16(zip(v2.value1)(v3.value1)))(findUpBoundary))(function(v4) {
+              return bind26(getFirst(fromFoldable15(zip(v2.value1)(v3.value1)))(findUpBoundary))(function(v4) {
                 return bind26(doOperation2(v4.value1.value0.value0)(v4.value1.value0.value1.value1))(function(v5) {
                   var subFull = map64(map50(CInj.create))(v2.value0.value0.value1);
                   var sub$prime = union7(v5.value0)(subFull);
@@ -37039,7 +37230,7 @@
                   };
                   return pure21(parentBoundary(new Expr(new SSInj(new DerivLabel(v2.value0.value0.value0, map64(function($854) {
                     return snd(endpoints3($854));
-                  })(sub$prime))), append16(fromFoldable17(leftKids))(append16([wrapBoundary1(Down.value)(v5.value1)(v4.value1.value0.value1.value0)])(fromFoldable17(rightKids))))));
+                  })(sub$prime))), append16(fromFoldable16(leftKids))(append16([wrapBoundary1(Down.value)(v5.value1)(v4.value1.value0.value1.value0)])(fromFoldable16(rightKids))))));
                 });
               });
             }
@@ -37113,7 +37304,7 @@
         return function(rightKids) {
           return new Expr(new Plus(new Tooth(new InjectMatchLabel(new MInj(new SInj(l))), {
             left: reverseArray(leftKids),
-            right: fromFoldable16(rightKids)
+            right: fromFoldable15(rightKids)
           })), [inside]);
         };
       };
@@ -37125,7 +37316,7 @@
         return function(rightKids) {
           return new Expr(new Minus(new Tooth(new InjectMatchLabel(new MInj(new SInj(l))), {
             left: reverseArray(leftKids),
-            right: fromFoldable16(rightKids)
+            right: fromFoldable15(rightKids)
           })), [inside]);
         };
       };
@@ -37267,8 +37458,8 @@
             return rule205(parentTooth);
           })(fullRules));
           if (v1 instanceof Nothing) {
-            return bind26(stepSomebody(dictIsRuleLabel)(fromFoldable16(kidsWithTeeth))(rules))(function(kids$prime) {
-              return pure21(new Expr(v.value0, fromFoldable17(kids$prime)));
+            return bind26(stepSomebody(dictIsRuleLabel)(fromFoldable15(kidsWithTeeth))(rules))(function(kids$prime) {
+              return pure21(new Expr(v.value0, fromFoldable16(kids$prime)));
             });
           }
           ;
@@ -37366,10 +37557,10 @@
     var pretty13 = pretty(prettyExpr(isExprLabelStepExprLabel(dictIsRuleLabel)));
     return function(v) {
       if (v.value0 instanceof SSInj) {
-        var kids$prime = fromFoldable16(map213(unwrapSSTerm$prime(dictIsRuleLabel))(v.value1));
+        var kids$prime = fromFoldable15(map213(unwrapSSTerm$prime(dictIsRuleLabel))(v.value1));
         var v1 = oneOrNone(kids$prime)(identity20);
         if (v1 instanceof Left) {
-          return new Right(new Expr(v.value0.value0, fromFoldable17(v1.value0)));
+          return new Right(new Expr(v.value0.value0, fromFoldable16(v1.value0)));
         }
         ;
         if (v1 instanceof Right) {
@@ -37472,7 +37663,7 @@
   };
   var addToothToTerm = function(v) {
     return function(t) {
-      return new Expr(new SSInj(v.value0), append16(fromFoldable17(map56(map50(SSInj.create))(unreverse(v.value1.left))))(append16([t])(fromFoldable17(map56(map50(SSInj.create))(v.value1.right)))));
+      return new Expr(new SSInj(v.value0), append16(fromFoldable16(map56(map50(SSInj.create))(unreverse(v.value1.left))))(append16([t])(fromFoldable16(map56(map50(SSInj.create))(v.value1.right)))));
     };
   };
   var wrapPath = function($copy_v) {
@@ -38064,13 +38255,13 @@
   };
   var incremementIndentationLevel = function(ctx) {
     return {
-      indentationLevel: ctx.indentationLevel + 1 | 0,
       isCursor: ctx.isCursor,
       isInteractive: ctx.isInteractive,
       isInlined: ctx.isInlined,
       metavarNumbers: ctx.metavarNumbers,
       cssClasses: ctx.cssClasses,
-      pathIdPrefix: ctx.pathIdPrefix
+      pathIdPrefix: ctx.pathIdPrefix,
+      indentationLevel: ctx.indentationLevel + 1 | 0
     };
   };
   var highlightClassName = "highlight";
@@ -38213,7 +38404,7 @@
   var bufferSlot = /* @__PURE__ */ function() {
     return $$Proxy.value;
   }();
-  var additionalQueryKeys = /* @__PURE__ */ mapFlipped(functorArray)(["+", "-", ">", "<", "=", "*", "/", "^", "%", "(", ")"])(function(s) {
+  var additionalQueryKeys = /* @__PURE__ */ mapFlipped(functorArray)(["+", "-", ">", "<", "=", "*", "/", "^", "%", "(", ")", "&", "|"])(function(s) {
     return fromJust6(index3(toCodePointArray(s))(0));
   });
   var isQueryKey = function(s) {
@@ -39112,8 +39303,8 @@
                 if (v2.value1.value0.edit.action instanceof Right) {
                   return discard11($$void13(modify7(function(v3) {
                     return {
-                      isEnabled: false,
                       bufferString: v3.bufferString,
+                      isEnabled: false,
                       bufferFocus: 0
                     };
                   })))(function() {
@@ -39152,9 +39343,9 @@
             if (v1 instanceof SetBufferEnabledQuery) {
               return discard11($$void13(modify7(function(v2) {
                 return {
-                  isEnabled: v1.value0,
                   bufferString: v2.bufferString,
-                  bufferFocus: v2.bufferFocus
+                  bufferFocus: v2.bufferFocus,
+                  isEnabled: v1.value0
                 };
               })))(function() {
                 return discard11(function() {
@@ -39385,11 +39576,11 @@
   });
 
   // output/Language.Pantograph.Generic.Rendering.Rendering/index.js
-  var fromFoldable18 = /* @__PURE__ */ fromFoldable3(foldableSet);
+  var fromFoldable17 = /* @__PURE__ */ fromFoldable3(foldableSet);
   var insert14 = /* @__PURE__ */ insert7(ordString);
   var zipDowns4 = /* @__PURE__ */ zipDowns(zippableZipper);
   var mapFlipped7 = /* @__PURE__ */ mapFlipped(functorArray);
-  var fromFoldable19 = /* @__PURE__ */ fromFoldable3(foldableList);
+  var fromFoldable18 = /* @__PURE__ */ fromFoldable3(foldableList);
   var append20 = /* @__PURE__ */ append(semigroupArray);
   var slot3 = /* @__PURE__ */ slot()({
     reflectSymbol: function() {
@@ -39420,7 +39611,7 @@
         return html2;
       }
       ;
-      return div2([classNames(fromFoldable18(insert14("node")(classes2)))])([html2]);
+      return div2([classNames(fromFoldable17(insert14("node")(classes2)))])([html2]);
     };
   };
   var renderPreviewDerivTooth = function(dictIsRuleLabel) {
@@ -39461,7 +39652,7 @@
               ;
               throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Rendering (line 255, column 23 - line 259, column 29): " + [v2.constructor.name]);
             };
-            var kids = fromFoldable19(unpathAround(dterm)(v.value1));
+            var kids = fromFoldable18(unpathAround(dterm)(v.value1));
             var sort2 = getSortFromSub2(v1.value0)(v1.value1);
             var subCtxSymElems = assert(wellformedExprF2("renderPreviewDerivTooth")(pretty7)(new Tuple(new DerivLabel(v1.value0, v1.value1), kids)))(function() {
               return function(v2) {
@@ -39774,7 +39965,7 @@
                 ;
                 var elemId = fromPathToElementId2(renCtx.pathIdPrefix)(zipperPath(v.value0.value1));
                 return [id2(elemId), onMouseDown(locs.onMouseDown(injectHoleyDerivZipper(v.value0.value1))), onMouseOver(locs.onMouseOver(injectHoleyDerivZipper(v.value0.value1)))];
-              }()]))(arrangeNodeSubs1(locs)(false)(injectHoleyDerivZipper(v.value0.value1))(arrangeDerivTermSubs1(locs)(false)(v.value0.value1)(fromFoldable19(unpathAround(interior)(function() {
+              }()]))(arrangeNodeSubs1(locs)(false)(injectHoleyDerivZipper(v.value0.value1))(arrangeDerivTermSubs1(locs)(false)(v.value0.value1)(fromFoldable18(unpathAround(interior)(function() {
                 var kidZippers = zipDownsTooth2(v.value0.value1)(v.value0.value0);
                 return mapFlipped12(kidZippers)(renderDerivTerm1(locs)(false)(false));
               }())))(renCtx)));
@@ -39982,6 +40173,9 @@
     };
   };
 
+  // output/Language.Pantograph.UserStudy.Programs/index.js
+  var program_strings = ['{ "values": [ { "values": [ { "values": [], "tag": "TermHole" }, [ [ { "values": [ "gamma" ], "tag": "RuleMetaVar" }, { "values": [ { "values": [ { "values": [ { "values": [], "tag": "CtxNilSort" } ], "tag": "SInj" } ], "tag": "MInj" }, [] ], "tag": "Expr" } ], [ { "values": [ "type" ], "tag": "RuleMetaVar" }, { "values": [ { "values": [ { "values": [ "type", 913 ], "tag": "MetaVar" } ], "tag": "MV" }, [] ], "tag": "Expr" } ] ] ], "tag": "DerivLabel" }, [ { "values": [ { "values": [ { "values": [], "tag": "TypeHole" }, [ [ { "values": [ "type" ], "tag": "RuleMetaVar" }, { "values": [ { "values": [ { "values": [ "type", 913 ], "tag": "MetaVar" } ], "tag": "MV" }, [] ], "tag": "Expr" } ] ] ], "tag": "DerivLabel" }, [] ], "tag": "Expr" } ] ], "tag": "Expr" }', '{ "values": [ { "values": [ { "values": [], "tag": "TermHole" }, [ [ { "values": [ "gamma" ], "tag": "RuleMetaVar" }, { "values": [ { "values": [ { "values": [ { "values": [], "tag": "CtxNilSort" } ], "tag": "SInj" } ], "tag": "MInj" }, [] ], "tag": "Expr" } ], [ { "values": [ "type" ], "tag": "RuleMetaVar" }, { "values": [ { "values": [ { "values": [ "type", 913 ], "tag": "MetaVar" } ], "tag": "MV" }, [] ], "tag": "Expr" } ] ] ], "tag": "DerivLabel" }, [ { "values": [ { "values": [ { "values": [], "tag": "TypeHole" }, [ [ { "values": [ "type" ], "tag": "RuleMetaVar" }, { "values": [ { "values": [ { "values": [ "type", 913 ], "tag": "MetaVar" } ], "tag": "MV" }, [] ], "tag": "Expr" } ] ] ], "tag": "DerivLabel" }, [] ], "tag": "Expr" } ] ], "tag": "Expr" }', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["deMorgansLaw"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["p"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["q"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"EqualsRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpOr"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstTrue"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstTrue"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstTrue"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstFalse"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstFalse"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstTrue"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstFalse"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstFalse"}],"tag":"ConstantRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["isPrime"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["helper"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["x"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"If"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"EqualsRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstFalse"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"If"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"EqualsRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMod"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TermHole"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[0],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstTrue"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMinus"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["n"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMinus"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[3],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[4],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[5],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[6],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[7],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[8],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["isPrime"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["helper"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["x"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"If"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"EqualsRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstFalse"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"If"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"EqualsRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMod"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TermHole"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TermHole"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstTrue"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMinus"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["n"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMinus"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[3],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[4],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[5],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[6],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpAnd"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[7],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"ConstNot"}],"tag":"ConstantRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[8],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["reverse"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TermHole"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[3],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[4],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"NilRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["filter"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TermHole"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Bool"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["x"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"EqualsRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpMod"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[0],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[3],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[4],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"NilRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["fold"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["f"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["n"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["ls"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"TypeHole"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListMatchRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Right","value":{"values":["h"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Right","value":{"values":["t"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["sum"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"TermHole"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[0],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[3],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[4],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"NilRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}', '{"values":[{"tag":"Left","value":{"values":[],"tag":"Let"}},[{"values":[{"tag":"Right","value":{"values":["sum"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ArrowRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Newline"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Lam"}},[{"values":[{"tag":"Right","value":{"values":["l"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListRule"}},[{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"Int"}],"tag":"DataTypeRule"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"ListMatchRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[0],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Right","value":{"values":["h"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Right","value":{"values":["t"],"tag":"DataString"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[{"values":[],"tag":"OpPlus"}],"tag":"InfixRule"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Suc"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Var"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"Zero"}},[]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[1],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[2],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[3],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"App"}},[{"values":[{"tag":"Left","value":{"values":[],"tag":"ConsRule"}},[]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"IntegerLiteral"}},[{"values":[{"tag":"Right","value":{"values":[4],"tag":"DataInt"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"},{"values":[{"tag":"Left","value":{"values":[],"tag":"NilRule"}},[]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}]],"tag":"Expr"}'];
+
   // output/Log/foreign.js
   var _log = (tag) => (x) => (k) => {
     console.log(`--[ ${tag} ]---------------------------------------------------`);
@@ -40007,20 +40201,20 @@
   }();
   var logM = function(dictMonad) {
     var discard19 = discard14(dictMonad.Bind1());
-    var pure37 = pure(dictMonad.Applicative0());
+    var pure38 = pure(dictMonad.Applicative0());
     if (_logging) {
       return function(tag) {
         return function(x) {
-          return discard19(pure37(unit))(function() {
+          return discard19(pure38(unit))(function() {
             return log4(tag)(x)(function(v) {
-              return pure37(unit);
+              return pure38(unit);
             });
           });
         };
       };
     }
     ;
-    return $$const($$const(pure37(unit)));
+    return $$const($$const(pure38(unit)));
   };
 
   // output/Web.UIEvent.KeyboardEvent/foreign.js
@@ -40057,8 +40251,9 @@
     };
   };
   var show10 = /* @__PURE__ */ show(showInt);
-  var bind29 = /* @__PURE__ */ bind(bindEffect);
+  var pure31 = /* @__PURE__ */ pure(applicativeEffect);
   var mempty4 = /* @__PURE__ */ mempty(monoidPath);
+  var bind29 = /* @__PURE__ */ bind(bindEffect);
   var pure113 = /* @__PURE__ */ pure(applicativeList);
   var monadEffectHookM2 = /* @__PURE__ */ monadEffectHookM(monadEffectAff);
   var liftEffect8 = /* @__PURE__ */ liftEffect(monadEffectHookM2);
@@ -40231,7 +40426,7 @@
     var pretty52 = pretty(prettyExpr(isExprLabelMeta3));
     var pretty62 = pretty(prettyDerivLabel(IsExprLabel0)(dictIsRuleLabel.Pretty5()));
     var serializePath2 = serializePath(dictIsRuleLabel);
-    var printSerializedDerivZipper22 = printSerializedDerivZipper2(dictIsRuleLabel);
+    var encodeJson3 = encodeJson(encodeJsonZipper(encodeJsonDerivLabel(dictIsRuleLabel.EncodeJson6())(dictIsRuleLabel.EncodeJson7())));
     var unzipper2 = unzipper(isExprLabelDerivLabel2);
     var step5 = step4(dictIsRuleLabel);
     var stateToDerivTerm2 = stateToDerivTerm(dictIsRuleLabel);
@@ -40244,16 +40439,37 @@
       var pathIdPrefix = "Editor" + (show10(editorIdPrefixNum) + "-");
       return component(function(tokens) {
         return function(spec) {
-          var initState = unsafePerformEffect(function __do2() {
-            var program_string = get_url_search_param("program")();
-            var $254 = $$null2(program_string);
-            if ($254) {
-              return new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(new Zipper(mempty4, spec.dterm))));
-            }
-            ;
-            var dterm = decodeSerializedZipper22(spec.clipboardSort)(program_string);
-            return new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(new Zipper(mempty4, dterm))));
-          });
+          var initState = unsafePerformEffect(function() {
+            var $$default2 = pure31(new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(new Zipper(mempty4, spec.dterm)))));
+            return function __do2() {
+              var param2 = get_url_search_param("UserStudyProgramIndex")();
+              var $261 = $$null2(param2);
+              if ($261) {
+                return $$default2();
+              }
+              ;
+              var v1 = fromString(param2);
+              if (v1 instanceof Nothing) {
+                return $$default2();
+              }
+              ;
+              if (v1 instanceof Just) {
+                var v2 = index3(program_strings)(v1.value0);
+                if (v2 instanceof Nothing) {
+                  return $$default2();
+                }
+                ;
+                if (v2 instanceof Just) {
+                  var dterm = decodeSerializedZipper22(spec.clipboardSort)(v2.value0);
+                  return new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(new Zipper(mempty4, dterm))));
+                }
+                ;
+                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 110, column 13 - line 114, column 116): " + [v2.constructor.name]);
+              }
+              ;
+              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 107, column 9 - line 114, column 116): " + [v1.constructor.name]);
+            };
+          }());
           return bind19(useState(initState))(function(v1) {
             return bind19(useRef(false))(function(v2) {
               return bind19(useRef(pure113(initState)))(function(v3) {
@@ -40281,17 +40497,17 @@
                               }
                               ;
                               if (history2.value0 instanceof CursorState && (history2.value0.value0.mode instanceof BufferCursorMode && true)) {
-                                return $lazy_popHistory(507);
+                                return $lazy_popHistory(526);
                               }
                               ;
                               return pure210(new Just(history2.value0));
                             });
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 493, column 7 - line 508, column 32): " + [history2.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 512, column 7 - line 527, column 32): " + [history2.constructor.name]);
                         });
                       });
-                      var popHistory = $lazy_popHistory(490);
+                      var popHistory = $lazy_popHistory(509);
                       var normalizeZipperpToState = function(zipperp) {
                         if (zipperp instanceof Left) {
                           return new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(zipperp.value0)));
@@ -40303,14 +40519,14 @@
                           });
                         }
                         ;
-                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 391, column 39 - line 393, column 53): " + [zipperp.constructor.name]);
+                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 410, column 39 - line 412, column 53): " + [zipperp.constructor.name]);
                       };
                       var getState = get3(v1.value1);
                       var getFacade = liftEffect8(read(v4.value1));
                       var getElementIdByHoleyDerivPath = function() {
-                        var $520 = fromHoleyDerivPathToElementId2(pathIdPrefix);
-                        return function($521) {
-                          return pure210($520($521));
+                        var $531 = fromHoleyDerivPathToElementId2(pathIdPrefix);
+                        return function($532) {
+                          return pure210($531($532));
                         };
                       }();
                       var getElementByHoleyDerivPath = function(hdzipper) {
@@ -40327,7 +40543,7 @@
                                 return pure210(v7.value0);
                               }
                               ;
-                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 128, column 109 - line 132, column 31): " + [v7.constructor.name]);
+                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 147, column 109 - line 151, column 31): " + [v7.constructor.name]);
                             });
                           });
                         });
@@ -40346,15 +40562,15 @@
                                 });
                               }
                               ;
-                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 153, column 9 - line 157, column 58): " + [mb_hdpath_new.constructor.name]);
+                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 172, column 9 - line 176, column 58): " + [mb_hdpath_new.constructor.name]);
                             }();
                             if (mb_hdpath_old instanceof Nothing) {
                               return update2;
                             }
                             ;
                             if (mb_hdpath_old instanceof Just) {
-                              var $277 = eq24(new Just(mb_hdpath_old.value0))(mb_hdpath_new);
-                              if ($277) {
+                              var $288 = eq24(new Just(mb_hdpath_old.value0))(mb_hdpath_new);
+                              if ($288) {
                                 return pure210(unit);
                               }
                               ;
@@ -40365,7 +40581,7 @@
                               });
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 137, column 7 - line 150, column 19): " + [mb_hdpath_old.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 156, column 7 - line 169, column 19): " + [mb_hdpath_old.constructor.name]);
                           };
                         };
                       };
@@ -40399,7 +40615,7 @@
                             return pure210(unit);
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 215, column 7 - line 224, column 20): " + [st.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 234, column 7 - line 243, column 20): " + [st.constructor.name]);
                         }())(function() {
                           return discard15(liftEffect8(write(st)(v4.value1)))(function() {
                             return liftEffect8(write(true)(v2.value1));
@@ -40429,7 +40645,7 @@
                           return setHighlightElement(Nothing.value);
                         }
                         ;
-                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 182, column 7 - line 193, column 38): " + [currentFacade.constructor.name]);
+                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 201, column 7 - line 212, column 38): " + [currentFacade.constructor.name]);
                       });
                       var setFacade = function(st) {
                         return discard15(function() {
@@ -40453,8 +40669,8 @@
                       var goToInnerHoleIfPossible = bind113(getFacade)(function(st) {
                         if (st instanceof CursorState) {
                           return setFacade(new CursorState({
-                            hdzipper: hdzEnterInnerHoleIfPossible2(st.value0.hdzipper),
-                            mode: st.value0.mode
+                            mode: st.value0.mode,
+                            hdzipper: hdzEnterInnerHoleIfPossible2(st.value0.hdzipper)
                           }));
                         }
                         ;
@@ -40485,7 +40701,7 @@
                               }));
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 400, column 9 - line 405, column 88): " + [v8.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 419, column 9 - line 424, column 88): " + [v8.constructor.name]);
                           }
                           ;
                           if (v7 instanceof SelectState) {
@@ -40504,7 +40720,7 @@
                               }));
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 407, column 9 - line 411, column 88): " + [v8.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 426, column 9 - line 430, column 88): " + [v8.constructor.name]);
                           }
                           ;
                           if (v7 instanceof TopState) {
@@ -40537,17 +40753,17 @@
                                 }));
                               }
                               ;
-                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 418, column 26 - line 421, column 90): " + [v8.constructor.name]);
+                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 437, column 26 - line 440, column 90): " + [v8.constructor.name]);
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 416, column 9 - line 421, column 90): " + [mb_select.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 435, column 9 - line 440, column 90): " + [mb_select.constructor.name]);
                           }
                           ;
                           if (v7 instanceof SmallStepState) {
                             return pure210(unit);
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 395, column 36 - line 422, column 36): " + [v7.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 414, column 36 - line 441, column 36): " + [v7.constructor.name]);
                         });
                       };
                       var moveToNextHole = bind113(getFacade)(function(v7) {
@@ -40567,7 +40783,7 @@
                             return setFacade(new CursorState(cursorFromHoleyDerivZipper(v8.value0)));
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 315, column 11 - line 317, column 93): " + [v8.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 334, column 11 - line 336, column 93): " + [v8.constructor.name]);
                         }
                         ;
                         return pure210(unit);
@@ -40589,15 +40805,15 @@
                             return setFacade(new CursorState(cursorFromHoleyDerivZipper(v8.value0)));
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 323, column 11 - line 325, column 93): " + [v8.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 342, column 11 - line 344, column 93): " + [v8.constructor.name]);
                         }
                         ;
                         return pure210(unit);
                       });
                       var onMouseDown2 = function(hdzipper) {
                         return function(event) {
-                          var $330 = isValidCursor2(spec.isValidCursorSort)(hdzipper);
-                          if ($330) {
+                          var $341 = isValidCursor2(spec.isValidCursorSort)(hdzipper);
+                          if ($341) {
                             return discard15(liftEffect8(stopPropagation(toEvent(event))))(function() {
                               return setFacade(new CursorState(cursorFromHoleyDerivZipper(hdzipper)));
                             });
@@ -40611,8 +40827,8 @@
                           var stopprop = liftEffect8(stopPropagation(toEvent(event)));
                           var checkValidity10 = function(dzipperp) {
                             var v7 = derivZipperpSorts2(dzipperp);
-                            var $332 = isValidSelect2(spec)(dzipperp);
-                            if ($332) {
+                            var $343 = isValidSelect2(spec)(dzipperp);
+                            if ($343) {
                               return discard15(stopprop)(function() {
                                 return setFacade(new SelectState({
                                   dzipperp
@@ -40623,8 +40839,8 @@
                             return pure210(unit);
                           };
                           var dzipper = hdzipperDerivZipper2(hdzipper);
-                          var $335 = (buttons(event) & 1) !== 0;
-                          if ($335) {
+                          var $346 = (buttons(event) & 1) !== 0;
+                          if ($346) {
                             return discard15(bind113(getFacade)(function(v7) {
                               if (v7 instanceof CursorState) {
                                 var v8 = zipperpFromTo2(hdzipperDerivZipper2(v7.value0.hdzipper))(dzipper);
@@ -40636,7 +40852,7 @@
                                   return checkValidity10(v8.value0);
                                 }
                                 ;
-                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 823, column 13 - line 825, column 54): " + [v8.constructor.name]);
+                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 842, column 13 - line 844, column 54): " + [v8.constructor.name]);
                               }
                               ;
                               if (v7 instanceof SelectState) {
@@ -40658,10 +40874,10 @@
                                     });
                                   }
                                   ;
-                                  throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 837, column 17 - line 841, column 110): " + [v9.constructor.name]);
+                                  throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 856, column 17 - line 860, column 110): " + [v9.constructor.name]);
                                 }
                                 ;
-                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 830, column 13 - line 841, column 110): " + [v8.constructor.name]);
+                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 849, column 13 - line 860, column 110): " + [v8.constructor.name]);
                               }
                               ;
                               if (v7 instanceof TopState) {
@@ -40672,14 +40888,14 @@
                                 return pure210(unit);
                               }
                               ;
-                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 821, column 23 - line 843, column 40): " + [v7.constructor.name]);
+                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 840, column 23 - line 862, column 40): " + [v7.constructor.name]);
                             }))(function() {
                               return setHighlightElement(Nothing.value);
                             });
                           }
                           ;
-                          var $348 = isValidCursor2(spec.isValidCursorSort)(hdzipper);
-                          if ($348) {
+                          var $359 = isValidCursor2(spec.isValidCursorSort)(hdzipper);
+                          if ($359) {
                             return discard15(stopprop)(function() {
                               return setHighlightElement(new Just(hdzipperHoleyDerivPath(hdzipper)));
                             });
@@ -40806,7 +41022,7 @@
                           });
                         }
                         ;
-                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 276, column 20 - line 309, column 27): " + [v7.constructor.name]);
+                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 295, column 20 - line 328, column 27): " + [v7.constructor.name]);
                       };
                       var handleBufferOutput = function(v7) {
                         if (v7 instanceof ActionOutput) {
@@ -40819,7 +41035,7 @@
                           });
                         }
                         ;
-                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 776, column 26 - line 780, column 83): " + [v7.constructor.name]);
+                        throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 795, column 26 - line 799, column 83): " + [v7.constructor.name]);
                       };
                       var deleteTermAtCursor = function(restOfProg) {
                         return function(dterm) {
@@ -40836,7 +41052,7 @@
                             });
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 479, column 9 - line 488, column 36): " + [v7.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 498, column 9 - line 507, column 36): " + [v7.constructor.name]);
                         };
                       };
                       var computeCursorMovement = function(dir2) {
@@ -40860,7 +41076,7 @@
                               return setFacade(new CursorState(cursorFromHoleyDerivZipper(v8.value0)));
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 368, column 11 - line 370, column 93): " + [v8.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 387, column 11 - line 389, column 93): " + [v8.constructor.name]);
                           }
                           ;
                           if (v7 instanceof SelectState) {
@@ -40881,14 +41097,14 @@
                               return setFacade(new CursorState(cursorFromHoleyDerivZipper(v8.value0)));
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 386, column 11 - line 388, column 93): " + [v8.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 405, column 11 - line 407, column 93): " + [v8.constructor.name]);
                           }
                           ;
                           if (v7 instanceof SmallStepState) {
                             return pure210(unit);
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 365, column 21 - line 389, column 38): " + [v7.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 384, column 21 - line 408, column 38): " + [v7.constructor.name]);
                         });
                       };
                       var moveCursorVertically = function(verticalOrHorizontal) {
@@ -40906,8 +41122,8 @@
                                 return function(hdzipper) {
                                   return function(check) {
                                     return bind113(getPos(hdzipper))(function(newPos) {
-                                      var $388 = check(newPos);
-                                      if ($388) {
+                                      var $399 = check(newPos);
+                                      if ($399) {
                                         return pure210(hdzipper);
                                       }
                                       ;
@@ -40920,7 +41136,7 @@
                                         return goUntil(dir2)(v8.value0)(check);
                                       }
                                       ;
-                                      throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 340, column 30 - line 342, column 78): " + [v8.constructor.name]);
+                                      throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 359, column 30 - line 361, column 78): " + [v8.constructor.name]);
                                     });
                                   };
                                 };
@@ -40944,8 +41160,8 @@
                                       return newpos.left + 4 >= startRect.left || newpos.top > rect1.top + 4;
                                     }))(function(pos2) {
                                       return bind113(getPos(pos2))(function(rect2) {
-                                        var $392 = rect2.top > rect1.top + 4;
-                                        if ($392) {
+                                        var $403 = rect2.top > rect1.top + 4;
+                                        if ($403) {
                                           var v8 = computeCursorMovement(prevDir)(pos2);
                                           if (v8 instanceof Nothing) {
                                             return pure210(pos2);
@@ -40955,7 +41171,7 @@
                                             return pure210(v8.value0);
                                           }
                                           ;
-                                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 353, column 30 - line 355, column 45): " + [v8.constructor.name]);
+                                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 372, column 30 - line 374, column 45): " + [v8.constructor.name]);
                                         }
                                         ;
                                         return pure210(pos2);
@@ -40988,8 +41204,8 @@
                         var cmdKey = ctrlKey3 || metaKey3;
                         return bind113(getFacade)(function(v7) {
                           if (v7 instanceof CursorState && v7.value0.mode instanceof BufferCursorMode) {
-                            var $399 = key5 === "Tab" || (key5 === "Enter" || key5 === " ");
-                            if ($399) {
+                            var $410 = key5 === "Tab" || (key5 === "Enter" || key5 === " ");
+                            if ($410) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return discard15(tell1(tokens.slotToken)(bufferSlot)(unit)(SubmitBufferQuery.create))(function() {
                                   return when7(key5 === " ")(moveToNextHole);
@@ -40997,15 +41213,15 @@
                               });
                             }
                             ;
-                            var $400 = key5 === "Escape";
-                            if ($400) {
+                            var $411 = key5 === "Escape";
+                            if ($411) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return setBufferEnabled(false)(Nothing.value);
                               });
                             }
                             ;
-                            var $401 = isJust(readVerticalDir(key5));
-                            if ($401) {
+                            var $412 = isJust(readVerticalDir(key5));
+                            if ($412) {
                               return assert(just("handleKeyboardEvent")(readVerticalDir(key5)))(function() {
                                 return function(dir2) {
                                   return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
@@ -41021,16 +41237,16 @@
                           if (v7 instanceof CursorState && v7.value0.mode instanceof NavigationCursorMode) {
                             var path = hdzipperDerivPath(v7.value0.hdzipper);
                             var dterm = hdzipperDerivTerm2(v7.value0.hdzipper);
-                            var $404 = isJust(spec.keyAction(key5)(derivTermSort3(dterm)));
-                            if ($404) {
+                            var $415 = isJust(spec.keyAction(key5)(derivTermSort3(dterm)));
+                            if ($415) {
                               return discard15(setState(v7))(function() {
                                 var action2 = fromJust6(spec.keyAction(key5)(derivTermSort3(dterm)));
                                 return handleAction(action2);
                               });
                             }
                             ;
-                            var $405 = cmdKey && key5 === "z";
-                            if ($405) {
+                            var $416 = cmdKey && key5 === "z";
+                            if ($416) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return bind113(popHistory)(function(v82) {
                                   return bind113(popHistory)(function(v9) {
@@ -41042,19 +41258,19 @@
                                       return setState(v9.value0);
                                     }
                                     ;
-                                    throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 566, column 49 - line 568, column 39): " + [v9.constructor.name]);
+                                    throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 585, column 49 - line 587, column 39): " + [v9.constructor.name]);
                                   });
                                 });
                               });
                             }
                             ;
-                            var $408 = cmdKey && key5 === "c";
-                            if ($408) {
+                            var $419 = cmdKey && key5 === "c";
+                            if ($419) {
                               return genAndCopyClipTerm(dterm);
                             }
                             ;
-                            var $409 = cmdKey && key5 === "x";
-                            if ($409) {
+                            var $420 = cmdKey && key5 === "x";
+                            if ($420) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return discard15(genAndCopyClipTerm(dterm))(function() {
                                   return deleteTermAtCursor(path)(dterm);
@@ -41062,8 +41278,8 @@
                               });
                             }
                             ;
-                            var $410 = cmdKey && key5 === "v";
-                            if ($410) {
+                            var $421 = cmdKey && key5 === "v";
+                            if ($421) {
                               return bind113(liftEffect8(read(v5.value1)))(function(v82) {
                                 if (v82 instanceof Nothing) {
                                   return pure210(unit);
@@ -41090,7 +41306,7 @@
                                       return pure210(unit);
                                     }
                                     ;
-                                    throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 596, column 17 - line 613, column 34): " + [v11.constructor.name]);
+                                    throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 615, column 17 - line 632, column 34): " + [v11.constructor.name]);
                                   });
                                 }
                                 ;
@@ -41110,10 +41326,10 @@
                                         return pure210(unit);
                                       }
                                       ;
-                                      throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 623, column 17 - line 629, column 34): " + [v10.constructor.name]);
+                                      throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 642, column 17 - line 648, column 34): " + [v10.constructor.name]);
                                     }())(function() {
-                                      var $432 = hdzIsHolePosition2(v7.value0.hdzipper);
-                                      if ($432) {
+                                      var $443 = hdzIsHolePosition2(v7.value0.hdzipper);
+                                      if ($443) {
                                         return pure210(unit);
                                       }
                                       ;
@@ -41122,12 +41338,12 @@
                                   });
                                 }
                                 ;
-                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 582, column 53 - line 632, column 45): " + [v82.constructor.name]);
+                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 601, column 53 - line 651, column 45): " + [v82.constructor.name]);
                               });
                             }
                             ;
-                            var $437 = cmdKey && key5 === "s";
-                            if ($437) {
+                            var $448 = cmdKey && key5 === "s";
+                            if ($448) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return bind113(getBoundingClientRectFromPath(hdzipperHoleyDerivPath(v7.value0.hdzipper)))(function(rect) {
                                   return log5(pretty5("[print sort]" + bullets(["path = " + pretty33(path), "dterm = " + pretty42(dterm), "sort = " + pretty52(derivTermSort3(dterm)), "dlabel = " + pretty62(exprLabel(dterm)), "rect = " + show15(rect), "serialized-path = " + serializePath2(path)])));
@@ -41135,23 +41351,23 @@
                               });
                             }
                             ;
-                            var $438 = cmdKey && key5 === "p";
-                            if ($438) {
+                            var $449 = cmdKey && key5 === "p";
+                            if ($449) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return discard15(function() {
                                   if (shiftKey3) {
-                                    return log5(encode_uri_string(printSerializedDerivZipper22(hdzipperDerivZipper2(v7.value0.hdzipper))));
+                                    return log5(encode_uri_string(stringify(encodeJson3(hdzipperDerivZipper2(v7.value0.hdzipper)))));
                                   }
                                   ;
-                                  return log5(printSerializedDerivZipper22(hdzipperDerivZipper2(v7.value0.hdzipper)));
+                                  return log5(stringify(encodeJson3(hdzipperDerivZipper2(v7.value0.hdzipper))));
                                 }())(function() {
                                   return pure210(unit);
                                 });
                               });
                             }
                             ;
-                            var $440 = isOpenBufferKey(key5);
-                            if ($440) {
+                            var $451 = isOpenBufferKey(key5);
+                            if ($451) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return bind113(function() {
                                   var v82 = hdzipperDerivTerm2(v7.value0.hdzipper);
@@ -41170,22 +41386,22 @@
                               });
                             }
                             ;
-                            var $450 = !cmdKey && eq14(map314(isQueryKey)(keyCodePoint))(new Just(true));
-                            if ($450) {
+                            var $461 = !cmdKey && eq14(map314(isQueryKey)(keyCodePoint))(new Just(true));
+                            if ($461) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return setBufferEnabled(true)(new Just(key5));
                               });
                             }
                             ;
-                            var $451 = key5 === "Backspace" || key5 === "Delete";
-                            if ($451) {
+                            var $462 = key5 === "Backspace" || key5 === "Delete";
+                            if ($462) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return deleteTermAtCursor(path)(dterm);
                               });
                             }
                             ;
-                            var $452 = key5 === "Escape";
-                            if ($452) {
+                            var $463 = key5 === "Escape";
+                            if ($463) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return setFacade(new TopState({
                                   dterm: unzipper2(hdzipperDerivZipper2(v7.value0.hdzipper))
@@ -41193,18 +41409,18 @@
                               });
                             }
                             ;
-                            var $453 = key5 === "ArrowUp";
-                            if ($453) {
+                            var $464 = key5 === "ArrowUp";
+                            if ($464) {
                               return moveCursorVertically(true);
                             }
                             ;
-                            var $454 = key5 === "ArrowDown";
-                            if ($454) {
+                            var $465 = key5 === "ArrowDown";
+                            if ($465) {
                               return moveCursorVertically(false);
                             }
                             ;
-                            var $455 = isJust(readMoveDir(key5));
-                            if ($455) {
+                            var $466 = isJust(readMoveDir(key5));
+                            if ($466) {
                               return assert(just("handleKeyboardEvent")(readMoveDir(key5)))(function() {
                                 return function(dir2) {
                                   return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
@@ -41220,15 +41436,15 @@
                               });
                             }
                             ;
-                            var $457 = shiftKey3 && key5 === "Tab";
-                            if ($457) {
+                            var $468 = shiftKey3 && key5 === "Tab";
+                            if ($468) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return moveToPrevHole;
                               });
                             }
                             ;
-                            var $458 = key5 === " " || key5 === "Tab";
-                            if ($458) {
+                            var $469 = key5 === " " || key5 === "Tab";
+                            if ($469) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return moveToNextHole;
                               });
@@ -41249,36 +41465,36 @@
                                   return v7.value0.dzipperp.value1.value0;
                                 }
                                 ;
-                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 697, column 35 - line 699, column 35): " + [v7.value0.dzipperp.value1.constructor.name]);
+                                throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 716, column 35 - line 718, column 35): " + [v7.value0.dzipperp.value1.constructor.name]);
                               }();
                               var v82 = spec.splitChange(getPathChange22(selection$prime$prime)(spec.forgetSorts));
                               var ssterm = setupSSTermFromWrapAction2(false)(v7.value0.dzipperp.value0)(invert(v82.upChange))(mempty13)(v82.downChange)(v7.value0.dzipperp.value2);
                               return doSmallstep(ssterm);
                             };
-                            var $473 = cmdKey && key5 === "c";
-                            if ($473) {
+                            var $484 = cmdKey && key5 === "c";
+                            if ($484) {
                               return genAndCopyClipPath(either(reversePath5)(identity22)(v7.value0.dzipperp.value1));
                             }
                             ;
-                            var $474 = cmdKey && key5 === "x";
-                            if ($474) {
+                            var $485 = cmdKey && key5 === "x";
+                            if ($485) {
                               return discard15(genAndCopyClipPath(either(reversePath5)(identity22)(v7.value0.dzipperp.value1)))(function() {
                                 return deleteSelection(unit);
                               });
                             }
                             ;
-                            var $475 = key5 === "Escape";
-                            if ($475) {
+                            var $486 = key5 === "Escape";
+                            if ($486) {
                               return setFacade(new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(unzipperp2(v7.value0.dzipperp)))));
                             }
                             ;
-                            var $476 = key5 === "Backspace";
-                            if ($476) {
+                            var $487 = key5 === "Backspace";
+                            if ($487) {
                               return deleteSelection(unit);
                             }
                             ;
-                            var $477 = isOpenBufferKey(key5);
-                            if ($477) {
+                            var $488 = isOpenBufferKey(key5);
+                            if ($488) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 var cursor2 = cursorFromHoleyDerivZipper(injectHoleyDerivZipper(unzipperp2(v7.value0.dzipperp)));
                                 return discard15(setFacade(new CursorState(cursor2)))(function() {
@@ -41287,8 +41503,8 @@
                               });
                             }
                             ;
-                            var $478 = eq14(map314(isQueryKey)(keyCodePoint))(new Just(true));
-                            if ($478) {
+                            var $489 = eq14(map314(isQueryKey)(keyCodePoint))(new Just(true));
+                            if ($489) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 var cursor2 = cursorFromHoleyDerivZipper(injectHoleyDerivZipper(unzipperp2(v7.value0.dzipperp)));
                                 return discard15(setFacade(new CursorState(cursor2)))(function() {
@@ -41297,8 +41513,8 @@
                               });
                             }
                             ;
-                            var $479 = isJust(readMoveDir(key5));
-                            if ($479) {
+                            var $490 = isJust(readMoveDir(key5));
+                            if ($490) {
                               return assert(just("handleKeyboardEvent")(readMoveDir(key5)))(function() {
                                 return function(dir2) {
                                   return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
@@ -41318,15 +41534,15 @@
                           }
                           ;
                           if (v7 instanceof TopState) {
-                            var $485 = isOpenBufferKey(key5);
-                            if ($485) {
+                            var $496 = isOpenBufferKey(key5);
+                            if ($496) {
                               return discard15(liftEffect8(preventDefault(toEvent2(event))))(function() {
                                 return setFacade(new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(new Zipper(mempty4, v7.value0.dterm)))));
                               });
                             }
                             ;
-                            var $486 = isJust(readMoveDir(key5));
-                            if ($486) {
+                            var $497 = isJust(readMoveDir(key5));
+                            if ($497) {
                               return setFacade(new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(new Zipper(mempty4, v7.value0.dterm)))));
                             }
                             ;
@@ -41334,8 +41550,8 @@
                           }
                           ;
                           if (v7 instanceof SmallStepState) {
-                            var $488 = key5 === " ";
-                            if ($488) {
+                            var $499 = key5 === " ";
+                            if ($499) {
                               var v8 = step5(Nothing.value)(v7.value0.ssterm)(spec.stepRules);
                               if (v8 instanceof Nothing) {
                                 return finalizeSmallstep(v7.value0.ssterm);
@@ -41347,11 +41563,11 @@
                                 }));
                               }
                               ;
-                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 762, column 13 - line 764, column 76): " + [v8.constructor.name]);
+                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 781, column 13 - line 783, column 76): " + [v8.constructor.name]);
                             }
                             ;
-                            var $491 = key5 === "Enter";
-                            if ($491) {
+                            var $502 = key5 === "Enter";
+                            if ($502) {
                               var $$final = stepRepeatedly2(Nothing.value)(v7.value0.ssterm)(spec.stepRules);
                               return finalizeSmallstep($$final);
                             }
@@ -41359,7 +41575,7 @@
                             return pure210(unit);
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 531, column 21 - line 769, column 22): " + [v7.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 550, column 21 - line 788, column 22): " + [v7.constructor.name]);
                         });
                       };
                       var locs = {
@@ -41370,9 +41586,9 @@
                       };
                       return discard8(useLifecycleEffect(bind113(liftEffect8(bind29(windowImpl)(document)))(function(doc) {
                         return bind113(subscribe3(eventListener2(keydown)(toEventTarget(doc))(function() {
-                          var $522 = map314(handleKeyboardEvent);
-                          return function($523) {
-                            return $522(fromEvent($523));
+                          var $533 = map314(handleKeyboardEvent);
+                          return function($534) {
+                            return $533(fromEvent($534));
                           };
                         }())))(function(kbdSubId) {
                           return pure210(new Just(unsubscribe4(kbdSubId)));
@@ -41397,7 +41613,7 @@
                             });
                           }
                           ;
-                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 885, column 33 - line 892, column 51): " + [v7.constructor.name]);
+                          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 904, column 33 - line 911, column 51): " + [v7.constructor.name]);
                         }))(function() {
                           return pure14(div2([classNames(["editor"])])([div2([classNames(["program"]), onMouseLeave(function(event) {
                             return discard15(liftEffect8(stopPropagation(toEvent(event))))(function() {
@@ -41414,7 +41630,7 @@
                                 return [renderPath2(locs)(dzipper)(renderDerivTerm2(locs)(false)(true)(dzipper))(defaultRenderingContext(pathIdPrefix))];
                               }
                               ;
-                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 923, column 11 - line 933, column 16): " + [v1.value0.value0.hdzipper.constructor.name]);
+                              throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 942, column 11 - line 952, column 16): " + [v1.value0.value0.hdzipper.constructor.name]);
                             }
                             ;
                             if (v1.value0 instanceof SelectState) {
@@ -41429,7 +41645,7 @@
                               return [div2([classNames(["smallstep-program"])])([renderSSTerm2(locs)(v1.value0.value0.ssterm)(defaultRenderingContext(pathIdPrefix))])];
                             }
                             ;
-                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 919, column 7 - line 941, column 15): " + [v1.value0.constructor.name]);
+                            throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.Editor (line 938, column 7 - line 960, column 15): " + [v1.value0.constructor.name]);
                           }())]));
                         });
                       });
@@ -41459,7 +41675,7 @@
   var request3 = /* @__PURE__ */ request()(editorIsSymbol)(ordUnit);
   var get7 = /* @__PURE__ */ get(monadStateHalogenM);
   var modify_5 = /* @__PURE__ */ modify_2(monadStateHalogenM);
-  var pure31 = /* @__PURE__ */ pure(applicativeHalogenM);
+  var pure34 = /* @__PURE__ */ pure(applicativeHalogenM);
   var RunProgram = /* @__PURE__ */ function() {
     function RunProgram2() {
     }
@@ -41476,7 +41692,7 @@
       return div2([style3(discard16(display(flex))(function() {
         return flexDirection(column);
       }))])([div2([style3(discard16(function() {
-        var s = em2(1);
+        var s = em2(0.5);
         return padding(s)(s)(s)(s);
       }())(function() {
         return discard16(display(flex))(function() {
@@ -41519,7 +41735,7 @@
           }
           ;
           if (mprog instanceof Nothing) {
-            return pure31(unit);
+            return pure34(unit);
           }
           ;
           throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.RunnableEditor (line 49, column 7 - line 51, column 29): " + [mprog.constructor.name]);
@@ -41527,11 +41743,11 @@
       });
     };
     var $$eval2 = mkEval({
-      handleAction,
       handleQuery: defaultEval.handleQuery,
       receive: defaultEval.receive,
       initialize: defaultEval.initialize,
-      finalize: defaultEval.finalize
+      finalize: defaultEval.finalize,
+      handleAction
     });
     return mkComponent({
       initialState,
@@ -41721,10 +41937,10 @@
 
   // output/Language.Pantograph.Lib.DefaultEdits/index.js
   var bind31 = /* @__PURE__ */ bind(bindMaybe);
-  var pure34 = /* @__PURE__ */ pure(applicativeMaybe);
+  var pure35 = /* @__PURE__ */ pure(applicativeMaybe);
   var pure114 = /* @__PURE__ */ pure(applicativeEither);
   var map66 = /* @__PURE__ */ map(functorList);
-  var fromFoldable20 = /* @__PURE__ */ fromFoldable(foldableArray);
+  var fromFoldable19 = /* @__PURE__ */ fromFoldable(foldableArray);
   var zipDowns5 = /* @__PURE__ */ zipDowns(zippableZipper);
   var makeSubEditFromTerm = function(dictIsRuleLabel) {
     var unify3 = unify(isExprLabelSortLabel(dictIsRuleLabel.IsExprLabel0()));
@@ -41734,7 +41950,7 @@
       return function(name15) {
         return function(cursorSort) {
           return bind31(unify3(derivTermSort3(dterm))(cursorSort))(function(v) {
-            return pure34({
+            return pure35({
               label: name15,
               action: pure114(defer3(function(v1) {
                 return new FillAction({
@@ -41758,7 +41974,7 @@
       return function(name15) {
         return function(cursorSort) {
           return bind31(unify3(derivTermSort3(dterm))(cursorSort))(function(v) {
-            return pure34({
+            return pure35({
               label: name15,
               action: pure114(defer3(function(v1) {
                 return new ReplaceAction({
@@ -41790,7 +42006,7 @@
                   var topChange = subSomeMetaChange2(v1.value1)(v.upChange);
                   var botChange = subSomeMetaChange2(v1.value1)(invert(v.downChange));
                   var pathSubbed = subDerivPath2(v1.value1)(path);
-                  return pure34(new WrapAction({
+                  return pure35(new WrapAction({
                     topChange,
                     dpath: pathSubbed,
                     botChange,
@@ -41813,7 +42029,7 @@
           return function(name15) {
             return function(cursorSort) {
               return bind31(makeActionFromPath1(false)(forgetSorts2)(splitChange2)(v.value0)(name15)(cursorSort))(function(action2) {
-                return pure34({
+                return pure35({
                   label: name15,
                   action: pure114(defer3(function(v1) {
                     return action2;
@@ -41840,7 +42056,7 @@
               return function(cursorSort) {
                 return function(dterm) {
                   var getPaths = function(v) {
-                    var rest = concat(map66(getPaths)(fromFoldable20(zipDowns5(v))));
+                    var rest = concat(map66(getPaths)(fromFoldable19(zipDowns5(v))));
                     var $74 = isValidCursorSort2(derivTermSort3(v.value1)) && isHole2(exprLabel(v.value1));
                     if ($74) {
                       return new Cons(v, rest);
@@ -42194,7 +42410,7 @@
   var genericTopSum2 = /* @__PURE__ */ genericTopSum(genericTopConstructor2);
   var genericTopSum1 = /* @__PURE__ */ genericTopSum(genericTopSum2);
   var genericTopSum22 = /* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(/* @__PURE__ */ genericTopSum(genericTopSum1)))))))));
-  var pure35 = /* @__PURE__ */ pure(applicativeMaybe);
+  var pure36 = /* @__PURE__ */ pure(applicativeMaybe);
   var trace4 = /* @__PURE__ */ trace();
   var lookup$prime3 = /* @__PURE__ */ lookup$prime(ordMetaVar);
   var bind32 = /* @__PURE__ */ bind(bindMaybe);
@@ -42205,7 +42421,7 @@
   var discard17 = /* @__PURE__ */ discard(discardUnit)(bindMaybe);
   var traceM2 = /* @__PURE__ */ traceM()(monadMaybe);
   var map67 = /* @__PURE__ */ map(functorList);
-  var fromFoldable21 = /* @__PURE__ */ fromFoldable3(foldableList);
+  var fromFoldable20 = /* @__PURE__ */ fromFoldable3(foldableList);
   var mapFlipped9 = /* @__PURE__ */ mapFlipped(functorArray);
   var mapFlipped13 = /* @__PURE__ */ mapFlipped(functorList);
   var $$delete5 = /* @__PURE__ */ $$delete4(ordString);
@@ -42213,7 +42429,7 @@
   var insert15 = /* @__PURE__ */ insert7(ordString);
   var lookup18 = /* @__PURE__ */ lookup2(ordMetaVar);
   var filter6 = /* @__PURE__ */ filter4(ordMetaVar);
-  var toUnfoldable8 = /* @__PURE__ */ toUnfoldable4(unfoldableArray);
+  var toUnfoldable9 = /* @__PURE__ */ toUnfoldable4(unfoldableArray);
   var OpPlus = /* @__PURE__ */ function() {
     function OpPlus2() {
     }
@@ -43055,7 +43271,7 @@
   var genericCompare5 = /* @__PURE__ */ genericCompare(genericInfixOperator_)(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(/* @__PURE__ */ genericOrdSum4(genericOrdSum32)))))))));
   var genericPred2 = /* @__PURE__ */ genericPred(genericInfixOperator_)(genericEnumSum4);
   var genericSucc2 = /* @__PURE__ */ genericSucc(genericInfixOperator_)(genericEnumSum4);
-  var genericEncodeJson3 = /* @__PURE__ */ genericEncodeJson(genericInfixOperator_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpPlusIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpMinusIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpTimesIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpDivideIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpModIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpPowIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpLessIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpGreaterIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpLessEqIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpGreaterEqIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpAndIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(OpOrIsSymbol)(encodeRepArgsNoArguments)))))))))))));
+  var genericEncodeJson6 = /* @__PURE__ */ genericEncodeJson(genericInfixOperator_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpPlusIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpMinusIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpTimesIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpDivideIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpModIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpPowIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpLessIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpGreaterIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpLessEqIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpGreaterEqIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(OpAndIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(OpOrIsSymbol)(encodeRepArgsNoArguments)))))))))))));
   var genericDecodeJson3 = /* @__PURE__ */ genericDecodeJson(genericInfixOperator_)(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpPlusIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpMinusIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpTimesIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpDivideIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpModIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpPowIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpLessIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpGreaterIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpLessEqIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpGreaterEqIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(OpAndIsSymbol))(/* @__PURE__ */ decodeRepConstructorNoArgs(OpOrIsSymbol)))))))))))));
   var showInfixOperator = {
     show: function(x) {
@@ -43091,7 +43307,7 @@
   var genericCompare13 = /* @__PURE__ */ genericCompare(genericDataType_)(genericOrdSum1);
   var genericPred1 = /* @__PURE__ */ genericPred(genericDataType_)(genericEnumSum1);
   var genericSucc1 = /* @__PURE__ */ genericSucc(genericDataType_)(genericEnumSum1);
-  var genericEncodeJson1 = /* @__PURE__ */ genericEncodeJson(genericDataType_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(BoolIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(IntIsSymbol)(encodeRepArgsNoArguments)));
+  var genericEncodeJson14 = /* @__PURE__ */ genericEncodeJson(genericDataType_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(BoolIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(IntIsSymbol)(encodeRepArgsNoArguments)));
   var genericDecodeJson1 = /* @__PURE__ */ genericDecodeJson(genericDataType_)(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(BoolIsSymbol))(/* @__PURE__ */ decodeRepConstructorNoArgs(IntIsSymbol)));
   var showDataType = {
     show: function(x) {
@@ -43153,7 +43369,7 @@
   var genericCompare23 = /* @__PURE__ */ genericCompare(genericConstant_)(genericOrdSum22);
   var genericPred22 = /* @__PURE__ */ genericPred(genericConstant_)(genericEnumSum22);
   var genericSucc22 = /* @__PURE__ */ genericSucc(genericConstant_)(genericEnumSum22);
-  var genericEncodeJson22 = /* @__PURE__ */ genericEncodeJson(genericConstant_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConstTrueIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConstFalseIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(ConstNotIsSymbol)(encodeRepArgsNoArguments))));
+  var genericEncodeJson24 = /* @__PURE__ */ genericEncodeJson(genericConstant_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConstTrueIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConstFalseIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(ConstNotIsSymbol)(encodeRepArgsNoArguments))));
   var genericDecodeJson22 = /* @__PURE__ */ genericDecodeJson(genericConstant_)(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(ConstTrueIsSymbol))(/* @__PURE__ */ decodeRepSum(/* @__PURE__ */ decodeRepConstructorNoArgs(ConstFalseIsSymbol))(/* @__PURE__ */ decodeRepConstructorNoArgs(ConstNotIsSymbol))));
   var showConstant = {
     show: function(x) {
@@ -43877,27 +44093,27 @@
   };
   var encodeJsonInfixOperator = {
     encodeJson: function(a2) {
-      return genericEncodeJson3(a2);
+      return genericEncodeJson6(a2);
     }
   };
   var encodeJsonDataType = {
     encodeJson: function(a2) {
-      return genericEncodeJson1(a2);
+      return genericEncodeJson14(a2);
     }
   };
-  var encodeRepArgsArgument2 = /* @__PURE__ */ encodeRepArgsArgument(encodeJsonDataType);
-  var genericEncodeJson32 = /* @__PURE__ */ genericEncodeJson(genericPreSortLabel_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(VarSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TermSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TypeSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(CtxConsSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(CtxNilSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(DataTypeIsSymbol)(encodeRepArgsArgument2))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ArrowIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ListIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LocalIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(NonLocalIsSymbol)(encodeRepArgsNoArguments)))))))))));
+  var encodeRepArgsArgument3 = /* @__PURE__ */ encodeRepArgsArgument(encodeJsonDataType);
+  var genericEncodeJson34 = /* @__PURE__ */ genericEncodeJson(genericPreSortLabel_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(VarSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TermSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TypeSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(CtxConsSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(CtxNilSortIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(DataTypeIsSymbol)(encodeRepArgsArgument3))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ArrowIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ListIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LocalIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(NonLocalIsSymbol)(encodeRepArgsNoArguments)))))))))));
   var encodeJsonPreSortLabel = {
     encodeJson: function(a2) {
-      return genericEncodeJson32(a2);
+      return genericEncodeJson34(a2);
     }
   };
   var encodeJsonConstant = {
     encodeJson: function(a2) {
-      return genericEncodeJson22(a2);
+      return genericEncodeJson24(a2);
     }
   };
-  var genericEncodeJson42 = /* @__PURE__ */ genericEncodeJson(genericRuleLabel_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ZeroIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(SucIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LamIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LetIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(AppIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(GreyAppIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(VarIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(FreeVarIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TermHoleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TypeHoleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(DataTypeRuleIsSymbol)(encodeRepArgsArgument2))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ArrowRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ListRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(NewlineIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(IfIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ErrorBoundaryIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConstantRuleIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonConstant)))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(InfixRuleIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonInfixOperator)))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(EqualsRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(NilRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConsRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LengthRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(AppendRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(HeadRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TailRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(IndexRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ListMatchRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(IntegerLiteralIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(CommentIsSymbol)(encodeRepArgsNoArguments))))))))))))))))))))))))))))));
+  var genericEncodeJson42 = /* @__PURE__ */ genericEncodeJson(genericRuleLabel_)(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ZeroIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(SucIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LamIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LetIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(AppIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(GreyAppIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(VarIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(FreeVarIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TermHoleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TypeHoleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(DataTypeRuleIsSymbol)(encodeRepArgsArgument3))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ArrowRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ListRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(NewlineIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(IfIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ErrorBoundaryIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConstantRuleIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonConstant)))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(InfixRuleIsSymbol)(/* @__PURE__ */ encodeRepArgsArgument(encodeJsonInfixOperator)))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(EqualsRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(NilRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ConsRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(LengthRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(AppendRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(HeadRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(TailRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(IndexRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(ListMatchRuleIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepSum(/* @__PURE__ */ encodeRepConstructor(IntegerLiteralIsSymbol)(encodeRepArgsNoArguments))(/* @__PURE__ */ encodeRepConstructor(CommentIsSymbol)(encodeRepArgsNoArguments))))))))))))))))))))))))))))));
   var encodeJsonRuleLabel = {
     encodeJson: function(a2) {
       return genericEncodeJson42(a2);
@@ -43985,12 +44201,12 @@
           };
           var $1931 = matchChange2(v1.value0.value1)(injectChangeMatchExpr(TermSort.value)([cSlot, dMINUS(Arrow.value)([slot2])(cSlot)([])]));
           if ($1931 instanceof Just && ($1931.value0.value0.length === 1 && $1931.value0.value1.length === 2)) {
-            return pure35(new Expr(csor(TermSort.value), [minusChange(sor(CtxConsSort.value))([varName, $1931["value0"]["value0"][0]])($1931["value0"]["value1"][0])([]), $1931["value0"]["value1"][1]]));
+            return pure36(new Expr(csor(TermSort.value), [minusChange(sor(CtxConsSort.value))([varName, $1931["value0"]["value0"][0]])($1931["value0"]["value1"][0])([]), $1931["value0"]["value1"][1]]));
           }
           ;
           return v2(true);
         }())(function(restOfCh) {
-          return pure35(wrapBoundary2(Down.value)(restOfCh)(v1["value1"][0]["value1"][2]));
+          return pure36(wrapBoundary2(Down.value)(restOfCh)(v1["value1"][0]["value1"][2]));
         });
       }
       ;
@@ -44007,7 +44223,7 @@
         if ($1953 instanceof Just && ($1953.value0.value0.length === 1 && $1953.value0.value1.length === 2)) {
           var $1954 = eq52(lookup$prime3(new RuleMetaVar("a"))(v1["value1"][0].value0.value0.value1))($1953["value0"]["value0"][0]);
           if ($1954) {
-            return pure35(wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$1953["value0"]["value1"][0], $1953["value0"]["value1"][1]]))(v1["value1"][0]["value1"][0]));
+            return pure36(wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$1953["value0"]["value1"][0], $1953["value0"]["value1"][1]]))(v1["value1"][0]["value1"][0]));
           }
           ;
           return v2(true);
@@ -44083,7 +44299,7 @@
   var removeGreyedApp = function(v) {
     return function(dterm) {
       if (dterm.value0 instanceof SSInj && (dterm.value0.value0 instanceof DerivLabel && (dterm.value0.value0.value0 instanceof GreyApp && (dterm.value1.length === 2 && (dterm["value1"][1].value0 instanceof SSInj && (dterm["value1"][1].value0.value0 instanceof DerivLabel && dterm["value1"][1].value0.value0.value0 instanceof TermHole)))))) {
-        return pure35(dterm["value1"][0]);
+        return pure36(dterm["value1"][0]);
       }
       ;
       return Nothing.value;
@@ -44096,7 +44312,7 @@
         var outsideType = lookup$prime3(new RuleMetaVar("outsideType"))(v1.value0.value0.value1);
         var $2038 = eq52(insideType)(outsideType);
         if ($2038) {
-          return pure35(v1["value1"][0]);
+          return pure36(v1["value1"][0]);
         }
         ;
         return Nothing.value;
@@ -44129,7 +44345,7 @@
   var mergeAppGreyApp2 = function(v) {
     return function(dterm) {
       if (dterm.value0 instanceof SSInj && (dterm.value0.value0 instanceof DerivLabel && (dterm.value0.value0.value0 instanceof App2 && (dterm.value1.length === 2 && (dterm["value1"][0].value0 instanceof SSInj && (dterm["value1"][0].value0.value0 instanceof DerivLabel && (dterm["value1"][0].value0.value0.value0 instanceof GreyApp && (dterm["value1"][0].value1.length === 2 && (dterm["value1"][1].value0 instanceof SSInj && (dterm["value1"][1].value0.value0 instanceof DerivLabel && (dterm["value1"][1].value0.value0.value0 instanceof TermHole && eq52(lookup$prime3(new RuleMetaVar("a"))(dterm.value0.value0.value1))(lookup$prime3(new RuleMetaVar("a"))(dterm["value1"][0].value0.value0.value1))))))))))))) {
-        return pure35(new Expr(new SSInj(new DerivLabel(App2.value, dterm.value0.value0.value1)), [dterm["value1"][0]["value1"][0], dterm["value1"][0]["value1"][1]]));
+        return pure36(new Expr(new SSInj(new DerivLabel(App2.value, dterm.value0.value0.value1)), [dterm["value1"][0]["value1"][0], dterm["value1"][0]["value1"][1]]));
       }
       ;
       return Nothing.value;
@@ -44138,15 +44354,15 @@
   var mergeAppGreyApp = function(v) {
     return function(dterm) {
       if (dterm.value0 instanceof SSInj && (dterm.value0.value0 instanceof DerivLabel && (dterm.value0.value0.value0 instanceof GreyApp && (dterm.value1.length === 2 && (dterm["value1"][0].value0 instanceof SSInj && (dterm["value1"][0].value0.value0 instanceof DerivLabel && (dterm["value1"][0].value0.value0.value0 instanceof App2 && (dterm["value1"][0].value1.length === 2 && (dterm["value1"][0]["value1"][1].value0 instanceof SSInj && (dterm["value1"][0]["value1"][1].value0.value0 instanceof DerivLabel && (dterm["value1"][0]["value1"][1].value0.value0.value0 instanceof TermHole && eq52(lookup$prime3(new RuleMetaVar("a"))(dterm["value1"][0].value0.value0.value1))(lookup$prime3(new RuleMetaVar("a"))(dterm.value0.value0.value1))))))))))))) {
-        return pure35(new Expr(new SSInj(new DerivLabel(App2.value, dterm["value1"][0].value0.value0.value1)), [dterm["value1"][0]["value1"][0], dterm["value1"][1]]));
+        return pure36(new Expr(new SSInj(new DerivLabel(App2.value, dterm["value1"][0].value0.value0.value1)), [dterm["value1"][0]["value1"][0], dterm["value1"][1]]));
       }
       ;
       return Nothing.value;
     };
   };
-  var mapstoElem = /* @__PURE__ */ makePuncElem("mapsto")(".");
+  var mapstoElem = /* @__PURE__ */ makePuncElem("mapsto")("=>");
   var letElem = /* @__PURE__ */ makePuncElem("let")("let");
-  var lambdaElem = /* @__PURE__ */ makePuncElem("lambda")("\u03BB");
+  var lambdaElem = /* @__PURE__ */ makePuncElem("lambda")("fun");
   var isValidSelectionSorts = function(v) {
     if (v.bottom.value0 instanceof MInj && (v.bottom.value0.value0 instanceof SInj && (v.bottom.value0.value0.value0 instanceof TermSort && (v.top.value0 instanceof MInj && (v.top.value0.value0 instanceof SInj && v.top.value0.value0.value0 instanceof TermSort))))) {
       return true;
@@ -44403,11 +44619,11 @@
     }
     ;
     if (op instanceof OpAnd) {
-      return "and";
+      return "&&";
     }
     ;
     if (op instanceof OpOr) {
-      return "or";
+      return "||";
     }
     ;
     throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 275, column 5 - line 287, column 17): " + [op.constructor.name]);
@@ -44427,7 +44643,7 @@
   };
   var forgetSorts = function(v) {
     if (v instanceof DerivLabel && v.value0 instanceof FreeVar) {
-      return pure35(v);
+      return pure36(v);
     }
     ;
     return Nothing.value;
@@ -44848,7 +45064,7 @@
         }
         ;
         if (v.value0 instanceof Lam && v.value1.length === 3) {
-          return parens(appendSpaced("\u03BB")(appendSpaced(v["value1"][0])(appendSpaced(":")(appendSpaced(v["value1"][1])(appendSpaced("=>")(v["value1"][2]))))));
+          return parens(appendSpaced("fun")(appendSpaced(v["value1"][0])(appendSpaced(":")(appendSpaced(v["value1"][1])(appendSpaced("=>")(v["value1"][2]))))));
         }
         ;
         if (v.value0 instanceof Let && v.value1.length === 4) {
@@ -44977,7 +45193,7 @@
     "defaultDerivTerm'": function() {
       return function(v) {
         if (v.value0 instanceof MInj && (v.value0.value0 instanceof SInj && (v.value0.value0.value0 instanceof TermSort && v.value1.length === 2))) {
-          return pure35(new Expr(makeLabel(isRuleLabelPreSortLabelRu)(TermHole.value)([new Tuple("gamma", v["value1"][0]), new Tuple("type", v["value1"][1])]), [sortToType(v["value1"][1])]));
+          return pure36(new Expr(makeLabel(isRuleLabelPreSortLabelRu)(TermHole.value)([new Tuple("gamma", v["value1"][0]), new Tuple("type", v["value1"][1])]), [sortToType(v["value1"][1])]));
         }
         ;
         if (v.value0 instanceof MInj && (v.value0.value0 instanceof SInj && (v.value0.value0.value0 instanceof VarSort && v.value1.length === 4))) {
@@ -44985,7 +45201,7 @@
         }
         ;
         if (v.value0 instanceof MInj && (v.value0.value0 instanceof SInj && (v.value0.value0.value0 instanceof TypeSort && v.value1.length === 1))) {
-          return pure35(sortToType(v["value1"][0]));
+          return pure36(sortToType(v["value1"][0]));
         }
         ;
         return bug("[defaultDerivTerm] no match: " + pretty32(v));
@@ -45071,7 +45287,7 @@
           var $2452 = matchExprImpl2(ssTermSort2(v1["value1"][0]))(injectMatchExpr(sor(TermSort.value))([slot2, slot2]));
           if ($2452 instanceof Just && $2452.value0.length === 2) {
             return trace4("fallbackDownError called")(function(v3) {
-              return pure35(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2451["value0"]["value1"][0])), new Tuple("insideType", $2452["value0"][1]), new Tuple("outsideType", rEndpoint2($2451["value0"]["value1"][1]))])([wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2451["value0"]["value1"][0], inject($2452["value0"][1])]))(v1["value1"][0])]));
+              return pure36(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2451["value0"]["value1"][0])), new Tuple("insideType", $2452["value0"][1]), new Tuple("outsideType", rEndpoint2($2451["value0"]["value1"][1]))])([wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2451["value0"]["value1"][0], inject($2452["value0"][1])]))(v1["value1"][0])]));
             });
           }
           ;
@@ -45097,7 +45313,7 @@
               if ($2471 instanceof Just && ($2471.value0.value0.length === 0 && $2471.value0.value1.length === 2)) {
                 var $2472 = matchExprImpl2(ssTermSort2(v1["value1"][0]))(injectMatchExpr(sor(TermSort.value))([slot2, slot2]));
                 if ($2472 instanceof Just && $2472.value0.length === 2) {
-                  return pure35(new Tuple($2471["value0"]["value1"][0], new Tuple($2471["value0"]["value1"][1], new Tuple(v1["value1"][0], $2472["value0"][1]))));
+                  return pure36(new Tuple($2471["value0"]["value1"][0], new Tuple($2471["value0"]["value1"][1], new Tuple(v1["value1"][0], $2472["value0"][1]))));
                 }
                 ;
                 return v2(true);
@@ -45111,7 +45327,7 @@
         }))(function(v1) {
           return discard17(traceM2("fallbackUpError called"))(function() {
             var outsideTy = lEndpoint2(v1.value0.value1.value0);
-            return pure35(new Expr(new SSInj(sterm.value0.value0), fromJust6(updateAt(v1.value1)(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [v1.value0.value0, inject(outsideTy)]))(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2(v1.value0.value0)), new Tuple("insideType", v1.value0.value1.value1.value1), new Tuple("outsideType", outsideTy)])([v1.value0.value1.value1.value0])))(sterm.value1))));
+            return pure36(new Expr(new SSInj(sterm.value0.value0), fromJust6(updateAt(v1.value1)(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [v1.value0.value0, inject(outsideTy)]))(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2(v1.value0.value0)), new Tuple("insideType", v1.value0.value1.value1.value1), new Tuple("outsideType", outsideTy)])([v1.value0.value1.value1.value0])))(sterm.value1))));
           });
         });
       }
@@ -45127,7 +45343,7 @@
             if (v1.length === 4) {
               return function(v2) {
                 if (v2.length === 1) {
-                  return pure35(dTERM2(Suc.value)([new Tuple("gamma", rEndpoint2(v1[0])), new Tuple("x", rEndpoint2(v1[1])), new Tuple("typeX", rEndpoint2(v1[2])), new Tuple("y", v[0]), new Tuple("typeY", v[1]), new Tuple("locality", rEndpoint2(v1[3]))])([wrapBoundary2(Down.value)(new Expr(csor(VarSort.value), [v1[0], v1[1], v1[2], v1[3]]))(v2[0])]));
+                  return pure36(dTERM2(Suc.value)([new Tuple("gamma", rEndpoint2(v1[0])), new Tuple("x", rEndpoint2(v1[1])), new Tuple("typeX", rEndpoint2(v1[2])), new Tuple("y", v[0]), new Tuple("typeY", v[1]), new Tuple("locality", rEndpoint2(v1[3]))])([wrapBoundary2(Down.value)(new Expr(csor(VarSort.value), [v1[0], v1[1], v1[2], v1[3]]))(v2[0])]));
                 }
                 ;
                 throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 977, column 6 - line 983, column 18): " + [v2.constructor.name]);
@@ -45164,7 +45380,7 @@
               if ($2524) {
                 var $2525 = matchExprImpl2(ssTermSort2(v1["value1"][0]))(injectMatchExpr(sor(TermSort.value))([slot2, slot2]));
                 if ($2525 instanceof Just && $2525.value0.length === 2) {
-                  return pure35(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2512["value0"]["value1"][0])), new Tuple("insideType", $2525["value0"][1]), new Tuple("outsideType", rEndpoint2($2512["value0"]["value1"][1]))])([wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2512["value0"]["value1"][0], inject($2525["value0"][1])]))(v1["value1"][0])]));
+                  return pure36(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2512["value0"]["value1"][0])), new Tuple("insideType", $2525["value0"][1]), new Tuple("outsideType", rEndpoint2($2512["value0"]["value1"][1]))])([wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2512["value0"]["value1"][0], inject($2525["value0"][1])]))(v1["value1"][0])]));
                 }
                 ;
                 return v2(true);
@@ -45209,7 +45425,7 @@
                   if ($2584) {
                     var $2585 = matchExprImpl2(ssTermSort2(v2["value1"][0]))(injectMatchExpr(sor(TermSort.value))([slot2, slot2]));
                     if ($2585 instanceof Just && $2585.value0.length === 2) {
-                      return pure35(new Tuple($2577["value0"]["value1"][0], new Tuple($2577["value0"]["value1"][1], new Tuple(v2["value1"][0], $2585["value0"][1]))));
+                      return pure36(new Tuple($2577["value0"]["value1"][0], new Tuple($2577["value0"]["value1"][1], new Tuple(v2["value1"][0], $2585["value0"][1]))));
                     }
                     ;
                     return v3(true);
@@ -45231,7 +45447,7 @@
         };
       }))(function(v2) {
         var outsideTy = lEndpoint2(v2.value0.value1.value0);
-        return pure35(new Expr(v1.value0, fromJust6(updateAt(v2.value1)(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [v2.value0.value0, inject(outsideTy)]))(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2(v2.value0.value0)), new Tuple("insideType", v2.value0.value1.value1.value1), new Tuple("outsideType", outsideTy)])([v2.value0.value1.value1.value0])))(v1.value1))));
+        return pure36(new Expr(v1.value0, fromJust6(updateAt(v2.value1)(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [v2.value0.value0, inject(outsideTy)]))(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2(v2.value0.value0)), new Tuple("insideType", v2.value0.value1.value1.value1), new Tuple("outsideType", outsideTy)])([v2.value0.value1.value1.value0])))(v1.value1))));
       });
     };
   };
@@ -45256,7 +45472,7 @@
       if (v1.value0 instanceof SSInj && (v1.value0.value0 instanceof DerivLabel && (v1.value0.value0.value0 instanceof App2 && (v1.value1.length === 2 && (v1["value1"][0].value0 instanceof Boundary && (v1["value1"][0].value0.value0 instanceof Up && v1["value1"][0].value1.length === 1)))))) {
         var $2619 = matchChange2(v1["value1"][0].value0.value1)(injectChangeMatchExpr(TermSort.value)([cSlot, dMINUS(Arrow.value)([slot2])(cSlot)([])]));
         if ($2619 instanceof Just && ($2619.value0.value0.length === 1 && $2619.value0.value1.length === 2)) {
-          return pure35(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [$2619["value0"]["value1"][0], $2619["value0"]["value1"][1]]))(new Expr(new SSInj(makeLabel2(GreyApp.value)([new Tuple("gamma", rEndpoint2($2619["value0"]["value1"][0])), new Tuple("a", $2619["value0"]["value0"][0]), new Tuple("b", rEndpoint2($2619["value0"]["value1"][1]))])), [v1["value1"][0]["value1"][0], wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2619["value0"]["value1"][0], inject($2619["value0"]["value0"][0])]))(v1["value1"][1])])));
+          return pure36(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [$2619["value0"]["value1"][0], $2619["value0"]["value1"][1]]))(new Expr(new SSInj(makeLabel2(GreyApp.value)([new Tuple("gamma", rEndpoint2($2619["value0"]["value1"][0])), new Tuple("a", $2619["value0"]["value0"][0]), new Tuple("b", rEndpoint2($2619["value0"]["value1"][1]))])), [v1["value1"][0]["value1"][0], wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2619["value0"]["value1"][0], inject($2619["value0"]["value0"][0])]))(v1["value1"][1])])));
         }
         ;
         return v2(true);
@@ -45276,7 +45492,7 @@
         if ($2654 instanceof Just && ($2654.value0.value0.length === 0 && $2654.value0.value1.length === 2)) {
           var insideInside = lookup$prime3(new RuleMetaVar("insideType"))(v1["value1"][0].value0.value0.value1);
           var outsideOutside = rEndpoint2($2654["value0"]["value1"][1]);
-          return pure35(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2654["value0"]["value1"][0])), new Tuple("insideType", insideInside), new Tuple("outsideType", outsideOutside)])([wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2654["value0"]["value1"][0], inject(insideInside)]))(v1["value1"][0]["value1"][0])]));
+          return pure36(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2654["value0"]["value1"][0])), new Tuple("insideType", insideInside), new Tuple("outsideType", outsideOutside)])([wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [$2654["value0"]["value1"][0], inject(insideInside)]))(v1["value1"][0]["value1"][0])]));
         }
         ;
         return v2(true);
@@ -45295,7 +45511,7 @@
         if ($2673 instanceof Just && ($2673.value0.value0.length === 0 && $2673.value0.value1.length === 2)) {
           var insideInside = rEndpoint2($2673["value0"]["value1"][1]);
           var outsideOutside = lookup$prime3(new RuleMetaVar("outsideType"))(v1.value0.value0.value1);
-          return pure35(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [$2673["value0"]["value1"][0], inject(outsideOutside)]))(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2673["value0"]["value1"][0])), new Tuple("insideType", insideInside), new Tuple("outsideType", outsideOutside)])([v1["value1"][0]["value1"][0]])));
+          return pure36(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [$2673["value0"]["value1"][0], inject(outsideOutside)]))(dTERM2(ErrorBoundary.value)([new Tuple("gamma", rEndpoint2($2673["value0"]["value1"][0])), new Tuple("insideType", insideInside), new Tuple("outsideType", outsideOutside)])([v1["value1"][0]["value1"][0]])));
         }
         ;
         return v2(true);
@@ -45317,7 +45533,7 @@
                     return Nothing.value;
                   }
                   ;
-                  return pure35(wrapBoundary2(Up.value)(new Expr(csor(VarSort.value), [new Expr(csor(CtxConsSort.value), [v1[1], inject(v[1]), inject(rEndpoint2(v1[0]))]), v1[1], diff2(rEndpoint2(v1[2]))(v[1]), replaceChange(new Expr(sor(NonLocal.value), []))(new Expr(sor(Local.value), []))]))(dTERM2(Zero.value)([new Tuple("gamma", rEndpoint2(v1[0])), new Tuple("x", v[0]), new Tuple("type", v[1])])([])));
+                  return pure36(wrapBoundary2(Up.value)(new Expr(csor(VarSort.value), [new Expr(csor(CtxConsSort.value), [v1[1], inject(v[1]), inject(rEndpoint2(v1[0]))]), v1[1], diff2(rEndpoint2(v1[2]))(v[1]), replaceChange(new Expr(sor(NonLocal.value), []))(new Expr(sor(Local.value), []))]))(dTERM2(Zero.value)([new Tuple("gamma", rEndpoint2(v1[0])), new Tuple("x", v[0]), new Tuple("type", v[1])])([])));
                 }
                 ;
                 throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 1017, column 6 - line 1024, column 79): " + [v2.constructor.name]);
@@ -45340,7 +45556,7 @@
       if (dterm.value0 instanceof Boundary && (dterm.value0.value0 instanceof Down && (dterm.value1.length === 1 && (dterm["value1"][0].value0 instanceof SSInj && (dterm["value1"][0].value0.value0 instanceof DerivLabel && (dterm["value1"][0].value0.value0.value0 instanceof ArrowRule && dterm["value1"][0].value1.length === 2)))))) {
         var $2701 = matchChange2(dterm.value0.value1)(injectChangeMatchExpr(TypeSort.value)([injectChangeMatchExpr(Arrow.value)([cSlot, cSlot])]));
         if ($2701 instanceof Just && ($2701.value0.value0.length === 0 && $2701.value0.value1.length === 2)) {
-          return pure35(dTERM2(ArrowRule.value)([new Tuple("a", rEndpoint2($2701["value0"]["value1"][0])), new Tuple("b", rEndpoint2($2701["value0"]["value1"][1]))])([wrapBoundary2(Down.value)(new Expr(csor(TypeSort.value), [$2701["value0"]["value1"][0]]))(dterm["value1"][0]["value1"][0]), wrapBoundary2(Down.value)(new Expr(csor(TypeSort.value), [$2701["value0"]["value1"][1]]))(dterm["value1"][0]["value1"][1])]));
+          return pure36(dTERM2(ArrowRule.value)([new Tuple("a", rEndpoint2($2701["value0"]["value1"][0])), new Tuple("b", rEndpoint2($2701["value0"]["value1"][1]))])([wrapBoundary2(Down.value)(new Expr(csor(TypeSort.value), [$2701["value0"]["value1"][0]]))(dterm["value1"][0]["value1"][0]), wrapBoundary2(Down.value)(new Expr(csor(TypeSort.value), [$2701["value0"]["value1"][1]]))(dterm["value1"][0]["value1"][1])]));
         }
         ;
         return v1(true);
@@ -45357,7 +45573,7 @@
             if (v1.length === 4) {
               return function(v2) {
                 if (v2.length === 1) {
-                  return pure35(wrapBoundary2(Down.value)(new Expr(csor(VarSort.value), [v1[0], v1[1], v1[2], v1[3]]))(v2[0]));
+                  return pure36(wrapBoundary2(Down.value)(new Expr(csor(VarSort.value), [v1[0], v1[1], v1[2], v1[3]]))(v2[0]));
                 }
                 ;
                 throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 1007, column 6 - line 1009, column 10): " + [v2.constructor.name]);
@@ -45378,7 +45594,7 @@
         return function(toBeWrapped) {
           var answerIfMe = function(v2) {
             return bind32(unify2(cursorTy)(tyOft))(function(v12) {
-              return pure35(new Tuple(subDerivTerm2(v12.value1)(toBeWrapped), v12.value1));
+              return pure36(new Tuple(subDerivTerm2(v12.value1)(toBeWrapped), v12.value1));
             });
           };
           var v = matchExprImpl2(tyOft)(injectMatchExpr(sor(Arrow.value))([slot2, slot2]));
@@ -45451,7 +45667,7 @@
                       var ty$prime = subMetaExprPartially2(v2.value1)(v1[1]);
                       var dterm$prime = subDerivTerm2(v2.value1)(dterm);
                       return bind32(maximallyApplied(cursorCtx$prime)(cursorTy$prime)(ty$prime)(dterm$prime))(function(v3) {
-                        return pure35(defer3(function(v4) {
+                        return pure36(defer3(function(v4) {
                           return new FillAction({
                             sub: composeSub2(v2.value1)(v3.value1),
                             dterm: v3.value0
@@ -45459,7 +45675,7 @@
                         }));
                       });
                     });
-                    return pure35({
+                    return pure36({
                       label: name15,
                       action: function() {
                         if (action2 instanceof Just) {
@@ -45502,7 +45718,7 @@
             if (v1.length === 1) {
               return function(v2) {
                 if (v2.length === 1) {
-                  return pure35(termToSSTerm(sortToType(rEndpoint2(v1[0]))));
+                  return pure36(termToSSTerm(sortToType(rEndpoint2(v1[0]))));
                 }
                 ;
                 throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 1043, column 6 - line 1043, column 78): " + [v2.constructor.name]);
@@ -45536,7 +45752,7 @@
                         return Nothing.value;
                       }
                       ;
-                      return pure35(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [v4[0], v4[1]]))(dTERM2(App2.value)([new Tuple("gamma", rEndpoint2(v4[0])), new Tuple("a", v3[0]), new Tuple("b", rEndpoint2(v4[1]))])([inside, termToSSTerm(fromJust$prime("wrapApp")(defaultDerivTerm2(new Expr(sor(TermSort.value), [rEndpoint2(v4[0]), v3[0]]))))])));
+                      return pure36(wrapBoundary2(Up.value)(new Expr(csor(TermSort.value), [v4[0], v4[1]]))(dTERM2(App2.value)([new Tuple("gamma", rEndpoint2(v4[0])), new Tuple("a", v3[0]), new Tuple("b", rEndpoint2(v4[1]))])([inside, termToSSTerm(fromJust$prime("wrapApp")(defaultDerivTerm2(new Expr(sor(TermSort.value), [rEndpoint2(v4[0]), v3[0]]))))])));
                     };
                   }
                   ;
@@ -45615,7 +45831,7 @@
                     return Nothing.value;
                   }
                   ;
-                  return pure35(wrapBoundary2(Up.value)(new Expr(csor(VarSort.value), [inject(rEndpoint2(v1[0])), v1[1], v1[2], new Expr(new Replace(new Expr(sor(Local.value), []), new Expr(sor(NonLocal.value), [])), [])]))(termToSSTerm(getFreeVar(rEndpoint2(v1[0]))(v[0])(v[1]))));
+                  return pure36(wrapBoundary2(Up.value)(new Expr(csor(VarSort.value), [inject(rEndpoint2(v1[0])), v1[1], v1[2], new Expr(new Replace(new Expr(sor(Local.value), []), new Expr(sor(NonLocal.value), [])), [])]))(termToSSTerm(getFreeVar(rEndpoint2(v1[0]))(v[0])(v[1]))));
                 }
                 ;
                 throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 995, column 6 - line 998, column 71): " + [v2.constructor.name]);
@@ -45661,7 +45877,7 @@
                   var maybeAction = function() {
                     var v2 = wrapInRef(index5);
                     return bind32(maximallyApplied(v[0])(v[1])(v2.value1)(v2.value0))(function(v3) {
-                      return pure35(defer3(function(v4) {
+                      return pure36(defer3(function(v4) {
                         return new FillAction({
                           sub: v3.value1,
                           dterm: v3.value0
@@ -45705,7 +45921,7 @@
     });
   };
   var editsAtHoleInterior = function(cursorSort) {
-    return append110(fromFoldable21(getVarEdits(cursorSort)))(mapMaybe2(identity23)(append110([makeSubEditFromTerm2(newTermFromRule2(If.value))("if")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(Lam.value))("lambda")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(Let.value))("let")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(App2.value))("(")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(NilRule.value))("nil")(cursorSort), getWrapInAppEdit("cons")(cursorSort)(newTermFromRule2(ConsRule.value)), getWrapInAppEdit("head")(cursorSort)(newTermFromRule2(HeadRule.value)), getWrapInAppEdit("tail")(cursorSort)(newTermFromRule2(TailRule.value)), getWrapInAppEdit("index")(cursorSort)(newTermFromRule2(IndexRule.value)), getWrapInAppEdit("length")(cursorSort)(newTermFromRule2(LengthRule.value)), getWrapInAppEdit("append")(cursorSort)(newTermFromRule2(AppendRule.value)), makeSubEditFromTerm2(newTermFromRule2(ListMatchRule.value))("match")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(EqualsRule.value))("==")(cursorSort)])(append110(mapFlipped9(allPossible1)(function(constant) {
+    return append110(fromFoldable20(getVarEdits(cursorSort)))(mapMaybe2(identity23)(append110([makeSubEditFromTerm2(newTermFromRule2(If.value))("if")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(Lam.value))("fun")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(Let.value))("let")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(App2.value))("(")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(NilRule.value))("nil")(cursorSort), getWrapInAppEdit("cons")(cursorSort)(newTermFromRule2(ConsRule.value)), getWrapInAppEdit("head")(cursorSort)(newTermFromRule2(HeadRule.value)), getWrapInAppEdit("tail")(cursorSort)(newTermFromRule2(TailRule.value)), getWrapInAppEdit("index")(cursorSort)(newTermFromRule2(IndexRule.value)), getWrapInAppEdit("length")(cursorSort)(newTermFromRule2(LengthRule.value)), getWrapInAppEdit("append")(cursorSort)(newTermFromRule2(AppendRule.value)), makeSubEditFromTerm2(newTermFromRule2(ListMatchRule.value))("match")(cursorSort), makeSubEditFromTerm2(newTermFromRule2(EqualsRule.value))("==")(cursorSort)])(append110(mapFlipped9(allPossible1)(function(constant) {
       return getWrapInAppEdit(constantName(constant))(cursorSort)(newTermFromRule2(new ConstantRule(constant)));
     }))(mapFlipped9(allPossible2)(function(op) {
       return makeSubEditFromTerm2(newTermFromRule2(new InfixRule(op)))(infixName(op))(cursorSort);
@@ -45722,7 +45938,7 @@
       var edits = mapFlipped13(indices)(function(index5) {
         var v2 = wrapInRef(index5);
         return bind32(maximallyApplied($2852["value0"][0])(meta2)(v2.value1)(v2.value0))(function(v3) {
-          return pure35(matchExpr3(derivTermSort2(index5))(injectMatchExpr(sor(VarSort.value))([slot2, slot2, slot2, slot2]))(function() {
+          return pure36(matchExpr3(derivTermSort2(index5))(injectMatchExpr(sor(VarSort.value))([slot2, slot2, slot2, slot2]))(function() {
             return function(v4) {
               if (v4.length === 4) {
                 return makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)(matchStringLabel(v4[1]))(v)(v3.value0);
@@ -45741,16 +45957,16 @@
     return v1(true);
   };
   var editsAtCursor = function(cursorSort) {
-    return append110(mapMaybe2(identity23)([makeChangeEditFromTerm2(newTermFromRule2(new DataTypeRule(Int.value)))("Int")(cursorSort), makeChangeEditFromTerm2(newTermFromRule2(new DataTypeRule(Bool.value)))("Bool")(cursorSort), makeEditFromPath2(newPathFromRule2(ListRule.value)(0))("List")(cursorSort)]))(append110(drop(1)(fromFoldable21(makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)("->")(cursorSort)(newTermFromRule2(ArrowRule.value)))))(function() {
+    return append110(mapMaybe2(identity23)([makeChangeEditFromTerm2(newTermFromRule2(new DataTypeRule(Int.value)))("Int")(cursorSort), makeChangeEditFromTerm2(newTermFromRule2(new DataTypeRule(Bool.value)))("Bool")(cursorSort), makeEditFromPath2(newPathFromRule2(ListRule.value)(0))("List")(cursorSort)]))(append110(drop(1)(fromFoldable20(makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)("->")(cursorSort)(newTermFromRule2(ArrowRule.value)))))(function() {
       var $2867 = !isTermSort(cursorSort);
       if ($2867) {
         return [];
       }
       ;
-      return append110(mapMaybe2(identity23)([makeEditFromPath2(newPathFromRule2(Lam.value)(2))("lambda")(cursorSort), makeEditFromPath2(newPathFromRule2(Let.value)(3))("let")(cursorSort), makeEditFromPath2(newPathFromRule2(Let.value)(2))("let")(cursorSort), makeEditFromPath2(newPathFromRule2(App2.value)(0))("(")(cursorSort)]))(append110(concat2(mapFlipped9(allPossible2)(function(op) {
-        return fromFoldable21(makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)(infixName(op))(cursorSort)(newTermFromRule2(new InfixRule(op))));
-      })))(append110(fromFoldable21(getVarWraps(cursorSort)))(append110(reverse2(fromFoldable21(getAppliedWrapEdits("cons")(cursorSort)(newTermFromRule2(ConsRule.value)))))(append110(reverse2(fromFoldable21(getAppliedWrapEdits("head")(cursorSort)(newTermFromRule2(HeadRule.value)))))(append110(reverse2(fromFoldable21(getAppliedWrapEdits("tail")(cursorSort)(newTermFromRule2(TailRule.value)))))(append110(reverse2(fromFoldable21(getAppliedWrapEdits("index")(cursorSort)(newTermFromRule2(IndexRule.value)))))(append110(reverse2(fromFoldable21(getAppliedWrapEdits("length")(cursorSort)(newTermFromRule2(LengthRule.value)))))(append110(reverse2(fromFoldable21(getAppliedWrapEdits("append")(cursorSort)(newTermFromRule2(AppendRule.value)))))(append110(fromFoldable21(getAppliedWrapEdits("match")(cursorSort)(newTermFromRule2(ListMatchRule.value))))(append110(catMaybes([makeEditFromPath2(newPathFromRule2(If.value)(1))("if")(cursorSort)]))(append110(fromFoldable21(makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)("==")(cursorSort)(newTermFromRule2(EqualsRule.value))))(concat2(mapFlipped9(allPossible1)(function(constant) {
-        return fromFoldable21(getAppliedWrapEdits(constantName(constant))(cursorSort)(newTermFromRule2(new ConstantRule(constant))));
+      return append110(mapMaybe2(identity23)([makeEditFromPath2(newPathFromRule2(Lam.value)(2))("fun")(cursorSort), makeEditFromPath2(newPathFromRule2(Let.value)(3))("let")(cursorSort), makeEditFromPath2(newPathFromRule2(Let.value)(2))("let")(cursorSort), makeEditFromPath2(newPathFromRule2(App2.value)(0))("(")(cursorSort)]))(append110(concat2(mapFlipped9(allPossible2)(function(op) {
+        return fromFoldable20(makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)(infixName(op))(cursorSort)(newTermFromRule2(new InfixRule(op))));
+      })))(append110(fromFoldable20(getVarWraps(cursorSort)))(append110(reverse2(fromFoldable20(getAppliedWrapEdits("cons")(cursorSort)(newTermFromRule2(ConsRule.value)))))(append110(reverse2(fromFoldable20(getAppliedWrapEdits("head")(cursorSort)(newTermFromRule2(HeadRule.value)))))(append110(reverse2(fromFoldable20(getAppliedWrapEdits("tail")(cursorSort)(newTermFromRule2(TailRule.value)))))(append110(reverse2(fromFoldable20(getAppliedWrapEdits("index")(cursorSort)(newTermFromRule2(IndexRule.value)))))(append110(reverse2(fromFoldable20(getAppliedWrapEdits("length")(cursorSort)(newTermFromRule2(LengthRule.value)))))(append110(reverse2(fromFoldable20(getAppliedWrapEdits("append")(cursorSort)(newTermFromRule2(AppendRule.value)))))(append110(fromFoldable20(getAppliedWrapEdits("match")(cursorSort)(newTermFromRule2(ListMatchRule.value))))(append110(catMaybes([makeEditFromPath2(newPathFromRule2(If.value)(1))("if")(cursorSort)]))(append110(fromFoldable20(makeWrapEdits2(isValidCursorSort)(isValidSelectionSorts)(forgetSorts)(splitChange)("==")(cursorSort)(newTermFromRule2(EqualsRule.value))))(concat2(mapFlipped9(allPossible1)(function(constant) {
+        return fromFoldable20(getAppliedWrapEdits(constantName(constant))(cursorSort)(newTermFromRule2(new ConstantRule(constant))));
       }))))))))))))));
     }()));
   };
@@ -45763,7 +45979,7 @@
               return function(v2) {
                 if (v2.length === 1) {
                   var varName = new Expr(new MInj(new DataLabel(new DataString(""))), []);
-                  return pure35(dTERM2(Lam.value)([new Tuple("x", varName), new Tuple("a", v[0]), new Tuple("b", rEndpoint2(v1[1])), new Tuple("gamma", rEndpoint2(v1[0]))])([termToSSTerm(fromJust$prime("wrapLambda")(defaultDerivTerm2(pureMetaExpr(new TypeOfLabel(SortString.value))([varName])))), termToSSTerm(sortToType(v[0])), wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [plusChange(sor(CtxConsSort.value))([varName, v[0]])(v1[0])([]), v1[1]]))(v2[0])]));
+                  return pure36(dTERM2(Lam.value)([new Tuple("x", varName), new Tuple("a", v[0]), new Tuple("b", rEndpoint2(v1[1])), new Tuple("gamma", rEndpoint2(v1[0]))])([termToSSTerm(fromJust$prime("wrapLambda")(defaultDerivTerm2(pureMetaExpr(new TypeOfLabel(SortString.value))([varName])))), termToSSTerm(sortToType(v[0])), wrapBoundary2(Down.value)(new Expr(csor(TermSort.value), [plusChange(sor(CtxConsSort.value))([varName, v[0]])(v1[0])([]), v1[1]]))(v2[0])]));
                 }
                 ;
                 throw new Error("Failed pattern match at Language.Pantograph.Specific.Currying (line 1055, column 6 - line 1063, column 18): " + [v2.constructor.name]);
@@ -45805,8 +46021,8 @@
           isInteractive: v1.renCtx.isInteractive,
           isInlined: v1.renCtx.isInlined,
           metavarNumbers: v1.renCtx.metavarNumbers,
-          cssClasses: $$delete5("error")(v1.renCtx.cssClasses),
-          pathIdPrefix: v1.renCtx.pathIdPrefix
+          pathIdPrefix: v1.renCtx.pathIdPrefix,
+          cssClasses: $$delete5("error")(v1.renCtx.cssClasses)
         };
         var parentRule = function() {
           if (v1.mb_parent instanceof Just && v1.mb_parent.value0.value0 instanceof DerivLabel) {
@@ -45861,13 +46077,13 @@
               return incremementIndentationLevel(renCtx);
             }();
             return [pure115([lambdaElem]), new Left(new Tuple(renCtx, 0)), pure115([colonElem2]), new Left(new Tuple({
-              cssClasses: singleton10("typesubscript"),
               indentationLevel: renCtx.indentationLevel,
               isCursor: renCtx.isCursor,
               isInlined: renCtx.isInlined,
               isInteractive: renCtx.isInteractive,
               metavarNumbers: renCtx.metavarNumbers,
-              pathIdPrefix: renCtx.pathIdPrefix
+              pathIdPrefix: renCtx.pathIdPrefix,
+              cssClasses: singleton10("typesubscript")
             }, 1)), pure115(maybeMapsTo), new Left(new Tuple(renCtx$prime, 2))];
           }
           ;
@@ -45914,13 +46130,13 @@
             var renCtx$prime$prime = function() {
               if (isGrey) {
                 return {
-                  cssClasses: insert15("grey")(singleton10("error")),
                   indentationLevel: renCtx$prime.indentationLevel,
                   isCursor: renCtx$prime.isCursor,
                   isInlined: renCtx$prime.isInlined,
                   isInteractive: renCtx$prime.isInteractive,
                   metavarNumbers: renCtx$prime.metavarNumbers,
-                  pathIdPrefix: renCtx$prime.pathIdPrefix
+                  pathIdPrefix: renCtx$prime.pathIdPrefix,
+                  cssClasses: insert15("grey")(singleton10("error"))
                 };
               }
               ;
@@ -45967,13 +46183,13 @@
           ;
           if (v2.value0 instanceof TermHole && (v2.value1.value0 instanceof MInj && (v2.value1.value0.value0 instanceof SInj && (v2.value1.value0.value0.value0 instanceof TermSort && v2.value1.value1.length === 2)))) {
             return [pure115([lbraceElem]), new Left(new Tuple(renCtx, 0)), pure115([colonElem2]), new Left(new Tuple({
-              cssClasses: singleton10("typesubscript"),
               indentationLevel: renCtx.indentationLevel,
               isCursor: renCtx.isCursor,
               isInlined: renCtx.isInlined,
               isInteractive: renCtx.isInteractive,
               metavarNumbers: renCtx.metavarNumbers,
-              pathIdPrefix: renCtx.pathIdPrefix
+              pathIdPrefix: renCtx.pathIdPrefix,
+              cssClasses: singleton10("typesubscript")
             }, 1)), pure115([rbraceElem])];
           }
           ;
@@ -46001,13 +46217,13 @@
               var outsideType = lookup$prime3(function() {
                 var $3040 = flip(index$prime)(0);
                 return function($3041) {
-                  return $3040(toUnfoldable8($3041));
+                  return $3040(toUnfoldable9($3041));
                 };
               }()(filter6(matchRuleMetaVarName("outsideType"))(v5.value0)))(v1.sigma);
               var insideType = lookup$prime3(function() {
                 var $3042 = flip(index$prime)(0);
                 return function($3043) {
-                  return $3042(toUnfoldable8($3043));
+                  return $3042(toUnfoldable9($3043));
                 };
               }()(filter6(matchRuleMetaVarName("insideType"))(v5.value0)))(v1.sigma);
               return [pure115([div2([classes(["error-info ErrorBoundary-info"])])([div_([text5("[type boundary]")]), div_([text5("inside  type: "), v1.renderTerm(new Zipper(Nil.value, sortToType(insideType)))(renCtx)]), div_([text5("outside type: "), v1.renderTerm(new Zipper(Nil.value, sortToType(outsideType)))(renCtx)])])]), pure115([errorLeftSide]), new Left(new Tuple(renCtx, 0)), pure115([errorRightSide])];
@@ -46128,7 +46344,7 @@
   var show18 = /* @__PURE__ */ show(showInt);
   var foldr9 = /* @__PURE__ */ foldr(foldableList);
   var all4 = /* @__PURE__ */ all(foldableList)(heytingAlgebraBoolean);
-  var pure36 = /* @__PURE__ */ pure(applicativeEither);
+  var pure37 = /* @__PURE__ */ pure(applicativeEither);
   var div4 = /* @__PURE__ */ div(euclideanRingInt);
   var mod4 = /* @__PURE__ */ mod(euclideanRingInt);
   var pure116 = /* @__PURE__ */ pure(applicativeLazy);
@@ -46278,7 +46494,7 @@
     ;
     if (v instanceof ConstNot) {
       return new FunVal(function(b2) {
-        return pure36(new BoolVal(!assertValBool(b2)));
+        return pure37(new BoolVal(!assertValBool(b2)));
       });
     }
     ;
@@ -46396,7 +46612,7 @@
         }
         ;
         if (v2.value0 instanceof Lam && v2.value1.length === 3) {
-          return pure36(new FunVal(function(x) {
+          return pure37(new FunVal(function(x) {
             return $$eval(new Cons(pure116(new Right(x)), v))(v2["value1"][2]);
           }));
         }
@@ -46455,13 +46671,13 @@
         }
         ;
         if (v2.value0 instanceof ConstantRule && v2.value1.length === 0) {
-          return pure36(evalConst(v2.value0.value0));
+          return pure37(evalConst(v2.value0.value0));
         }
         ;
         if (v2.value0 instanceof InfixRule && v2.value1.length === 2) {
           return bind33($$eval(v)(v2["value1"][0]))(function(v11) {
             return bind33($$eval(v)(v2["value1"][1]))(function(v21) {
-              return pure36(evalInfix(v2.value0.value0)(v11)(v21));
+              return pure37(evalInfix(v2.value0.value0)(v11)(v21));
             });
           });
         }
@@ -46469,53 +46685,53 @@
         if (v2.value0 instanceof EqualsRule && v2.value1.length === 2) {
           return bind33($$eval(v)(v2["value1"][0]))(function(v11) {
             return bind33($$eval(v)(v2["value1"][1]))(function(v21) {
-              return pure36(new BoolVal(eqValue2(v11)(v21)));
+              return pure37(new BoolVal(eqValue2(v11)(v21)));
             });
           });
         }
         ;
         if (v2.value0 instanceof NilRule && v2.value1.length === 0) {
-          return pure36(new ListVal(Nil.value));
+          return pure37(new ListVal(Nil.value));
         }
         ;
         if (v2.value0 instanceof ConsRule && v2.value1.length === 0) {
-          return pure36(new FunVal(function(x) {
-            return pure36(new FunVal(function(xs) {
-              return pure36(new ListVal(new Cons(x, assertValList(xs))));
+          return pure37(new FunVal(function(x) {
+            return pure37(new FunVal(function(xs) {
+              return pure37(new ListVal(new Cons(x, assertValList(xs))));
             }));
           }));
         }
         ;
         if (v2.value0 instanceof LengthRule && v2.value1.length === 0) {
-          return pure36(new FunVal(function(xs) {
-            return pure36(new IntVal(length4(assertValList(xs))));
+          return pure37(new FunVal(function(xs) {
+            return pure37(new IntVal(length4(assertValList(xs))));
           }));
         }
         ;
         if (v2.value0 instanceof AppendRule && v2.value1.length === 0) {
-          return pure36(new FunVal(function(xs) {
-            return pure36(new FunVal(function(ys) {
-              return pure36(new ListVal(append111(assertValList(xs))(assertValList(ys))));
+          return pure37(new FunVal(function(xs) {
+            return pure37(new FunVal(function(ys) {
+              return pure37(new ListVal(append111(assertValList(xs))(assertValList(ys))));
             }));
           }));
         }
         ;
         if (v2.value0 instanceof HeadRule && v2.value1.length === 0) {
-          return pure36(new FunVal(function(xs) {
-            return pure36(fromJust6(head(assertValList(xs))));
+          return pure37(new FunVal(function(xs) {
+            return pure37(fromJust6(head(assertValList(xs))));
           }));
         }
         ;
         if (v2.value0 instanceof TailRule && v2.value1.length === 0) {
-          return pure36(new FunVal(function(xs) {
-            return pure36(new ListVal(fromJust6(tail(assertValList(xs)))));
+          return pure37(new FunVal(function(xs) {
+            return pure37(new ListVal(fromJust6(tail(assertValList(xs)))));
           }));
         }
         ;
         if (v2.value0 instanceof IndexRule && v2.value1.length === 0) {
-          return pure36(new FunVal(function(xs) {
-            return pure36(new FunVal(function(n) {
-              return pure36(fromJust6(index2(assertValList(xs))(assertValInt(n))));
+          return pure37(new FunVal(function(xs) {
+            return pure37(new FunVal(function(n) {
+              return pure37(fromJust6(index2(assertValList(xs))(assertValInt(n))));
             }));
           }));
         }
@@ -46536,7 +46752,7 @@
         }
         ;
         if (v2.value0 instanceof IntegerLiteral && (v2.value1.length === 1 && (v2["value1"][0].value0 instanceof DerivLiteral && (v2["value1"][0].value0.value0 instanceof DataInt && v2["value1"][0].value1.length === 0)))) {
-          return pure36(new IntVal(v2["value1"][0].value0.value0.value0));
+          return pure37(new IntVal(v2["value1"][0].value0.value0.value0));
         }
         ;
         if (v2.value0 instanceof Comment && v2.value1.length === 2) {
@@ -46574,7 +46790,7 @@
     throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 130, column 22 - line 135, column 32): " + [v.constructor.name]);
   };
 
-  // output/Main/index.js
+  // output/MainStandalone/index.js
   var discard18 = /* @__PURE__ */ discard(discardUnit)(bindAff);
   var log6 = /* @__PURE__ */ log2(monadEffectAff);
   var bind34 = /* @__PURE__ */ bind(bindAff);
@@ -46596,6 +46812,6 @@
     interpreter: interpereter
   });
 
-  // index.js
+  // standalone.js
   main2();
 })();

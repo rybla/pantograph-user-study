@@ -1,6 +1,3 @@
-[submodule "packages/fp-in-monaco"]
-	path = packages/fp-in-monaco
-	url = git@github.com:rybla/fp-in-monaco.git
 [submodule "packages/pantograph"]
 	path = packages/pantograph
 	url = git@github.com:jeprinz/pantograph.git

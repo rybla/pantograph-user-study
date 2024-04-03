@@ -1,0 +1,13 @@
+{
+  "name": "demonaco-backend",
+  "scripts": {
+    "build": "spago build",
+    "bundle": "pnpm run build && spago bundle-module --to ../../src/backend.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.18",
+    "purescript": "^0.15.8",
+    "purty": "^7.0.0",
+    "spago": "^0.20.9"
+  }
+}

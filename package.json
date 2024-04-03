@@ -1,33 +1,35 @@
 {
   "name": "pantograph-user-study",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "pantograph.install": "cd packages/pantograph && npm install",
-    "pantograph.build": "cd packages/pantograph && npm run build",
-    "pantograph.serve": "cd packages/pantograph && npm run serve",
-    "pantograph.bundle": "pnpm pantograph.build && cp -r packages/pantograph/dist/Lib packages/pantograph/dist/Tutorial public/ && cp packages/pantograph/dist/main.css public/pantograph.css && cp packages/pantograph/dist/index.js public/pantograph.js",
-    "fp-in-monaco.install": "cd packages/fp-in-monaco && pnpm install",
-    "fp-in-monaco.build": "cd packages/fp-in-monaco && pnpm run build",
-    "fp-in-monaco.serve": "cd packages/fp-in-monaco && pnpm run serve",
-    "fp-in-monaco.bundle": "pnpm fp-in-monaco.build && rm -rf public/_next && cp -r packages/fp-in-monaco/out/_next public/_next && cp packages/fp-in-monaco/out/index.html public/fp-in-monaco.html",
-    "build": "pnpm pantograph.build && pnpm run fp-in-monaco.build",
-    "dev": "next dev -p 3000",
-    "bundle": "pnpm run pantograph.bundle && pnpm run fp-in-monaco.bundle",
-    "serve": "pnpm run bundle && pnpm run dev",
-    "serve-3": "pnpm run build && pnpm run pantograph.serve & pnpm run fp-in-monaco.serve & pnpm run dev"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18"
+    "pantograph.build": "cd packages/pantograph && npm run build && npm run build-standalone && cp dist/index.html ../../public/pantograph.html && cp dist/pantograph.js ../../public/pantograph.js && cp dist/pantograph.css ../../public/pantograph.css && cp -rf dist/Tutorial ../../public/Tutorial && cp -rf dist/Lib ../../public/Lib",
+    "demonaco.parser.build": "tspeg grammar/fp.peg src/fp_parser.ts",
+    "demonaco.backend.build": "pnpm --filter=demonaco-backend run bundle",
+    "demonaco.build": "pnpm run demonaco.backend.build && pnpm run demonaco.parser.build",
+    "packages.build": "pnpm run pantograph.build && pnpm run demonaco.build",
+    "dev": "pnpm run packages.build && vite",
+    "build": "pnpm run packages.build && vite build"
   },
   "devDependencies": {
-    "next": "14.1.3",
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.3"
+    "@monaco-editor/react": "^4.6.0",
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.23",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "monaco-editor": "^0.47.0",
+    "tspeg": "^3.3.1",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.0",
+    "vite-plugin-singlefile": "^2.0.1",
+    "vite-tsconfig-paths": "^4.3.2"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
