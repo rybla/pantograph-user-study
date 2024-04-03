@@ -213,20 +213,21 @@ export const all_biexercises: BiExercise[] = [
     instructions: (<span><i>(Do not copy text from these instructions to your clipboard)</i> Transcribe the following program into your editor:
       {renderCodeblock(
         [
-          "let f : Int -> Int = fun x : Int => 5 / x in",
-          "let m : Int = n + 1 in",
-          "let y : Int = f m in",
-          "y / n"
-        ].join("\n")
+					"let f : Int -> Int = fun x : Int => 5 / x in",
+					"let m : Int = n + 1 in",
+					"let y : Int = f m in",
+					"y / n"
+				].join("\n")
       )}
       Then, edit the program to result in this (swap the order of the definitions of <code>f</code> and <code>y</code>):
       {renderCodeblock(
         [
-          "let y : Int = f m in",
-          "let f : Int -> Int = fun x : Int => 5 / x in",
-          "let m : Int = n + 1 in",
-          "y / n"
-        ].join("\n")
+					"let y : Int =",
+					"	let f : Int -> Int = fun x : Int => 5 / x in",
+					"	let m : Int = n + 1 in",
+					"	f m in",
+					"y / n"
+				].join("\n")
       )}
     </span>),
     pantograph_program: "",
@@ -236,14 +237,14 @@ export const all_biexercises: BiExercise[] = [
     instructions: (<span><i>(Do not copy text from these instructions to your clipboard)</i> Transcribe the following program into your editor:
       {renderCodeblock(
         [
-          "let f : Int -> Int = fun x : ?",
-          "let g : Int -> Int = ?",
-          "let h : Int -> Int -> Int -> Int = ? in",
-          "(f (g (h 1 2 3)))"
-        ]
-          .join("\n")
+          "let f : Int -> Int -> Int -> Int = fun x : Int => fun y : Int => fun z : Int => ? in",
+					"let g : Int -> Int = fun x : Int => ? in",
+					"let h : Int -> Int = fun x : int => ? in",
+					"(f (g (h 1)) 2 3)"
+				]
+					.join("\n")
       )}
-      Then, edit the program to result in this (only the last line has changed):
+      Then, edit the program to result in this:
       {renderCodeblock(
         [
           "let f : Int -> Int = fun x : ?",
