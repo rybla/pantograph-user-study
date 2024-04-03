@@ -3,7 +3,7 @@
 * TOP  := _ term=TERM _ $
 * // terms
 * // NOTE: The order in which these appear in the next line affects the order that it tries things when parsing
-* TERM := MATCH | LET | IF | FUN | LET_NOANN | FUN_NOANN | EQUALS | INFIX_EXPRESSION | APP | SINGLES | PARENTERM | NOT
+* TERM :=  MATCH | LET | IF | FUN | LET_NOANN | FUN_NOANN | EQUALS | INFIX_EXPRESSION | APP | SINGLES | PARENTERM | NOT
 * PARENTERM := '\(' _ inside=TERM _ '\)'
 * APPRHS := SINGLES | PARENTERM
 * SINGLES := HOLE | NAME | INTEGER
@@ -18,7 +18,7 @@
 * INTEGER := start_pos=@ data='[0-9]+' end_pos=@
 * INFIX_EXPRESSION := start_pos=@ t1=TERM __ data=INFIX_OP __ t2=TERM end_pos=@
 * INFIX_OP := '>=' | '<=' | '\+|\*|\-|\/|\%|\^|<|>|&&|\|\|'
-* NOT := start_pos=@ '!' __ t=TERM end_pos=@
+* NOT := start_pos=@ '!' _ t=APPRHS end_pos=@
 * EQUALS := start_pos=@ t1=TERM __ '==' __ t2=TERM end_pos=@
 * MATCH := start_pos=@ 'match' __ l=TERM __ 'with' __ '\|' _ 'nil' _ '=>' _ nilcase=TERM _ '\|' _ 'cons' __ data=NAME __ data2=NAME _ '=>' _ t2=TERM end_pos=@
 * // types
@@ -198,7 +198,7 @@ export type INFIX_OP_3 = string;
 export interface NOT {
     kind: ASTKinds.NOT;
     start_pos: PosInfo;
-    t: TERM;
+    t: APPRHS;
     end_pos: PosInfo;
 }
 export interface EQUALS {
@@ -682,14 +682,14 @@ export class Parser {
         return this.run<NOT>($$dpth,
             () => {
                 let $scope$start_pos: Nullable<PosInfo>;
-                let $scope$t: Nullable<TERM>;
+                let $scope$t: Nullable<APPRHS>;
                 let $scope$end_pos: Nullable<PosInfo>;
                 let $$res: Nullable<NOT> = null;
                 if (true
                     && ($scope$start_pos = this.mark()) !== null
                     && this.regexAccept(String.raw`(?:!)`, "", $$dpth + 1, $$cr) !== null
-                    && this.match__($$dpth + 1, $$cr) !== null
-                    && ($scope$t = this.matchTERM($$dpth + 1, $$cr)) !== null
+                    && this.match_($$dpth + 1, $$cr) !== null
+                    && ($scope$t = this.matchAPPRHS($$dpth + 1, $$cr)) !== null
                     && ($scope$end_pos = this.mark()) !== null
                 ) {
                     $$res = {kind: ASTKinds.NOT, start_pos: $scope$start_pos, t: $scope$t, end_pos: $scope$end_pos};
