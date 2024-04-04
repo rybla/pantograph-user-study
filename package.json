@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "pantograph.build": "cd packages/pantograph && npm run build && npm run build-standalone && cp -f dist/index.html ../../public/pantograph.html && cp -f dist/pantograph.js ../../public/pantograph.js && cp -f dist/pantograph.css ../../public/pantograph.css && cp -rf dist/Tutorial ../../public/Tutorial && cp -rf dist/Lib ../../public/Lib",
+    "pantograph.build": "cd packages/pantograph && npm run build && npm run build-standalone && cp -f dist/index.html ../../public/pantograph.html && cp -f dist/pantograph.js ../../public/pantograph.js && cp -f dist/pantograph.css ../../public/pantograph.css && rm -rf ../../public/Tutorial && cp -rf dist/Tutorial ../../public/Tutorial && rm -rf dist/Lib ../../public/Lib && cp -rf dist/Lib ../../public/Lib",
     "demonaco.parser.build": "tspeg grammar/fp.peg src/fp_parser.ts",
     "demonaco.backend.build": "pnpm --filter=demonaco-backend run bundle",
     "demonaco.build": "pnpm run demonaco.backend.build && pnpm run demonaco.parser.build",
     "packages.build": "pnpm run pantograph.build && pnpm run demonaco.build",
     "dev": "pnpm run packages.build && vite",
-    "build": "pnpm run packages.build && vite build && cp -rf dist docs",
-    "clean": "rm -rf dist/ public/Lib public/Tutorial public/pantograph*"
+    "build": "pnpm run packages.build && vite build && rm -rf docs && cp -rf dist docs",
+    "clean": "rm -rf dist/ docs/ public/Lib public/Tutorial public/pantograph*"
   },
   "devDependencies": {
     "@monaco-editor/react": "^4.6.0",
