@@ -550,6 +550,13 @@ isPrime 7 &&
         <div>
           <i>Note.</i> There is a built-in function {renderCode("append : List Int -> List Int -> List Int")} which appends two {renderCode("List Int")}s together.
         </div>
+        <br />
+        <div>
+          <i>Note.</i> You can match on a list {renderCode("ls")} with the following syntax:
+          {renderCodeblock(`match ls with
+    | nil => ...
+    | cons h t => ...`)}
+        </div>
       </div>
 
     ),
