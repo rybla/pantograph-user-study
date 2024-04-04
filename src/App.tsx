@@ -3,26 +3,12 @@ import React, { JSX } from 'react'
 import Demonaco from './Demonaco'
 
 const pantograph_url = "./pantograph.html"
+const mode = 'mixed' as 'mixed' | 'pantograph' | 'text';
 
 export type BiExercise = { instructions: JSX.Element, text_program: string, pantograph_program_index: string }
 export type Exercise
   = { case: 'pantograph', instructions: JSX.Element, program_index: string }
   | { case: 'text', instructions: JSX.Element, program: string }
-
-const do_shuffle = false;
-
-function shuffleArray<A>(array: A[]): A[] {
-  const shuffledArray = [];
-  const originalArray = [...array];
-
-  while (originalArray.length > 0) {
-    const randomIndex = Math.floor(Math.random() * originalArray.length);
-    shuffledArray.push(originalArray[randomIndex]);
-    originalArray.splice(randomIndex, 1);
-  }
-
-  return shuffledArray;
-}
 
 export default function App() {
   useEffect(() => {
@@ -31,33 +17,37 @@ export default function App() {
 
   const [exercises, set_exercises] = useState<Exercise[] | undefined>(undefined);
 
-  useEffect(() => {
-    const biexercises = do_shuffle ? shuffleArray(all_biexercises) : all_biexercises;
-    const start_with_pantograph = Math.round(Math.random());
-    console.log(JSON.stringify({ start_with_pantograph }));
-    const mode = 'mixed' as 'mixed' | 'pantograph' | 'text';
+  function initExercises(start_with_pantograph: boolean) {
     switch (mode) {
       case 'mixed': {
-        if (start_with_pantograph === 1) {
-          set_exercises(biexercises.map((ex, i) => i < biexercises.length / 2 ? { case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index } : { case: 'text', instructions: ex.instructions, program: ex.text_program }));
+        if (start_with_pantograph) {
+          set_exercises(all_biexercises.map((ex, i) => i < all_biexercises.length / 2 ? { case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index } : { case: 'text', instructions: ex.instructions, program: ex.text_program }));
         } else {
-          set_exercises(biexercises.map((ex, i) => i >= biexercises.length / 2 ? { case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index } : { case: 'text', instructions: ex.instructions, program: ex.text_program }));
+          set_exercises(all_biexercises.map((ex, i) => i >= all_biexercises.length / 2 ? { case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index } : { case: 'text', instructions: ex.instructions, program: ex.text_program }));
         }
         break;
       }
       case 'text': {
-        set_exercises(biexercises.map((ex) => ({ case: 'text', instructions: ex.instructions, program: ex.text_program })));
+        set_exercises(all_biexercises.map((ex) => ({ case: 'text', instructions: ex.instructions, program: ex.text_program })));
         break;
       }
       case 'pantograph': {
-        set_exercises(biexercises.map((ex) => ({ case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index })));
+        set_exercises(all_biexercises.map((ex) => ({ case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index })));
         break;
       }
     }
-  }, []);
+  }
 
-  // const [exercise_status, set_exercise_status] = useState<'begin' | number | 'end'>('begin');
-  const [exercise_status, set_exercise_status] = useState<'begin' | number | 'end'>(0);
+  function initGroupA() {
+    initExercises(true)
+  }
+
+  function initGroupB() {
+    initExercises(false)
+  }
+
+  // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
+  const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('begin');
 
   function renderCurrentInstruction(): JSX.Element {
     if (typeof exercise_status === 'number') {
@@ -78,6 +68,7 @@ export default function App() {
       }
     } else {
       switch (exercise_status) {
+        case 'text-tutorial': return renderTextTutorial();
         case 'begin': return renderBegin();
         case 'end': return renderEnd();
       }
@@ -111,6 +102,21 @@ export default function App() {
           }
         }
       }
+    } else if (exercise_status === 'text-tutorial') {
+      return (<Demonaco key={exercise_status} start_program={`let a : Int = 1 in
+let a2 = a * a in
+let square = fun x => x * x in
+
+let l = cons 0 (cons 1 (cons 2 (cons 3 nil))) in
+let isNil : List Int -> Bool = 
+    fun l =>
+        match l with
+        | nil => true
+        | cons h t => false
+in
+
+square ? == a2
+`} />)
     }
 
     return (<></>)
@@ -121,6 +127,7 @@ export default function App() {
       set_exercise_status(i => {
         const next_exercise_status = (() => {
           switch (i) {
+            case 'text-tutorial': return 'begin';
             case 'begin': return 0;
             case 'end': return 'end';
             default: {
@@ -151,9 +158,23 @@ export default function App() {
     )
 
     switch (exercise_status) {
-      case 'begin': return renderContainer([
+      case 'text-tutorial': return renderContainer([
         <button onClick={nextExercise}>
-          begin
+          next
+        </button>
+      ])
+      case 'begin': return renderContainer([
+        <button onClick={() => {
+          initGroupA()
+          nextExercise()
+        }}>
+          Begin Group A
+        </button>,
+        <button onClick={() => {
+          initGroupB()
+          nextExercise()
+        }}>
+          Begin Group B
         </button>
       ])
       case 'end': return renderContainer([])
@@ -165,8 +186,46 @@ export default function App() {
     }
   }
 
-  const renderBegin = () =>
-  (
+  const renderTextTutorial = () => (
+    <div
+      style={{
+        padding: "0.5em",
+        display: 'flex',
+        flexDirection: 'column',
+        gap: "0.5em",
+      }}
+    >
+      {renderExerciseTitle("Text Editor Introduction")}
+      <div>
+        To the left of these instructions is a text editor with the basic editing features of programming-focussed text editors such as VS Code, Sublime Text, etc.
+        This text editor also has a few extra features:
+        <ul>
+          <li>Checks syntax automatically</li>
+          <li>Checks types automatically</li>
+          <li>Hover over errors for more info</li>
+        </ul>
+      </div>
+      <div>
+        The programming language used with the text editor is essentially the same as the one you used in the Pantograph tutorial, with a few variations:
+        <ul>
+          <li>A hole is written {renderCode("?")}</li>
+          <li>Hover over a hole to see its expected type</li>
+          <li>Type annotations are <i>optional</i></li>
+        </ul>
+      </div>
+      <div>
+        Take a few minutes to get familiar with the text editor. For example:
+        <ul>
+          <li>Write a simple expression e.g. {renderCode("let x = 4 in ? x x")}</li>
+          <li>Note syntax error feedback on hover</li>
+          <li>Note type error feedback on hover</li>
+          <li>Write a hole and view its type on hover</li>
+        </ul>
+      </div>
+    </div>
+  )
+
+  const renderBegin = () => (
     <div
       style={{
         padding: "0.5em",
@@ -178,16 +237,16 @@ export default function App() {
       <div>
         <div>
           Welcome to the exercise section of the Pantograph user study.
-          In this section, you will be presented with {exercises?.length} programming questions.
-          For half of the questions you will use a text editor and for the other half you will use Pantograph.
-          You will screen-record your session.
+          In this section, you will be presented with a selection of programming exercises.
+          For half of the exercises you will use a text editor and for the other half you will use Pantograph.
+          You will screen-record your session using <a href="https://recordscreen.io/" target='_blank'>screenrecord.io</a>. <b>Make sure to test that screen recording works before you begin.</b>
           <br></br>
           <br></br>
-          You may ask the users study hosts any questions about the programming language, editors, or what a question is asking.
-          However, they can't help you to solve the question.
+          You may ask the users study hosts any questions about the programming language, editors, or exercise instructions.
+          However, they can't help you to solve an exercise.
           <br></br>
           <br></br>
-          Once the study's hosts have announced that you may begin, press the start button.
+          Once the study's hosts have announced that you may begin, start screen recording and then press the "Begin" button above according to your assigned group.
         </div>
         {/* <ul>
               <li>We can explain how to do any particular editing action in Pantograph or the text editor.</li>
@@ -211,8 +270,7 @@ export default function App() {
   )
 
 
-  const renderEnd = () =>
-  (
+  const renderEnd = () => (
     <div
       style={{
         backgroundColor: "lightgreen",
