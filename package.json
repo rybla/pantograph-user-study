@@ -10,7 +10,7 @@
     "demonaco.build": "pnpm run demonaco.backend.build && pnpm run demonaco.parser.build",
     "packages.build": "pnpm run pantograph.build && pnpm run demonaco.build",
     "dev": "pnpm run packages.build && vite",
-    "build": "pnpm run packages.build && vite build && rm -rf docs && cp -rf dist docs",
+    "build": "pnpm run packages.build && vite build && rm -rf docs && cp -rf dist docs && git add -A && git commit -m'rebuild' && git push",
     "clean": "rm -rf dist/ docs/ public/Lib public/Tutorial public/pantograph*"
   },
   "devDependencies": {
