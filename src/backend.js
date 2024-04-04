@@ -1161,8 +1161,8 @@ var fromFoldable = function(dictFoldable) {
 var any2 = /* @__PURE__ */ runFn2(anyImpl);
 
 // output/Data.Int/foreign.js
-var fromStringAsImpl = function(just) {
-  return function(nothing) {
+var fromStringAsImpl = function(just2) {
+  return function(nothing2) {
     return function(radix) {
       var digits;
       if (radix < 11) {
@@ -1176,9 +1176,9 @@ var fromStringAsImpl = function(just) {
       return function(s) {
         if (pattern.test(s)) {
           var i = parseInt(s, radix);
-          return (i | 0) === i ? just(i) : nothing;
+          return (i | 0) === i ? just2(i) : nothing2;
         } else {
-          return nothing;
+          return nothing2;
         }
       };
     };
@@ -2001,6 +2001,16 @@ var ast2IsAst = function(x) {
   return x;
 };
 
+// output/MaybeJs/foreign.js
+var realCatchException = (Left2) => (Right2) => (callback) => {
+  try {
+    var res = callback();
+    return Right2(res);
+  } catch (e) {
+    return Left2("error");
+  }
+};
+
 // output/Debug/foreign.js
 var req = typeof module === "undefined" ? void 0 : module.require;
 var util = function() {
@@ -2212,7 +2222,7 @@ var printValue = function(val) {
     return "<function>";
   }
   ;
-  throw new Error("Failed pattern match at Evaluate (line 155, column 18 - line 159, column 29): " + [val.constructor.name]);
+  throw new Error("Failed pattern match at Evaluate (line 159, column 18 - line 163, column 29): " + [val.constructor.name]);
 };
 var evalConst = function(v) {
   if (v === "true") {
@@ -2399,20 +2409,20 @@ var $$eval = function(v) {
     if (v2.value0 === "LET" && v2.value1.length === 3) {
       var $lazy_vDef = $runtime_lazy("vDef", "Evaluate", function() {
         return $$eval(insert2(v1.dataa)(defer2(function(v32) {
-          return $lazy_vDef(87);
+          return $lazy_vDef(91);
         }))(v))(v2["value1"][1]);
       });
-      var vDef = $lazy_vDef(87);
+      var vDef = $lazy_vDef(91);
       return $$eval(insert2(v1.dataa)(pure22(vDef))(v))(v2["value1"][2]);
     }
     ;
     if (v2.value0 === "LET_NOANN" && v2.value1.length === 2) {
       var $lazy_vDef = $runtime_lazy("vDef", "Evaluate", function() {
         return $$eval(insert2(v1.dataa)(defer2(function(v32) {
-          return $lazy_vDef(90);
+          return $lazy_vDef(94);
         }))(v))(v2["value1"][0]);
       });
-      var vDef = $lazy_vDef(90);
+      var vDef = $lazy_vDef(94);
       return $$eval(insert2(v1.dataa)(pure22(vDef))(v))(v2["value1"][1]);
     }
     ;
@@ -2517,7 +2527,7 @@ var $$eval = function(v) {
             return $$eval(insert2(v1.dataa)(pure22(new Right(v5.value0)))(insert2(v1.dataa2)(pure22(new Right(new ListVal(v5.value1))))(v)))(v2["value1"][2]);
           }
           ;
-          throw new Error("Failed pattern match at Evaluate (line 121, column 13 - line 123, column 128): " + [v5.constructor.name]);
+          throw new Error("Failed pattern match at Evaluate (line 125, column 13 - line 127, column 128): " + [v5.constructor.name]);
         });
       }
       ;
@@ -2546,28 +2556,34 @@ var $$eval = function(v) {
   };
 };
 var evaluate = function(dterm) {
-  var v = $$eval(empty2)(dterm);
-  if (v instanceof Left) {
-    if (v.value0 instanceof HoleError) {
+  var res = realCatchException(Left.create)(Right.create)(function(v) {
+    return $$eval(empty2)(dterm);
+  });
+  if (res instanceof Right && res.value0 instanceof Left) {
+    if (res.value0.value0 instanceof HoleError) {
       return "Error: hole";
     }
     ;
-    if (v.value0 instanceof BoundaryError) {
+    if (res.value0.value0 instanceof BoundaryError) {
       return "Error: type boundary";
     }
     ;
-    if (v.value0 instanceof FreeVarError) {
+    if (res.value0.value0 instanceof FreeVarError) {
       return "Error: unbound variable";
     }
     ;
-    throw new Error("Failed pattern match at Evaluate (line 32, column 19 - line 35, column 50): " + [v.value0.constructor.name]);
+    throw new Error("Failed pattern match at Evaluate (line 34, column 27 - line 37, column 50): " + [res.value0.value0.constructor.name]);
   }
   ;
-  if (v instanceof Right) {
-    return printValue(v.value0);
+  if (res instanceof Right && res.value0 instanceof Right) {
+    return printValue(res.value0.value0);
   }
   ;
-  throw new Error("Failed pattern match at Evaluate (line 31, column 18 - line 36, column 32): " + [v.constructor.name]);
+  if (res instanceof Left) {
+    return "Error: infinite loop";
+  }
+  ;
+  throw new Error("Failed pattern match at Evaluate (line 33, column 5 - line 39, column 41): " + [res.constructor.name]);
 };
 
 // output/Data.Eq.Generic/index.js

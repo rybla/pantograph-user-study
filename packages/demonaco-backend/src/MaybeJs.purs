@@ -1,6 +1,7 @@
 module MaybeJs where
 
 import Prelude
+import Data.Either (Either(..))
 
 foreign import data Maybe :: Type -> Type
 

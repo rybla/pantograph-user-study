@@ -28,7 +28,7 @@ import Data.Array as Array
 -- evaluate _ = Exception.unsafeThrow "unimplemented: evaluate"
 
 evaluate :: Ast -> String
-evaluate dterm = case eval Map.empty dterm of
+evaluate dterm =
     let res = realCatchException Left Right (\_ -> eval Map.empty dterm) in
     case res of
     Right (Left error) -> case error of
