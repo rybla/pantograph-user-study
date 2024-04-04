@@ -47,7 +47,7 @@ export default function App() {
   }
 
   // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
-  const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('begin');
+  const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
 
   function renderCurrentInstruction(): JSX.Element {
     if (typeof exercise_status === 'number') {
