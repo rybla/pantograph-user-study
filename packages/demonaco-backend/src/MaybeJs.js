@@ -8,3 +8,13 @@ export const maybe = on_nothing => on_just => m => {
 		case 'nothing': return on_just(m.value);
 	}
 }
+
+
+export const realCatchException = (Left) => (Right) => (callback) => {
+    try{
+        var res = callback();
+        return Right(res);
+    }catch(e){
+        return Left("error");
+    }
+}

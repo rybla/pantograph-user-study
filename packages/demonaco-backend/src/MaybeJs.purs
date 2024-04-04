@@ -10,6 +10,9 @@ foreign import nothing :: forall a. Maybe a
 
 foreign import maybe :: forall a b. b -> (a -> b) -> Maybe a -> b
 
+foreign import realCatchException :: forall a. (forall x y. x -> Either x y) -> (forall x y. x -> Either y x)
+    -> (Unit -> a) -> Either String a
+
 instance _Functor_Maybe :: Functor Maybe where
   map f = maybe nothing (f >>> just)
 

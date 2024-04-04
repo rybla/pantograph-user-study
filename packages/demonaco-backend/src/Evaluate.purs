@@ -29,11 +29,15 @@ import Data.Array as Array
 
 evaluate :: Ast -> String
 evaluate dterm = case eval Map.empty dterm of
-    Left error -> case error of
+    let res = realCatchException Left Right (\_ -> eval Map.empty dterm) in
+    case res of
+    Right (Left error) -> case error of
         HoleError -> "Error: hole"
         BoundaryError -> "Error: type boundary"
         FreeVarError -> "Error: unbound variable"
-    Right res -> printValue res
+    Right (Right res) -> printValue res
+    Left error -> "Error: infinite loop"
+
 
 
 
