@@ -14724,6 +14724,14 @@
     console.log(a2);
     throw new Error("HOLE");
   };
+  var realCatchException = (Left2) => (Right2) => (callback) => {
+    try {
+      var res = callback();
+      return Right2(res);
+    } catch (e) {
+      return Left2("error");
+    }
+  };
 
   // output/Hole/index.js
   var hole = function() {
@@ -46239,7 +46247,7 @@
       return "<function>";
     }
     ;
-    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 123, column 18 - line 127, column 29): " + [val.constructor.name]);
+    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 124, column 18 - line 128, column 29): " + [val.constructor.name]);
   };
   var eqValue2 = function(v1) {
     return function(v2) {
@@ -46304,7 +46312,7 @@
       });
     }
     ;
-    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 102, column 13 - line 105, column 70): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 103, column 13 - line 106, column 70): " + [v.constructor.name]);
   };
   var evalInfix = function(v) {
     if (v instanceof OpPlus) {
@@ -46403,7 +46411,7 @@
       };
     }
     ;
-    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 108, column 13 - line 120, column 65): " + [v.constructor.name]);
+    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 109, column 13 - line 121, column 65): " + [v.constructor.name]);
   };
   var $$eval = function(v) {
     return function(v1) {
@@ -46426,10 +46434,10 @@
         if (v2.value0 instanceof Let && v2.value1.length === 4) {
           var $lazy_vDef = $runtime_lazy11("vDef", "Language.Pantograph.Specific.CurryingInterpereter", function() {
             return $$eval(new Cons(defer3(function(v3) {
-              return $lazy_vDef(54);
+              return $lazy_vDef(55);
             }), v))(v2["value1"][2]);
           });
-          var vDef = $lazy_vDef(54);
+          var vDef = $lazy_vDef(55);
           return $$eval(new Cons(pure116(vDef), v))(v2["value1"][3]);
         }
         ;
@@ -46553,7 +46561,7 @@
               return $$eval(new Cons(pure116(new Right(v3.value0)), new Cons(pure116(new Right(new ListVal(v3.value1))), v)))(v2["value1"][4]);
             }
             ;
-            throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 93, column 13 - line 95, column 91): " + [v3.constructor.name]);
+            throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 94, column 13 - line 96, column 91): " + [v3.constructor.name]);
           });
         }
         ;
@@ -46572,28 +46580,34 @@
     };
   };
   var interpereter = function(dterm) {
-    var v = $$eval(Nil.value)(dterm);
-    if (v instanceof Left) {
-      if (v.value0 instanceof HoleError) {
+    var res = realCatchException(Left.create)(Right.create)(function(v) {
+      return $$eval(Nil.value)(dterm);
+    });
+    if (res instanceof Right && res.value0 instanceof Left) {
+      if (res.value0.value0 instanceof HoleError) {
         return "Error: hole";
       }
       ;
-      if (v.value0 instanceof BoundaryError) {
+      if (res.value0.value0 instanceof BoundaryError) {
         return "Error: type boundary";
       }
       ;
-      if (v.value0 instanceof FreeVarError) {
+      if (res.value0.value0 instanceof FreeVarError) {
         return "Error: unbound variable";
       }
       ;
-      throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 131, column 19 - line 134, column 50): " + [v.value0.constructor.name]);
+      throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 134, column 27 - line 137, column 50): " + [res.value0.value0.constructor.name]);
     }
     ;
-    if (v instanceof Right) {
-      return printValue(v.value0);
+    if (res instanceof Right && res.value0 instanceof Right) {
+      return printValue(res.value0.value0);
     }
     ;
-    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 130, column 22 - line 135, column 32): " + [v.constructor.name]);
+    if (res instanceof Left) {
+      return "Error: infinite loop";
+    }
+    ;
+    throw new Error("Failed pattern match at Language.Pantograph.Specific.CurryingInterpereter (line 133, column 5 - line 139, column 41): " + [res.constructor.name]);
   };
 
   // output/MainStandalone/index.js
