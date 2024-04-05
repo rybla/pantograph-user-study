@@ -376,85 +376,86 @@ const renderExerciseTitle = (text: string) => (
   </div>
 )
 
-export const all_biexercises: BiExercise[] = [
-  {
-    instructions: (
-      <div>
-        {renderExerciseTitle("Transcribe and Edit")}
-        <div><i>(<b>Do not</b> copy text from these instructions)</i></div>
-        <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
-          {renderCodeblock(
-            [
-              "let f : Int -> Int = fun x : Int => 4 * x in",
-              "let m : Int = 1 + 1 in",
-              "let y : Int = f m in",
-              "y / 2"
-            ].join("\n")
-          )}
-          Then, edit the program to result in this (Move the definitions of {renderCode("f")} and {renderCode("m")} inside the definition of {renderCode("y")}):
-          {renderCodeblock(
-            [
-              "let y : Int =",
-              "    let f : Int -> Int = fun x : Int => 4 * x in",
-              "    let m : Int = 1 + 1 in",
-              "    f m in",
-              "y / 2"
-            ].join("\n")
-          )}
-        </div>
+const transcribe1 = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Transcribe and Edit")}
+      <div><i>(<b>Do not</b> copy text from these instructions)</i></div>
+      <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
+        {renderCodeblock(
+          [
+            "let f : Int -> Int = fun x : Int => 4 * x in",
+            "let m : Int = 1 + 1 in",
+            "let y : Int = f m in",
+            "y / 2"
+          ].join("\n")
+        )}
+        Then, edit the program to result in this (Move the definitions of {renderCode("f")} and {renderCode("m")} inside the definition of {renderCode("y")}):
+        {renderCodeblock(
+          [
+            "let y : Int =",
+            "    let f : Int -> Int = fun x : Int => 4 * x in",
+            "    let m : Int = 1 + 1 in",
+            "    f m in",
+            "y / 2"
+          ].join("\n")
+        )}
       </div>
-    ),
-    text_program: "",
-    pantograph_program_index: "transcribe1",
-  },
-  {
-    instructions: (
+    </div>
+  ),
+  text_program: "",
+  pantograph_program_index: "transcribe1",
+};
+
+const transcribe2 = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Transcribe and Edit")}
+      <div><i>(<b>Do not</b> copy text from these instructions)</i></div>
+      <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
+        {renderCodeblock(
+          [
+            "fun x : Int => ",
+            "    let i : Int = 7 in",
+            "    x / i",
+          ]
+            .join("\n")
+        )}
+        Then, edit the program to result in this (move the function into the definition of a let expression):
+        {renderCodeblock(
+          [
+            "let f : Int -> Int =",
+            "    fun x : Int => ",
+            "        let i : Int = 7 in",
+            "        x / i in",
+            "f 7",
+          ]
+            .join("\n")
+        )}</div>
+    </div>),
+  text_program: "",
+  pantograph_program_index: "transcribe2",
+};
+
+const demorgan = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("DeMorgan's Law")}
       <div>
-        {renderExerciseTitle("Transcribe and Edit")}
-        <div><i>(<b>Do not</b> copy text from these instructions)</i></div>
-        <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
-          {renderCodeblock(
-            [
-              "fun x : Int => ",
-              "    let i : Int = 7 in",
-              "    x / i",
-            ]
-              .join("\n")
-          )}
-          Then, edit the program to result in this (move the function into the definition of a let expression):
-          {renderCodeblock(
-            [
-              "let f : Int -> Int =",
-              "    fun x : Int => ",
-              "        let i : Int = 7 in",
-              "        x / i in",
-              "f 7",
-            ]
-              .join("\n")
-          )}</div>
-      </div>),
-    text_program: "",
-    pantograph_program_index: "transcribe2",
-  },
-  {
-    instructions: (
-      <div>
-        {renderExerciseTitle("DeMorgan's Law")}
-        <div>
-          You have been provided with an <i>incorrect</i> implementation of {renderCode("deMorgansLaw")}, which should be a function that takes as input two {renderCode("Bool")}s and output whether or not DeMorgan&apos;s Law holds for the inputs. Recall that DeMorgan&apos;s Law states that
-          {renderCodeblock("!(p && q) == !p || !q")}
-        </div>
-        <br />
-        <div>
-          Edit {renderCode("deMorgansLaw")} to be correct.
-        </div>
-        <br />
-        <div>
-          Run should output {renderCode("true")}.
-        </div>
+        You have been provided with an <i>incorrect</i> implementation of {renderCode("deMorgansLaw")}, which should be a function that takes as input two {renderCode("Bool")}s and output whether or not DeMorgan&apos;s Law holds for the inputs. Recall that DeMorgan&apos;s Law states that
+        {renderCodeblock("!(p && q) == !p || !q")}
       </div>
-    ),
-    text_program: `let deMorgansLaw : Bool -> Bool -> Bool =
+      <br />
+      <div>
+        Edit {renderCode("deMorgansLaw")} to be correct.
+      </div>
+      <br />
+      <div>
+        Run should output {renderCode("true")}.
+      </div>
+    </div>
+  ),
+  text_program: `let deMorgansLaw : Bool -> Bool -> Bool =
     fun p => fun q =>
       p && q == p || q
 in
@@ -463,32 +464,33 @@ deMorgansLaw true true &&
 deMorgansLaw true false &&
 deMorgansLaw false true &&
 deMorgansLaw false false`,
-    pantograph_program_index: "deMorgan",
-  },
-  {
-    instructions: (
+  pantograph_program_index: "deMorgan",
+};
+
+const collatz = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Collatz")}
       <div>
-        {renderExerciseTitle("Collatz")}
-        <div>
-          You have been provided wth a <i>buggy</i> implementation of {renderCode("collatz")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs the number of steps there are in the Collatz sequence starting from {renderCode("n")}.
-          Recall that the Collatz sequence is defined as follows: given an element of the Collatz sequence {renderCode("n")}, the next element of the Collatz sequence is:
-          <ul>
-            <li>if {renderCode("n")} is {renderCode("1")}, then this is the end of the Collatz sequence</li>
-            <li>if {renderCode("n")} is even, then {renderCode("n / 2")}</li>
-            <li>if {renderCode("n")} is odd, then {renderCode("n * 3 + 1")}</li>
-          </ul>
-        </div>
-        <br />
-        <div>
-          Edit {renderCode("collatz")} to be correct.
-        </div>
-        <br />
-        <div>
-          Run should output {renderCode("5")}.
-        </div>
+        You have been provided wth a <i>buggy</i> implementation of {renderCode("collatz")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs the number of steps there are in the Collatz sequence starting from {renderCode("n")}.
+        Recall that the Collatz sequence is defined as follows: given an element of the Collatz sequence {renderCode("n")}, the next element of the Collatz sequence is:
+        <ul>
+          <li>if {renderCode("n")} is {renderCode("1")}, then this is the end of the Collatz sequence</li>
+          <li>if {renderCode("n")} is even, then {renderCode("n / 2")}</li>
+          <li>if {renderCode("n")} is odd, then {renderCode("n * 3 + 1")}</li>
+        </ul>
       </div>
-    ),
-    text_program: `let collatz : Int -> Int =
+      <br />
+      <div>
+        Edit {renderCode("collatz")} to be correct.
+      </div>
+      <br />
+      <div>
+        Run should output {renderCode("5")}.
+      </div>
+    </div>
+  ),
+  text_program: `let collatz : Int -> Int =
     fun n =>
       if n == 1
       then 0
@@ -498,26 +500,27 @@ deMorgansLaw false false`,
 in
 
 collatz 5`,
-    pantograph_program_index: "collatz",
-  },
-  {
-    instructions: (
+  pantograph_program_index: "collatz",
+};
+
+const prime = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Prime")}
       <div>
-        {renderExerciseTitle("Prime")}
-        <div>
-          You have been provided with a <i>partial</i> implementation of {renderCode("isPrime")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs whether or not {renderCode("n")} is a prime.
-        </div>
-        <br />
-        <div>
-          Finish implementing {renderCode("isPrime")} and fix any bugs.
-        </div>
-        <br />
-        <div>
-          Run should output {renderCode("true")}.
-        </div>
+        You have been provided with a <i>partial</i> implementation of {renderCode("isPrime")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs whether or not {renderCode("n")} is a prime.
       </div>
-    ),
-    text_program: `let isPrime : Int -> Bool =
+      <br />
+      <div>
+        Finish implementing {renderCode("isPrime")} and fix any bugs.
+      </div>
+      <br />
+      <div>
+        Run should output {renderCode("true")}.
+      </div>
+    </div>
+  ),
+  text_program: `let isPrime : Int -> Bool =
     let helper : Int -> Bool =
         fun x =>
             if x == 1 then false
@@ -535,75 +538,78 @@ isPrime 5 &&
 isPrime 7 &&
 ! (isPrime 8)
 `,
-    pantograph_program_index: "isPrime",
-  },
-  {
-    instructions: (
+  pantograph_program_index: "isPrime",
+};
+
+const reverse = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Reverse")}
+      <div>You have been provided with a stub for {renderCode("reverse")}, which should be a function that takes as input a list {renderCode("ls : List Int")} and outputs the reversed {renderCode("List Int")} -- that is, the {renderCode("List Int")} which has all the same elements as {renderCode("ls")} but in reversed order.</div>
+      <br />
       <div>
-        {renderExerciseTitle("Reverse")}
-        <div>You have been provided with a stub for {renderCode("reverse")}, which should be a function that takes as input a list {renderCode("ls : List Int")} and outputs the reversed {renderCode("List Int")} -- that is, the {renderCode("List Int")} which has all the same elements as {renderCode("ls")} but in reversed order.</div>
-        <br />
-        <div>
-          Run should output {renderCode("(cons 4 (cons 3 (cons 2 (cons 1))))")}.
-        </div>
-        <br />
-        <div>
-          <i>Note.</i> There is a built-in function {renderCode("append : List Int -> List Int -> List Int")} which appends two {renderCode("List Int")}s together.
-        </div>
-        <br />
-        <div>
-          <i>Note.</i> You can match on a list {renderCode("ls")} with the following syntax:
-          {renderCodeblock(`match ls with
+        Run should output {renderCode("(cons 4 (cons 3 (cons 2 (cons 1))))")}.
+      </div>
+      <br />
+      <div>
+        <i>Note.</i> There is a built-in function {renderCode("append : List Int -> List Int -> List Int")} which appends two {renderCode("List Int")}s together.
+      </div>
+      <br />
+      <div>
+        <i>Note.</i> You can match on a list {renderCode("ls")} with the following syntax:
+        {renderCodeblock(`match ls with
     | nil => ...
     | cons h t => ...`)}
-        </div>
       </div>
+    </div>
 
-    ),
-    text_program: `let reverse : List Int -> List Int =
+  ),
+  text_program: `let reverse : List Int -> List Int =
     ?
 in
 
 reverse (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 `,
-    pantograph_program_index: "reverse",
-  },
-  {
-    instructions: (
+  pantograph_program_index: "reverse",
+};
+
+const filter = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Filter")}
+      <div>You have been provided with a stub for {renderCode("filter")}, which should be a function that takes as input a condition {renderCode("cond : Int -> Bool")} and a list {renderCode("ls : List Int")}, and output a {renderCode("List Int")} which is the same as {renderCode("ls")} except without each element {renderCode("x")} such that {renderCode("not (cond x)")}.</div>
+      <br />
       <div>
-        {renderExerciseTitle("Filter")}
-        <div>You have been provided with a stub for {renderCode("filter")}, which should be a function that takes as input a condition {renderCode("cond : Int -> Bool")} and a list {renderCode("ls : List Int")}, and output a {renderCode("List Int")} which is the same as {renderCode("ls")} except without each element {renderCode("x")} such that {renderCode("not (cond x)")}.</div>
-        <br />
-        <div>
-          Run should output {renderCode("(cons 2 (cons 4 nil))")}.
-        </div>
+        Run should output {renderCode("(cons 2 (cons 4 nil))")}.
       </div>
-    ),
-    text_program: `let filter : (Int -> Bool) -> List Int -> List Int =
+    </div>
+  ),
+  text_program: `let filter : (Int -> Bool) -> List Int -> List Int =
     ?
 in
 
 filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 `,
-    pantograph_program_index: "filter",
-  },
-  {
-    instructions: (
+  pantograph_program_index: "filter",
+};
+
+const sumviafold = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Sum via Fold")}
       <div>
-        {renderExerciseTitle("Sum via Fold")}
-        <div>
-          You have been provided with an implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Int")} result.
-          You have also been provided with a stub for a function {renderCode("sum")}, which should compute the sum of a {renderCode("List Int")}.
-          Implement {renderCode("sum")} by using {renderCode("fold")}.
-          Note that, by using {renderCode("fold")} correctly, you will <i>not</i> need to {renderCode("match")} on the input {renderCode("List")}.
-        </div>
-        <br />
-        <div>
-          Run should output {renderCode("10")}.
-        </div>
+        You have been provided with an implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Int")} result.
+        You have also been provided with a stub for a function {renderCode("sum")}, which should compute the sum of a {renderCode("List Int")}.
+        Implement {renderCode("sum")} by using {renderCode("fold")}.
+        Note that, by using {renderCode("fold")} correctly, you will <i>not</i> need to {renderCode("match")} on the input {renderCode("List")}.
       </div>
-    ),
-    text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
+      <br />
+      <div>
+        Run should output {renderCode("10")}.
+      </div>
+    </div>
+  ),
+  text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
     fun f => fun n => fun ls =>
         match ls with
         | nil => n
@@ -616,6 +622,16 @@ in
 
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 `,
-    pantograph_program_index: "fold",
-  },
+  pantograph_program_index: "fold",
+};
+
+export const all_biexercises: BiExercise[] = [
+  transcribe1,
+  demorgan,
+  filter,
+  collatz,
+  transcribe2,
+  sumviafold,
+  reverse,
+  prime,
 ]
