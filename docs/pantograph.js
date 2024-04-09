@@ -41300,7 +41300,7 @@
                               return setFacade(new CursorState(cursorFromHoleyDerivZipper(injectHoleyDerivZipper(unzipperp2(v7.value0.dzipperp)))));
                             }
                             ;
-                            var $481 = key6 === "Backspace";
+                            var $481 = key6 === "Backspace" || key6 === "Delete";
                             if ($481) {
                               return deleteSelection(unit);
                             }
