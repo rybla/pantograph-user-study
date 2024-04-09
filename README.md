@@ -1,8 +1,19 @@
-# React + Vite
+# Pantograph User Study
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dependencies:
+- [pnpm](https://pnpm.io/)
 
-Currently, two official plugins are available:
+To get everything installed and setup:
+```sh
+pnpm install
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To serve the project locally:
+```sh
+pnpm run dev
+```
+
+To build the project and update the github pages version online:
+```sh
+pnpm run build
+```

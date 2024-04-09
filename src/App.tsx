@@ -328,6 +328,17 @@ square ? == a2
   )
 }
 
+const Button = (props: { onClick: React.MouseEventHandler<HTMLButtonElement>, children: JSX.Element[] }) => {
+  return (
+    <button
+      onClick={props.onClick}
+      onFocus={(event) => event.target.blur()}
+    >
+      {props.children}
+    </button>
+  )
+}
+
 function renderInstruction(body: JSX.Element): JSX.Element {
   return (
     <div
