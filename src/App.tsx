@@ -144,6 +144,30 @@ square ? == a2
       })
     }
 
+    const prevExercise = () => {
+      set_exercise_status(i => {
+        const prev_exercise_status = ((): typeof exercise_status => {
+          switch (i) {
+            case 'text-tutorial': return 'text-tutorial';
+            case 'begin': return 'text-tutorial';
+            case 'end': {
+              if (exercises === undefined) throw new Error("invariant violated: exercise_ix: 'end' ==> exercises !== undefined");
+              return exercises.length - 1;
+            }
+            default: {
+              if (i === 0) return 'begin';
+              else return i - 1;
+            }
+          }
+        })();
+        console.log("prev_exercise_ix", prev_exercise_status);
+        if (exercises !== undefined && typeof prev_exercise_status === 'number') {
+          console.log("exercises[prev_exercise_ix].case", exercises[prev_exercise_status].case)
+        }
+        return prev_exercise_status
+      })
+    }
+
     const renderContainer = (kids: JSX.Element[]) => (
       <div
         style={{
@@ -164,6 +188,9 @@ square ? == a2
         </button>
       ])
       case 'begin': return renderContainer([
+        <button onClick={prevExercise}>
+          back
+        </button>,
         <button onClick={() => {
           initGroupA()
           nextExercise()
@@ -177,8 +204,15 @@ square ? == a2
           Begin Group B
         </button>
       ])
-      case 'end': return renderContainer([])
+      case 'end': return renderContainer([
+        <button onClick={prevExercise}>
+          back
+        </button>,
+      ])
       default: return renderContainer([
+        <button onClick={prevExercise}>
+          back
+        </button>,
         <button onClick={nextExercise}>
           next
         </button>
