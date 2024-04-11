@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import React, { JSX } from 'react'
 import Demonaco from './Demonaco'
 
 const pantograph_url = "./pantograph.html"
 const mode = 'mixed' as 'mixed' | 'pantograph' | 'text';
+const check_tick = 500
 
-export type BiExercise = { instructions: JSX.Element, text_program: string, pantograph_program_index: string }
-export type Exercise
-  = { case: 'pantograph', instructions: JSX.Element, program_index: string }
-  | { case: 'text', instructions: JSX.Element, program: string }
+export type BiExercise = {
+  instructions: JSX.Element,
+  text_program: string,
+  pantograph_program_index: string,
+  expected_output: string
+}
+export type Exercise = { case: 'pantograph' | 'text' } & BiExercise
 
 export default function App() {
   useEffect(() => {
@@ -21,18 +25,18 @@ export default function App() {
     switch (mode) {
       case 'mixed': {
         if (start_with_pantograph) {
-          set_exercises(all_biexercises.map((ex, i) => i < all_biexercises.length / 2 ? { case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index } : { case: 'text', instructions: ex.instructions, program: ex.text_program }));
+          set_exercises(all_biexercises.map((ex, i) => i < all_biexercises.length / 2 ? { case: 'pantograph', ...ex } : { case: 'text', ...ex }));
         } else {
-          set_exercises(all_biexercises.map((ex, i) => i >= all_biexercises.length / 2 ? { case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index } : { case: 'text', instructions: ex.instructions, program: ex.text_program }));
+          set_exercises(all_biexercises.map((ex, i) => i >= all_biexercises.length / 2 ? { case: 'pantograph', ...ex } : { case: 'text', ...ex }));
         }
         break;
       }
       case 'text': {
-        set_exercises(all_biexercises.map((ex) => ({ case: 'text', instructions: ex.instructions, program: ex.text_program })));
+        set_exercises(all_biexercises.map((ex) => ({ case: 'text', ...ex })));
         break;
       }
       case 'pantograph': {
-        set_exercises(all_biexercises.map((ex) => ({ case: 'pantograph', instructions: ex.instructions, program_index: ex.pantograph_program_index })));
+        set_exercises(all_biexercises.map((ex) => ({ case: 'pantograph', ...ex })));
         break;
       }
     }
@@ -49,23 +53,81 @@ export default function App() {
   // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
   const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
 
+  const [check_result, set_check_result] = useState<boolean | undefined>(undefined);
+
+  // for use in checking, need to have refs to the most recent version of exercise_status and exercises
+  const exercise_status_ref = useRef<typeof exercise_status>('text-tutorial');
+  const exercises_ref = useRef<typeof exercises>([]);
+  useEffect(() => {
+    exercise_status_ref.current = exercise_status
+    exercises_ref.current = exercises
+  },
+    [exercise_status, exercises]
+  );
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const exercise_status = exercise_status_ref.current;
+      const exercises = exercises_ref.current;
+      console.log(`checking exercise_status ${exercise_status}`)
+      if (typeof exercise_status === 'number') {
+        if (exercises === undefined) return console.error("BUG: `typeof exercise_status === 'number'` but `exercises === undefined`")
+        else if (!(0 <= exercise_status && exercise_status < exercises.length)) return console.error("BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`")
+        const exercise = exercises[exercise_status]
+
+        function checkText() {
+          const evaluation = document.getElementById('evaluation')?.innerText.trim()
+          if (evaluation === undefined) throw new Error("#evaluation not found")
+          console.log({ evaluation })
+          if (evaluation === "") {
+            set_check_result(undefined)
+            return
+          }
+          set_check_result(evaluation.trim() === exercise.expected_output)
+        }
+
+        function checkPantograph() {
+          const iframe = document.getElementById('pantograph-iframe') as HTMLIFrameElement;
+          const evaluation = iframe?.contentWindow?.document.getElementById('evaluation')?.innerText
+          if (evaluation === undefined) throw new Error("#evaluation not found")
+          console.log({ evaluation })
+          if (evaluation === "") {
+            set_check_result(undefined)
+            return
+          }
+          set_check_result(evaluation.trim() === exercise.expected_output)
+        }
+
+        switch (exercise.case) {
+          case 'pantograph': {
+            checkPantograph()
+            break
+          }
+          case 'text': {
+            checkText()
+            break
+          }
+        }
+      }
+    }, check_tick)
+    return () => clearInterval(intervalId)
+  }, [])
+
   function renderCurrentInstruction(): JSX.Element {
     if (typeof exercise_status === 'number') {
       if (exercises === undefined) return renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `exercises === undefined`"}</div>)
-      else if (!(0 <= exercise_status && exercise_status < exercises.length)) renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`"}</div>)
-      else {
-        const exercise = exercises[exercise_status];
-        return (
-          <div
-            style={{
-              padding: "0.5em",
-              userSelect: "none",
-            }}
-          >
-            {exercise.instructions}
-          </div>
-        );
-      }
+      else if (!(0 <= exercise_status && exercise_status < exercises.length)) return renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`"}</div>)
+      const exercise = exercises[exercise_status];
+      return (
+        <div
+          style={{
+            padding: "0.5em",
+            userSelect: "none",
+          }}
+        >
+          {exercise.instructions}
+        </div>
+      );
     } else {
       switch (exercise_status) {
         case 'text-tutorial': return renderTextTutorial();
@@ -85,11 +147,12 @@ export default function App() {
         const exercise = exercises[exercise_status];
         switch (exercise.case) {
           case 'text': {
-            return (<Demonaco key={exercise_status} start_program={exercise.program} />)
+            return (<Demonaco key={exercise_status} start_program={exercise.text_program} />)
           }
           case 'pantograph': {
             return (<iframe
               key={exercise_status}
+              id="pantograph-iframe"
               style={{
                 width: "100%",
                 height: "100%",
@@ -97,7 +160,7 @@ export default function App() {
                 margin: "0",
                 padding: "0",
               }}
-              src={`${pantograph_url}?UserStudyProgramIndex=${exercise.program_index}`}
+              src={`${pantograph_url}?UserStudyProgramIndex=${exercise.pantograph_program_index}`}
             />);
           }
         }
@@ -126,6 +189,7 @@ square ? == a2
     const nextExercise = () => {
       set_exercise_status(i => {
         const next_exercise_status = (() => {
+          set_check_result(undefined)
           switch (i) {
             case 'text-tutorial': return 'begin';
             case 'begin': return 0;
@@ -213,7 +277,11 @@ square ? == a2
         <button onClick={prevExercise}>
           back
         </button>,
-        <button onClick={nextExercise}>
+        <button onClick={nextExercise}
+          disabled={check_result !== true}
+          style={{
+            backgroundColor: check_result === undefined ? 'inherit' : check_result === false ? 'pink' : 'lightgreen'
+          }}>
           next
         </button>
       ])
@@ -421,7 +489,7 @@ const renderExerciseTitle = (text: string) => (
   </div>
 )
 
-const transcribe1 = {
+const transcribe1: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Transcribe and Edit")}
@@ -450,9 +518,10 @@ const transcribe1 = {
   ),
   text_program: "",
   pantograph_program_index: "transcribe1",
+  expected_output: "4",
 };
 
-const transcribe2 = {
+const transcribe2: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Transcribe and Edit")}
@@ -480,9 +549,10 @@ const transcribe2 = {
     </div>),
   text_program: "",
   pantograph_program_index: "transcribe2",
+  expected_output: "1",
 };
 
-const demorgan = {
+const demorgan: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("DeMorgan's Law")}
@@ -510,9 +580,10 @@ deMorgansLaw true false &&
 deMorgansLaw false true &&
 deMorgansLaw false false`,
   pantograph_program_index: "deMorgan",
+  expected_output: "true",
 };
 
-const collatz = {
+const collatz: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Collatz")}
@@ -546,9 +617,10 @@ in
 
 collatz 5`,
   pantograph_program_index: "collatz",
+  expected_output: "5",
 };
 
-const prime = {
+const prime: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Prime")}
@@ -584,9 +656,10 @@ isPrime 7 &&
 ! (isPrime 8)
 `,
   pantograph_program_index: "isPrime",
+  expected_output: "true",
 };
 
-const reverse = {
+const reverse: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Reverse")}
@@ -616,9 +689,10 @@ in
 reverse (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 `,
   pantograph_program_index: "reverse",
+  expected_output: "(cons 4 (cons 3 (cons 2 (cons 1))))",
 };
 
-const filter = {
+const filter: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Filter")}
@@ -636,9 +710,10 @@ in
 filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 `,
   pantograph_program_index: "filter",
+  expected_output: "(cons 2 (cons 4 nil)",
 };
 
-const sumviafold = {
+const sumviafold: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Sum via Fold")}
@@ -668,6 +743,7 @@ in
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 `,
   pantograph_program_index: "fold",
+  expected_output: "10",
 };
 
 export const all_biexercises: BiExercise[] = [

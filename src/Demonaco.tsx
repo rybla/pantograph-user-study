@@ -163,7 +163,7 @@ export default function Demonaco(
                 }}
             >
                 <button onClick={run}>run</button>
-                <div style={{ fontFamily: "monospace" }}>{evaluation ?? ""}</div>
+                <div id="evaluation" style={{ fontFamily: "monospace" }}>{evaluation ?? ""}</div>
             </div>
         )
 
