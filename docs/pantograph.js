@@ -41518,7 +41518,7 @@
             });
           });
         });
-      }))])([button([onMouseDown($$const(RunProgram.value))])([text5("run")]), div2([style3(fontFamily([])(singleton11(monospace)))])([text5(state3.output)])]), div2([style3(function() {
+      }))])([button([onMouseDown($$const(RunProgram.value))])([text5("run")]), div2([id2("evaluation"), style3(fontFamily([])(singleton11(monospace)))])([text5(state3.output)])]), div2([style3(function() {
         var s = em2(1);
         return padding(s)(s)(s)(s);
       }())])([slot_3(_editorSlot)(unit)(editorComponent2(unit))(state3.spec)])]);
@@ -41552,7 +41552,7 @@
             return pure34(unit);
           }
           ;
-          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.RunnableEditor (line 50, column 7 - line 52, column 29): " + [mprog.constructor.name]);
+          throw new Error("Failed pattern match at Language.Pantograph.Generic.Rendering.RunnableEditor (line 51, column 7 - line 53, column 29): " + [mprog.constructor.name]);
         });
       });
     };
