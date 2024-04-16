@@ -3,7 +3,7 @@ import React, { JSX } from 'react'
 import Demonaco from './Demonaco'
 
 const pantograph_url = "./pantograph.html"
-const mode = 'mixed' as 'mixed' | 'pantograph' | 'text';
+const mode = 'pantograph' as 'mixed' | 'pantograph' | 'text';
 const check_tick = 500
 
 export type BiExercise = {
@@ -494,6 +494,12 @@ const renderExerciseTitle = (text: string) => (
   </div>
 )
 
+const renderParagraphs = (ps: JSX.Element[]) => (
+  <div style={{ display: "flex", flexDirection: "column", gap: "0.5em" }}>
+    {ps.map((p, i) => (<div key={i}>{p}</div>))}
+  </div>
+)
+
 const transcribe1: BiExercise = {
   instructions: (
     <div>
@@ -726,11 +732,15 @@ const filterWithIndex: BiExercise = {
       <div>Edit {renderCode("filter")} to be {renderCode("filterWithIndex")}, which is the same as {renderCode("filter")} except the filter condition can also use the index of the element in the list.</div>
       <div>In order to accomplish this, you must do the following edits:</div>
       <ol>
-        <li>Insert a new second argument {renderCode("i")} of type {renderCode("Int")}, which is the starting index.</li>
-        <li>Change the argument type {renderCode("Bool -> Bool")} to be {renderCode("Int -> Bool -> Bool")}, where the {renderCode("Int")} is the current index.</li>
-        <li>Use the new argument {renderCode("i")} as </li>
+        <li>Rename {renderCode("filter")} to be {renderCode("filterWithIndex")}.</li>
+        <li>Insert a new second input to {renderCode("filterWithIndex")} called {renderCode("i")} of type {renderCode("Int")}, which is the starting index.</li>
+        <li>Change the {renderCode("filterWithIndex")}'s input type {renderCode("Bool -> Bool")} to be {renderCode("Int -> Bool -> Bool")}, where the {renderCode("Int")} is the current index.</li>
+        <li>Use the new input {renderCode("i")} as the first argument of {renderCode("cond")} in the condition of the {renderCode("if")}.</li>
+        <li>Give {renderCode("i + 1")} as the new second argument to each recursive call to {renderCode("filterWithIndex")}.</li>
+        <li>On the last line, insert a new first input to the second argument of {renderCode("filter")}, and use that input to fill in the hole of type {renderCode("Int")}.</li>
+        <li>On the last line, give {renderCode("0")} as the new second argument to {renderCode("filterWithIndex")}.</li>
       </ol>
-      <div>So, the type of {renderCode("filterWithIndex")} should be</div>
+      <div>When you're done, the type of {renderCode("filterWithIndex")} should be</div>
       {renderCodeblock("(Int -> Bool -> Bool) -> Int -> List Bool -> List Bool")}
       <div>Run should output {renderCode("(cons true nil)")}.</div>
     </div>
@@ -743,15 +753,14 @@ const filterWithIndex: BiExercise = {
 in
 
 filter
-  (fun i => fun b => b && ((i % 2) == 0))
-  0
+  (fun b => b && ((? % 2) == 0))
   (cons true (cons true (cons false (cons true nil))))
 `,
   pantograph_program_index: "filterWithIndex",
   expected_output: "(cons true nil)",
 }
 
-const sumviafold: BiExercise = {
+const sumViaFold: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Sum via Fold")}
@@ -780,18 +789,103 @@ in
 
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 `,
-  pantograph_program_index: "fold",
-  expected_output: "10",
+  pantograph_program_index: "sumViaFold",
+  expected_output: "17",
 };
 
+const sumFromViaFold: BiExercise = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Sum From via Fold")}
+      <div>
+        You have been provided with a <i>correct</i> implementation of {renderCode("sum")}.
+        Edit {renderCode("sum")} to be {renderCode("sumFrom")}, which takes as input the starting amount add the sum of the list to.
+        This requires the following edits:
+        <ol>
+          <li>Rename {renderCode("sum")} to {renderCode("sumFrom")}</li>
+          <li>Delete the last argument of {renderCode("fold")} in the body of {renderCode("sumFrom")} and edit {renderCode("sumFrom")}'s type to be {renderCode("Int -> List Int -> Int")}</li>
+          <li>Insert {renderCode("7")} as a new first argument of {renderCode("sumFrom")} on the last line.</li>
+        </ol>
+      </div>
+      <div>Run should output {renderCode("17")}.</div>
+    </div>
+  ),
+  text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
+  fun f => fun n => fun ls =>
+      match ls with
+      | nil => n
+      | cons h t => fold f (f n h) t
+in
+
+let sum : List Int -> Int =
+  fold (fun x => fun y => x + y) 0
+in
+
+sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))`,
+  pantograph_program_index: "sumFromViaFold",
+  expected_output: ""
+}
+
+const allEvenViaFold: BiExercise = {
+  instructions: renderParagraphs([
+    renderExerciseTitle("All Even via Fold"),
+    <>
+      You have been provided with a <i>correct</i> implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Int")} result.
+    </>,
+    <>
+      You have also been provided for a stub for a function {renderCode("allEven")}, which should evaluate to {renderCode("true")} if the input list only contains even numbers, and {renderCode("false")} otherwise.
+    </>,
+    <>
+      Implement {renderCode("allEven")} by using {renderCode("fold")}. Note that, by using {renderCode("fold")} correctly, you will not need to {renderCode("match")} on the input list.
+    </>
+  ]),
+  text_program: '',
+  pantograph_program_index: 'allEvenViaFold',
+  expected_output: ''
+}
+
+const allViaFold: BiExercise = {
+  instructions: renderParagraphs([
+    renderExerciseTitle("All via Fold"),
+    <>
+      You have been provided with a <i>correct</i> implementation of {renderCode("allEven")}, which checks whether all the numbers in the input list are even.
+    </>,
+    <>
+      Edit {renderCode("allEven")} to be {renderCode("all")}, which is the same as {renderCode("allEven")} except it takes an arbitrary condition of type {renderCode("Int -> Bool")} as a new first input, and checks whether all the numbers in the input list satisfy that condition.
+    </>,
+    <>
+      This requires the following edits:
+      <ol>
+        <li>Change the name of {renderCode("allEven")} to {renderCode("all")}.</li>
+        <li>Insert a new input to {renderCode("all")} called {renderCode("cond")} of type {renderCode("Int -> Bool")}</li>
+        <li>Replace {renderCode("isEven")} with {renderCode("cond")} in the body of {renderCode("all")}.</li>
+        <li>On the last line, insert {renderCode("(fun x => (! (isEven x)))")} as a new second argument to {renderCode("all")}.</li>
+      </ol>
+    </>,
+    <>
+      When you're done the type of {renderCode("all")} should be
+      {renderCodeblock("(Int -> Bool) -> List Int -> Bool")}
+    </>,
+    <>
+      Run should output {renderCode("false")}.
+    </>
+  ]),
+  text_program: '',
+  pantograph_program_index: 'allViaFold',
+  expected_output: ''
+}
+
 export const all_biexercises: BiExercise[] = [
+  allEvenViaFold,
+  allViaFold,
+  sumViaFold,
+  sumFromViaFold,
+  filter,
   filterWithIndex,
   transcribe1,
   demorgan,
-  filter,
   // collatz,
   transcribe2,
-  sumviafold,
   reverse,
   // prime,
 ]
