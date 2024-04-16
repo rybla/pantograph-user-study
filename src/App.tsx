@@ -1,127 +1,174 @@
-import { useEffect, useRef, useState } from 'react'
-import React, { JSX } from 'react'
-import Demonaco from './Demonaco'
+import { useEffect, useRef, useState } from "react";
+import React, { JSX } from "react";
+import Demonaco from "./Demonaco";
 
-const pantograph_url = "./pantograph.html"
-const mode = 'pantograph' as 'mixed' | 'pantograph' | 'text';
-const check_tick = 500
+const pantograph_url = "./pantograph.html";
+const mode = "pantograph" as "mixed" | "pantograph" | "text";
+const check_tick = 500;
 
 export type BiExercise = {
-  instructions: JSX.Element,
-  text_program: string,
-  pantograph_program_index: string,
-  expected_output: string
-}
-export type Exercise = { case: 'pantograph' | 'text' } & BiExercise
+  instructions: JSX.Element;
+  text_program: string;
+  pantograph_program_index: string;
+  expected_output: string;
+};
+export type Exercise = { case: "pantograph" | "text" } & BiExercise;
 
 export default function App({ debug }: { debug?: boolean }) {
   function log(...msg: any) {
-    if (debug) console.log(...msg)
+    if (debug) console.log(...msg);
   }
 
   useEffect(() => {
-    log("[pantograph-user-study]")
-    log(JSON.stringify({ debug }))
-  })
+    log("[pantograph-user-study]");
+    log(JSON.stringify({ debug }));
+  });
 
-  const [exercises, set_exercises] = useState<Exercise[] | undefined>(undefined);
+  const [exercises, set_exercises] = useState<Exercise[] | undefined>(
+    undefined,
+  );
 
   function initExercises(start_with_pantograph: boolean) {
     switch (mode) {
-      case 'mixed': {
+      case "mixed": {
         if (start_with_pantograph) {
-          set_exercises(all_biexercises.map((ex, i) => i < all_biexercises.length / 2 ? { case: 'pantograph', ...ex } : { case: 'text', ...ex }));
+          set_exercises(
+            all_biexercises.map((ex, i) =>
+              i < all_biexercises.length / 2
+                ? { case: "pantograph", ...ex }
+                : { case: "text", ...ex },
+            ),
+          );
         } else {
-          set_exercises(all_biexercises.map((ex, i) => i >= all_biexercises.length / 2 ? { case: 'pantograph', ...ex } : { case: 'text', ...ex }));
+          set_exercises(
+            all_biexercises.map((ex, i) =>
+              i >= all_biexercises.length / 2
+                ? { case: "pantograph", ...ex }
+                : { case: "text", ...ex },
+            ),
+          );
         }
         break;
       }
-      case 'text': {
-        set_exercises(all_biexercises.map((ex) => ({ case: 'text', ...ex })));
+      case "text": {
+        set_exercises(all_biexercises.map((ex) => ({ case: "text", ...ex })));
         break;
       }
-      case 'pantograph': {
-        set_exercises(all_biexercises.map((ex) => ({ case: 'pantograph', ...ex })));
+      case "pantograph": {
+        set_exercises(
+          all_biexercises.map((ex) => ({ case: "pantograph", ...ex })),
+        );
         break;
       }
     }
   }
 
   function initGroupA() {
-    initExercises(true)
+    initExercises(true);
   }
 
   function initGroupB() {
-    initExercises(false)
+    initExercises(false);
   }
 
   // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('begin');
-  const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
+  const [exercise_status, set_exercise_status] = useState<
+    "text-tutorial" | "begin" | number | "end"
+  >("text-tutorial");
 
-  const [check_result, set_check_result] = useState<boolean | undefined>(undefined);
+  const [check_result, set_check_result] = useState<boolean | undefined>(
+    undefined,
+  );
 
   // for use in checking, need to have refs to the most recent version of exercise_status and exercises
-  const exercise_status_ref = useRef<typeof exercise_status>('text-tutorial');
+  const exercise_status_ref = useRef<typeof exercise_status>("text-tutorial");
   const exercises_ref = useRef<typeof exercises>([]);
   useEffect(() => {
-    exercise_status_ref.current = exercise_status
-    exercises_ref.current = exercises
-  },
-    [exercise_status, exercises]
-  );
+    exercise_status_ref.current = exercise_status;
+    exercises_ref.current = exercises;
+  }, [exercise_status, exercises]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       const exercise_status = exercise_status_ref.current;
       const exercises = exercises_ref.current;
-      log(`checking exercise_status ${exercise_status}`)
-      if (typeof exercise_status === 'number') {
-        if (exercises === undefined) return console.error("BUG: `typeof exercise_status === 'number'` but `exercises === undefined`")
-        else if (!(0 <= exercise_status && exercise_status < exercises.length)) return console.error("BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`")
-        const exercise = exercises[exercise_status]
+      log(`checking exercise_status ${exercise_status}`);
+      if (typeof exercise_status === "number") {
+        if (exercises === undefined)
+          return console.error(
+            "BUG: `typeof exercise_status === 'number'` but `exercises === undefined`",
+          );
+        else if (!(0 <= exercise_status && exercise_status < exercises.length))
+          return console.error(
+            "BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`",
+          );
+        const exercise = exercises[exercise_status];
 
         function checkText() {
-          const evaluation = document.getElementById('evaluation')?.innerText.trim()
-          if (evaluation === undefined) throw new Error("#evaluation not found")
-          log({ evaluation })
+          const evaluation = document
+            .getElementById("evaluation")
+            ?.innerText.trim();
+          if (evaluation === undefined)
+            throw new Error("#evaluation not found");
+          log({ evaluation });
           if (evaluation === "") {
-            set_check_result(undefined)
-            return
+            set_check_result(undefined);
+            return;
           }
-          set_check_result(evaluation.trim() === exercise.expected_output)
+          set_check_result(evaluation.trim() === exercise.expected_output);
         }
 
         function checkPantograph() {
-          const iframe = document.getElementById('pantograph-iframe') as HTMLIFrameElement;
-          const evaluation = iframe?.contentWindow?.document.getElementById('evaluation')?.innerText
-          if (evaluation === undefined) throw new Error("#evaluation not found")
-          log({ evaluation })
+          const iframe = document.getElementById(
+            "pantograph-iframe",
+          ) as HTMLIFrameElement;
+          const evaluation =
+            iframe?.contentWindow?.document.getElementById(
+              "evaluation",
+            )?.innerText;
+          if (evaluation === undefined)
+            throw new Error("#evaluation not found");
+          log({ evaluation });
           if (evaluation === "") {
-            set_check_result(undefined)
-            return
+            set_check_result(undefined);
+            return;
           }
-          set_check_result(evaluation.trim() === exercise.expected_output)
+          set_check_result(evaluation.trim() === exercise.expected_output);
         }
 
         switch (exercise.case) {
-          case 'pantograph': {
-            checkPantograph()
-            break
+          case "pantograph": {
+            checkPantograph();
+            break;
           }
-          case 'text': {
-            checkText()
-            break
+          case "text": {
+            checkText();
+            break;
           }
         }
       }
-    }, check_tick)
-    return () => clearInterval(intervalId)
-  }, [])
+    }, check_tick);
+    return () => clearInterval(intervalId);
+  }, []);
 
   function renderCurrentInstruction(): JSX.Element {
-    if (typeof exercise_status === 'number') {
-      if (exercises === undefined) return renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `exercises === undefined`"}</div>)
-      else if (!(0 <= exercise_status && exercise_status < exercises.length)) return renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`"}</div>)
+    if (typeof exercise_status === "number") {
+      if (exercises === undefined)
+        return renderInstruction(
+          <div>
+            {
+              "BUG: `typeof exercise_status === 'number'` but `exercises === undefined`"
+            }
+          </div>,
+        );
+      else if (!(0 <= exercise_status && exercise_status < exercises.length))
+        return renderInstruction(
+          <div>
+            {
+              "BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`"
+            }
+          </div>,
+        );
       const exercise = exercises[exercise_status];
       return (
         <div
@@ -135,48 +182,75 @@ export default function App({ debug }: { debug?: boolean }) {
       );
     } else {
       switch (exercise_status) {
-        case 'text-tutorial': return renderTextTutorial();
-        case 'begin': return renderBegin();
-        case 'end': return renderEnd();
+        case "text-tutorial":
+          return renderTextTutorial();
+        case "begin":
+          return renderBegin();
+        case "end":
+          return renderEnd();
       }
     }
 
-    return (<></>)
+    return <></>;
   }
 
   function renderCurrentExercise(): JSX.Element {
-    if (typeof exercise_status === 'number') {
-      if (exercises === undefined) return renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `exercises === undefined`"}</div>)
-      else if (!(0 <= exercise_status && exercise_status < exercises.length)) renderInstruction(<div>{"BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`"}</div>)
+    if (typeof exercise_status === "number") {
+      if (exercises === undefined)
+        return renderInstruction(
+          <div>
+            {
+              "BUG: `typeof exercise_status === 'number'` but `exercises === undefined`"
+            }
+          </div>,
+        );
+      else if (!(0 <= exercise_status && exercise_status < exercises.length))
+        renderInstruction(
+          <div>
+            {
+              "BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`"
+            }
+          </div>,
+        );
       else {
         const exercise = exercises[exercise_status];
         switch (exercise.case) {
-          case 'text': {
-            return (<Demonaco key={exercise_status} start_program={exercise.text_program} />)
+          case "text": {
+            return (
+              <Demonaco
+                key={exercise_status}
+                start_program={exercise.text_program}
+              />
+            );
           }
-          case 'pantograph': {
-            return (<iframe
-              key={exercise_status}
-              id="pantograph-iframe"
-              style={{
-                width: "100%",
-                height: "100%",
-                border: "none",
-                margin: "0",
-                padding: "0",
-              }}
-              src={`${pantograph_url}?UserStudyProgramIndex=${exercise.pantograph_program_index}`}
-            />);
+          case "pantograph": {
+            return (
+              <iframe
+                key={exercise_status}
+                id="pantograph-iframe"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  margin: "0",
+                  padding: "0",
+                }}
+                src={`${pantograph_url}?UserStudyProgramIndex=${exercise.pantograph_program_index}`}
+              />
+            );
           }
         }
       }
-    } else if (exercise_status === 'text-tutorial') {
-      return (<Demonaco key={exercise_status} start_program={`let a : Int = 1 in
+    } else if (exercise_status === "text-tutorial") {
+      return (
+        <Demonaco
+          key={exercise_status}
+          start_program={`let a : Int = 1 in
 let a2 = a * a in
 let square = fun x => x * x in
 
 let l = cons 0 (cons 1 (cons 2 (cons 3 nil))) in
-let isNil : List Int -> Bool = 
+let isNil : List Int -> Bool =
     fun l =>
         match l with
         | nil => true
@@ -184,58 +258,83 @@ let isNil : List Int -> Bool =
 in
 
 square ? == a2
-`} />)
+`}
+        />
+      );
     }
 
-    return (<></>)
+    return <></>;
   }
 
   function renderControls(): JSX.Element {
     const nextExercise = () => {
-      set_exercise_status(i => {
+      set_exercise_status((i) => {
         const next_exercise_status = (() => {
-          set_check_result(undefined)
+          set_check_result(undefined);
           switch (i) {
-            case 'text-tutorial': return 'begin';
-            case 'begin': return 0;
-            case 'end': return 'end';
+            case "text-tutorial":
+              return "begin";
+            case "begin":
+              return 0;
+            case "end":
+              return "end";
             default: {
-              if (exercises === undefined) throw new Error("invariant violated: exercise_ix: number ==> exercises !== undefined");
-              return i == exercises.length - 1 ? 'end' : i + 1
+              if (exercises === undefined)
+                throw new Error(
+                  "invariant violated: exercise_ix: number ==> exercises !== undefined",
+                );
+              return i == exercises.length - 1 ? "end" : i + 1;
             }
           }
         })();
         log("next_exercise_ix", next_exercise_status);
-        if (exercises !== undefined && typeof next_exercise_status === 'number') {
-          log("exercises[next_exercise_ix].case", exercises[next_exercise_status].case)
+        if (
+          exercises !== undefined &&
+          typeof next_exercise_status === "number"
+        ) {
+          log(
+            "exercises[next_exercise_ix].case",
+            exercises[next_exercise_status].case,
+          );
         }
-        return next_exercise_status
-      })
-    }
+        return next_exercise_status;
+      });
+    };
 
     const prevExercise = () => {
-      set_exercise_status(i => {
+      set_exercise_status((i) => {
         const prev_exercise_status = ((): typeof exercise_status => {
           switch (i) {
-            case 'text-tutorial': return 'text-tutorial';
-            case 'begin': return 'text-tutorial';
-            case 'end': {
-              if (exercises === undefined) throw new Error("invariant violated: exercise_ix: 'end' ==> exercises !== undefined");
+            case "text-tutorial":
+              return "text-tutorial";
+            case "begin":
+              return "text-tutorial";
+            case "end": {
+              if (exercises === undefined)
+                throw new Error(
+                  "invariant violated: exercise_ix: 'end' ==> exercises !== undefined",
+                );
               return exercises.length - 1;
             }
             default: {
-              if (i === 0) return 'begin';
+              if (i === 0) return "begin";
               else return i - 1;
             }
           }
         })();
         log("prev_exercise_ix", prev_exercise_status);
-        if (exercises !== undefined && typeof prev_exercise_status === 'number') {
-          log("exercises[prev_exercise_ix].case", exercises[prev_exercise_status].case)
+        if (
+          exercises !== undefined &&
+          typeof prev_exercise_status === "number"
+        ) {
+          log(
+            "exercises[prev_exercise_ix].case",
+            exercises[prev_exercise_status].case,
+          );
         }
-        return prev_exercise_status
-      })
-    }
+        return prev_exercise_status;
+      });
+    };
 
     const renderContainer = (kids: JSX.Element[]) => (
       <div
@@ -243,53 +342,56 @@ square ? == a2
           padding: "0.5em",
           display: "flex",
           flexDirection: "row",
-          gap: "0.5em"
+          gap: "0.5em",
         }}
       >
         {kids}
       </div>
-    )
+    );
 
     switch (exercise_status) {
-      case 'text-tutorial': return renderContainer([
-        <button onClick={nextExercise}>
-          next
-        </button>
-      ])
-      case 'begin': return renderContainer([
-        <button onClick={prevExercise}>
-          back
-        </button>,
-        <button onClick={() => {
-          initGroupA()
-          nextExercise()
-        }}>
-          Begin Group A
-        </button>,
-        <button onClick={() => {
-          initGroupB()
-          nextExercise()
-        }}>
-          Begin Group B
-        </button>
-      ])
-      case 'end': return renderContainer([
-        <button onClick={prevExercise}>
-          back
-        </button>,
-      ])
-      default: return renderContainer([
-        <button onClick={prevExercise}>
-          back
-        </button>,
-        <button onClick={nextExercise}
-          disabled={check_result !== true && !(debug === true)}
-          style={{
-            backgroundColor: check_result === undefined ? 'inherit' : check_result === false ? 'pink' : 'lightgreen'
-          }}>
-          next
-        </button>
-      ])
+      case "text-tutorial":
+        return renderContainer([<button onClick={nextExercise}>next</button>]);
+      case "begin":
+        return renderContainer([
+          <button onClick={prevExercise}>back</button>,
+          <button
+            onClick={() => {
+              initGroupA();
+              nextExercise();
+            }}
+          >
+            Begin Group A
+          </button>,
+          <button
+            onClick={() => {
+              initGroupB();
+              nextExercise();
+            }}
+          >
+            Begin Group B
+          </button>,
+        ]);
+      case "end":
+        return renderContainer([<button onClick={prevExercise}>back</button>]);
+      default:
+        return renderContainer([
+          <button onClick={prevExercise}>back</button>,
+          <button
+            onClick={nextExercise}
+            disabled={check_result !== true && !(debug === true)}
+            style={{
+              backgroundColor:
+                check_result === undefined
+                  ? "inherit"
+                  : check_result === false
+                    ? "pink"
+                    : "lightgreen",
+            }}
+          >
+            next
+          </button>,
+        ]);
     }
   }
 
@@ -297,15 +399,16 @@ square ? == a2
     <div
       style={{
         padding: "0.5em",
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
         gap: "0.5em",
       }}
     >
       {renderExerciseTitle("Text Editor Introduction")}
       <div>
-        To the left of these instructions is a text editor with the basic editing features of programming-focussed text editors such as VS Code, Sublime Text, etc.
-        This text editor also has a few extra features:
+        To the left of these instructions is a text editor with the basic
+        editing features of programming-focussed text editors such as VS Code,
+        Sublime Text, etc. This text editor also has a few extra features:
         <ul>
           <li>Checks syntax automatically</li>
           <li>Checks types automatically</li>
@@ -313,47 +416,62 @@ square ? == a2
         </ul>
       </div>
       <div>
-        The programming language used with the text editor is essentially the same as the one you used in the Pantograph tutorial, with a few variations:
+        The programming language used with the text editor is essentially the
+        same as the one you used in the Pantograph tutorial, with a few
+        variations:
         <ul>
           <li>A hole is written {renderCode("?")}</li>
           <li>Hover over a hole to see its expected type</li>
-          <li>Type annotations are <i>optional</i></li>
+          <li>
+            Type annotations are <i>optional</i>
+          </li>
         </ul>
       </div>
       <div>
         Take a few minutes to get familiar with the text editor. For example:
         <ul>
-          <li>Write a simple expression e.g. {renderCode("let x = 4 in ? x x")}</li>
+          <li>
+            Write a simple expression e.g. {renderCode("let x = 4 in ? x x")}
+          </li>
           <li>Note syntax error feedback on hover</li>
           <li>Note type error feedback on hover</li>
           <li>Write a hole and view its type on hover</li>
         </ul>
       </div>
     </div>
-  )
+  );
 
   const renderBegin = () => (
     <div
       style={{
         padding: "0.5em",
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
         gap: "0.5em",
       }}
     >
       <div>
         <div>
-          Welcome to the exercise section of the Pantograph user study.
-          In this section, you will be presented with a selection of programming exercises.
-          For half of the exercises you will use a text editor and for the other half you will use Pantograph.
-          You will screen-record your session using <a href="https://recordscreen.io/" target='_blank'>screenrecord.io</a>. <b>Make sure to test that screen recording works before you begin.</b>
+          Welcome to the exercise section of the Pantograph user study. In this
+          section, you will be presented with a selection of programming
+          exercises. For half of the exercises you will use a text editor and
+          for the other half you will use Pantograph. You will screen-record
+          your session using{" "}
+          <a href="https://recordscreen.io/" target="_blank">
+            screenrecord.io
+          </a>
+          .{" "}
+          <b>Make sure to test that screen recording works before you begin.</b>
           <br></br>
           <br></br>
-          You may ask the users study hosts any questions about the programming language, editors, or exercise instructions.
-          However, they can't help you to solve an exercise.
+          You may ask the users study hosts any questions about the programming
+          language, editors, or exercise instructions. However, they can't help
+          you to solve an exercise.
           <br></br>
           <br></br>
-          Once the study's hosts have announced that you may begin, start screen recording and then press the "Begin" button above according to your assigned group.
+          Once the study's hosts have announced that you may begin, start screen
+          recording and then press the "Begin" button above according to your
+          assigned group.
         </div>
         {/* <ul>
               <li>We can explain how to do any particular editing action in Pantograph or the text editor.</li>
@@ -374,8 +492,7 @@ square ? == a2
         */}
       </div>
     </div>
-  )
-
+  );
 
   const renderEnd = () => (
     <div
@@ -387,11 +504,9 @@ square ? == a2
       <div>
         <b>{"You're done with the exercise section of this study!"}</b>
       </div>
-      <div>
-        Please end your screen recording.
-      </div>
+      <div>Please end your screen recording.</div>
     </div>
-  )
+  );
 
   return (
     <div
@@ -400,7 +515,8 @@ square ? == a2
         width: "100vw",
         display: "flex",
         flexDirection: "row-reverse",
-      }}>
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -418,7 +534,9 @@ square ? == a2
             backgroundColor: "black",
             color: "white",
           }}
-        >Pantograph User Study</div>
+        >
+          Pantograph User Study
+        </div>
         {renderControls()}
         {renderCurrentInstruction()}
       </div>
@@ -426,25 +544,25 @@ square ? == a2
         style={{
           flexGrow: 1,
           flexShrink: 0,
-          boxShadow: "-1px 0 0 0 black inset"
+          boxShadow: "-1px 0 0 0 black inset",
         }}
       >
         {renderCurrentExercise()}
       </div>
     </div>
-  )
+  );
 }
 
-const Button = (props: { onClick: React.MouseEventHandler<HTMLButtonElement>, children: JSX.Element[] }) => {
+const Button = (props: {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  children: JSX.Element[];
+}) => {
   return (
-    <button
-      onClick={props.onClick}
-      onFocus={(event) => event.target.blur()}
-    >
+    <button onClick={props.onClick} onFocus={(event) => event.target.blur()}>
       {props.children}
     </button>
-  )
-}
+  );
+};
 
 function renderInstruction(body: JSX.Element): JSX.Element {
   return (
@@ -456,7 +574,7 @@ function renderInstruction(body: JSX.Element): JSX.Element {
     >
       {body}
     </div>
-  )
+  );
 }
 
 const renderCodeblock = (text: string) => (
@@ -465,12 +583,12 @@ const renderCodeblock = (text: string) => (
       padding: "0.5em",
       margin: "0.5em 0",
       backgroundColor: "rgba(0, 0, 0, 0.1)",
-      boxShadow: "1px 1px 4px 0 black"
+      boxShadow: "1px 1px 4px 0 black",
     }}
   >
     <code style={{ whiteSpace: "pre" }}>{text}</code>
   </div>
-)
+);
 
 const renderCode = (text: string) => (
   <code
@@ -478,51 +596,62 @@ const renderCode = (text: string) => (
       padding: "0 0.2em",
       backgroundColor: "rgba(0, 0, 0, 0.1)",
     }}
-  >{text}
+  >
+    {text}
   </code>
-)
+);
 
 const renderExerciseTitle = (text: string) => (
   <div
     style={{
       fontSize: "1.2em",
       textDecoration: "underline",
-      marginBottom: "0.5em"
+      marginBottom: "0.5em",
     }}
   >
     {text}
   </div>
-)
+);
 
 const renderParagraphs = (ps: JSX.Element[]) => (
   <div style={{ display: "flex", flexDirection: "column", gap: "0.5em" }}>
-    {ps.map((p, i) => (<div key={i}>{p}</div>))}
+    {ps.map((p, i) => (
+      <div key={i}>{p}</div>
+    ))}
   </div>
-)
+);
 
 const transcribe1: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Transcribe and Edit")}
-      <div><i>(<b>Do not</b> copy text from these instructions)</i></div>
-      <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
+      <div>
+        <i>
+          (<b>Do not</b> copy text from these instructions)
+        </i>
+      </div>
+      <div>
+        Transcribe the following program into your editor. Whitespace does not
+        have to be exact.
         {renderCodeblock(
           [
             "let f : Int -> Int = fun x : Int => 4 * x in",
             "let m : Int = 1 + 1 in",
             "let y : Int = f m in",
-            "y / 2"
-          ].join("\n")
+            "y / 2",
+          ].join("\n"),
         )}
-        Then, edit the program to result in this (Move the definitions of {renderCode("f")} and {renderCode("m")} inside the definition of {renderCode("y")}):
+        Then, edit the program to result in this (Move the definitions of{" "}
+        {renderCode("f")} and {renderCode("m")} inside the definition of{" "}
+        {renderCode("y")}):
         {renderCodeblock(
           [
             "let y : Int =",
             "    let f : Int -> Int = fun x : Int => 4 * x in",
             "    let m : Int = 1 + 1 in",
             "    f m in",
-            "y / 2"
-          ].join("\n")
+            "y / 2",
+          ].join("\n"),
         )}
       </div>
     </div>
@@ -536,17 +665,19 @@ const transcribe2: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Transcribe and Edit")}
-      <div><i>(<b>Do not</b> copy text from these instructions)</i></div>
-      <div>Transcribe the following program into your editor. Whitespace does not have to be exact.
+      <div>
+        <i>
+          (<b>Do not</b> copy text from these instructions)
+        </i>
+      </div>
+      <div>
+        Transcribe the following program into your editor. Whitespace does not
+        have to be exact.
         {renderCodeblock(
-          [
-            "fun x : Int => ",
-            "    let i : Int = 7 in",
-            "    x / i",
-          ]
-            .join("\n")
+          ["fun x : Int => ", "    let i : Int = 7 in", "    x / i"].join("\n"),
         )}
-        Then, edit the program to result in this (move the function into the definition of a let expression):
+        Then, edit the program to result in this (move the function into the
+        definition of a let expression):
         {renderCodeblock(
           [
             "let f : Int -> Int =",
@@ -554,10 +685,11 @@ const transcribe2: BiExercise = {
             "        let i : Int = 7 in",
             "        x / i in",
             "f 7",
-          ]
-            .join("\n")
-        )}</div>
-    </div>),
+          ].join("\n"),
+        )}
+      </div>
+    </div>
+  ),
   text_program: "",
   pantograph_program_index: "transcribe2",
   expected_output: "1",
@@ -568,17 +700,17 @@ const demorgan: BiExercise = {
     <div>
       {renderExerciseTitle("DeMorgan's Law")}
       <div>
-        You have been provided with an <i>incorrect</i> implementation of {renderCode("deMorgansLaw")}, which should be a function that takes as input two {renderCode("Bool")}s and output whether or not DeMorgan&apos;s Law holds for the inputs. Recall that DeMorgan&apos;s Law states that
+        You have been provided with an <i>incorrect</i> implementation of{" "}
+        {renderCode("deMorgansLaw")}, which should be a function that takes as
+        input two {renderCode("Bool")}s and output whether or not
+        DeMorgan&apos;s Law holds for the inputs. Recall that DeMorgan&apos;s
+        Law states that
         {renderCodeblock("!(p && q) == !p || !q")}
       </div>
       <br />
-      <div>
-        Edit {renderCode("deMorgansLaw")} to be correct.
-      </div>
+      <div>Edit {renderCode("deMorgansLaw")} to be correct.</div>
       <br />
-      <div>
-        Run should output {renderCode("true")}.
-      </div>
+      <div>Run should output {renderCode("true")}.</div>
     </div>
   ),
   text_program: `let deMorgansLaw : Bool -> Bool -> Bool =
@@ -599,22 +731,30 @@ const collatz: BiExercise = {
     <div>
       {renderExerciseTitle("Collatz")}
       <div>
-        You have been provided wth a <i>buggy</i> implementation of {renderCode("collatz")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs the number of steps there are in the Collatz sequence starting from {renderCode("n")}.
-        Recall that the Collatz sequence is defined as follows: given an element of the Collatz sequence {renderCode("n")}, the next element of the Collatz sequence is:
+        You have been provided wth a <i>buggy</i> implementation of{" "}
+        {renderCode("collatz")}, which should be a function that takes as input
+        an integer {renderCode("n : Int")} and outputs the number of steps there
+        are in the Collatz sequence starting from {renderCode("n")}. Recall that
+        the Collatz sequence is defined as follows: given an element of the
+        Collatz sequence {renderCode("n")}, the next element of the Collatz
+        sequence is:
         <ul>
-          <li>if {renderCode("n")} is {renderCode("1")}, then this is the end of the Collatz sequence</li>
-          <li>if {renderCode("n")} is even, then {renderCode("n / 2")}</li>
-          <li>if {renderCode("n")} is odd, then {renderCode("n * 3 + 1")}</li>
+          <li>
+            if {renderCode("n")} is {renderCode("1")}, then this is the end of
+            the Collatz sequence
+          </li>
+          <li>
+            if {renderCode("n")} is even, then {renderCode("n / 2")}
+          </li>
+          <li>
+            if {renderCode("n")} is odd, then {renderCode("n * 3 + 1")}
+          </li>
         </ul>
       </div>
       <br />
-      <div>
-        Edit {renderCode("collatz")} to be correct.
-      </div>
+      <div>Edit {renderCode("collatz")} to be correct.</div>
       <br />
-      <div>
-        Run should output {renderCode("5")}.
-      </div>
+      <div>Run should output {renderCode("5")}.</div>
     </div>
   ),
   text_program: `let collatz : Int -> Int =
@@ -636,16 +776,15 @@ const prime: BiExercise = {
     <div>
       {renderExerciseTitle("Prime")}
       <div>
-        You have been provided with a <i>partial</i> implementation of {renderCode("isPrime")}, which should be a function that takes as input an integer {renderCode("n : Int")} and outputs whether or not {renderCode("n")} is a prime.
+        You have been provided with a <i>partial</i> implementation of{" "}
+        {renderCode("isPrime")}, which should be a function that takes as input
+        an integer {renderCode("n : Int")} and outputs whether or not{" "}
+        {renderCode("n")} is a prime.
       </div>
       <br />
-      <div>
-        Finish implementing {renderCode("isPrime")} and fix any bugs.
-      </div>
+      <div>Finish implementing {renderCode("isPrime")} and fix any bugs.</div>
       <br />
-      <div>
-        Run should output {renderCode("true")}.
-      </div>
+      <div>Run should output {renderCode("true")}.</div>
     </div>
   ),
   text_program: `let isPrime : Int -> Bool =
@@ -674,24 +813,32 @@ const reverse: BiExercise = {
   instructions: (
     <div>
       {renderExerciseTitle("Reverse")}
-      <div>You have been provided with a stub for {renderCode("reverse")}, which should be a function that takes as input a list {renderCode("ls : List Int")} and outputs the reversed {renderCode("List Int")} -- that is, the {renderCode("List Int")} which has all the same elements as {renderCode("ls")} but in reversed order.</div>
+      <div>
+        You have been provided with a stub for {renderCode("reverse")}, which
+        should be a function that takes as input a list{" "}
+        {renderCode("ls : List Int")} and outputs the reversed{" "}
+        {renderCode("List Int")} -- that is, the {renderCode("List Int")} which
+        has all the same elements as {renderCode("ls")} but in reversed order.
+      </div>
       <br />
       <div>
         Run should output {renderCode("(cons 4 (cons 3 (cons 2 (cons 1))))")}.
       </div>
       <br />
       <div>
-        <i>Note.</i> There is a built-in function {renderCode("append : List Int -> List Int -> List Int")} which appends two {renderCode("List Int")}s together.
+        <i>Note.</i> There is a built-in function{" "}
+        {renderCode("append : List Int -> List Int -> List Int")} which appends
+        two {renderCode("List Int")}s together.
       </div>
       <br />
       <div>
-        <i>Note.</i> You can match on a list {renderCode("ls")} with the following syntax:
+        <i>Note.</i> You can match on a list {renderCode("ls")} with the
+        following syntax:
         {renderCodeblock(`match ls with
     | nil => ...
     | cons h t => ...`)}
       </div>
     </div>
-
   ),
   text_program: `let reverse : List Int -> List Int =
     ?
@@ -704,16 +851,18 @@ reverse (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 };
 
 const filter: BiExercise = {
-  instructions: (
-    <div>
-      {renderExerciseTitle("Filter")}
-      <div>You have been provided with a stub for {renderCode("filter")}, which should be a function that takes as input a condition {renderCode("cond : Int -> Bool")} and a list {renderCode("ls : List Int")}, and output a {renderCode("List Int")} which is the same as {renderCode("ls")} except without each element {renderCode("x")} such that {renderCode("not (cond x)")}.</div>
-      <br />
-      <div>
-        Run should output {renderCode("(cons 2 (cons 4 nil))")}.
-      </div>
-    </div>
-  ),
+  instructions: renderParagraphs([
+    renderExerciseTitle("Filter"),
+    <>
+      You have been provided with a stub for {renderCode("filter")}, which
+      should be a function that takes as input a condition{" "}
+      {renderCode("cond : Int -> Bool")} and a list{" "}
+      {renderCode("ls : List Int")}, and output a {renderCode("List Int")} which
+      is the same as {renderCode("ls")} except without each element{" "}
+      {renderCode("x")} such that {renderCode("not (cond x)")}.
+    </>,
+    <>Run should output {renderCode("(cons 2 (cons 4 nil))")}.</>,
+  ]),
   text_program: `let filter : (Int -> Bool) -> List Int -> List Int =
     ?
 in
@@ -725,30 +874,60 @@ filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 };
 
 const filterWithIndex: BiExercise = {
-  instructions: (
-    <div>
-      {renderExerciseTitle("Filter with Index")}
-      <div>You have been provided with a <i>correct</i> implementation of {renderCode("filter")}.</div>
-      <div>Edit {renderCode("filter")} to be {renderCode("filterWithIndex")}, which is the same as {renderCode("filter")} except the filter condition can also use the index of the element in the list.</div>
-      <div>In order to accomplish this, you must do the following edits:</div>
-      <ol>
-        <li>Rename {renderCode("filter")} to be {renderCode("filterWithIndex")}.</li>
-        <li>Insert a new second input to {renderCode("filterWithIndex")} called {renderCode("i")} of type {renderCode("Int")}, which is the starting index.</li>
-        <li>Change the {renderCode("filterWithIndex")}'s input type {renderCode("Bool -> Bool")} to be {renderCode("Int -> Bool -> Bool")}, where the {renderCode("Int")} is the current index.</li>
-        <li>Use the new input {renderCode("i")} as the first argument of {renderCode("cond")} in the condition of the {renderCode("if")}.</li>
-        <li>Give {renderCode("i + 1")} as the new second argument to each recursive call to {renderCode("filterWithIndex")}.</li>
-        <li>On the last line, insert a new first input to the second argument of {renderCode("filter")}, and use that input to fill in the hole of type {renderCode("Int")}.</li>
-        <li>On the last line, give {renderCode("0")} as the new second argument to {renderCode("filterWithIndex")}.</li>
-      </ol>
-      <div>When you're done, the type of {renderCode("filterWithIndex")} should be</div>
-      {renderCodeblock("(Int -> Bool -> Bool) -> Int -> List Bool -> List Bool")}
-      <div>Run should output {renderCode("(cons true nil)")}.</div>
-    </div>
-  ),
+  instructions: renderParagraphs([
+    renderExerciseTitle("Filter with Index"),
+    <>
+      You have been provided with a <i>correct</i> implementation of{" "}
+      {renderCode("filter")}.
+    </>,
+    <>
+      Edit {renderCode("filter")} to be {renderCode("filterWithIndex")}, which
+      is the same as {renderCode("filter")} except the filter condition can also
+      use the index of the element in the list.
+    </>,
+    <>In order to accomplish this, you must do the following edits:</>,
+    <ol>
+      <li>
+        Rename {renderCode("filter")} to be {renderCode("filterWithIndex")}.
+      </li>
+      <li>
+        Insert a new second input to {renderCode("filterWithIndex")} called{" "}
+        {renderCode("i")} of type {renderCode("Int")}, which is the starting
+        index.
+      </li>
+      <li>
+        Change the {renderCode("filterWithIndex")}'s input type{" "}
+        {renderCode("Bool -> Bool")} to be {renderCode("Int -> Bool -> Bool")},
+        where the {renderCode("Int")} is the current index.
+      </li>
+      <li>
+        Use the new input {renderCode("i")} as the first argument of{" "}
+        {renderCode("cond")} in the condition of the {renderCode("if")}.
+      </li>
+      <li>
+        Give {renderCode("i + 1")} as the new second argument to each recursive
+        call to {renderCode("filterWithIndex")}.
+      </li>
+      <li>
+        On the last line, insert a new first input to the second argument of{" "}
+        {renderCode("filter")}, and use that input to fill in the hole of type{" "}
+        {renderCode("Int")}.
+      </li>
+      <li>
+        On the last line, give {renderCode("0")} as the new second argument to{" "}
+        {renderCode("filterWithIndex")}.
+      </li>
+    </ol>,
+    <>
+      When you're done, the type of {renderCode("filterWithIndex")} should be
+    </>,
+    renderCodeblock("(Int -> Bool -> Bool) -> Int -> List Bool -> List Bool"),
+    <>Run should output {renderCode("(cons true nil)")}.</>,
+  ]),
   text_program: `let filter : (Bool -> Bool) -> List Bool -> List Bool =
-  fun cond => fun l => 
-  match l with 
-  | nil => nil 
+  fun cond => fun l =>
+  match l with
+  | nil => nil
   | cons h t => if cond h then cons h (filter cond t) else filter cond t
 in
 
@@ -758,24 +937,23 @@ filter
 `,
   pantograph_program_index: "filterWithIndex",
   expected_output: "(cons true nil)",
-}
+};
 
 const sumViaFold: BiExercise = {
-  instructions: (
-    <div>
-      {renderExerciseTitle("Sum via Fold")}
-      <div>
-        You have been provided with an implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Int")} result.
-        You have also been provided with a stub for a function {renderCode("sum")}, which should compute the sum of a {renderCode("List Int")}.
-        Implement {renderCode("sum")} by using {renderCode("fold")}.
-        Note that, by using {renderCode("fold")} correctly, you will <i>not</i> need to {renderCode("match")} on the input {renderCode("List")}.
-      </div>
-      <br />
-      <div>
-        Run should output {renderCode("10")}.
-      </div>
-    </div>
-  ),
+  instructions: renderParagraphs([
+    renderExerciseTitle("Sum via Fold"),
+    <>
+      You have been provided with an implementation of {renderCode("fold")},
+      which is a function that folds over a {renderCode("List Int")} to produce
+      an {renderCode("Int")} result. You have also been provided with a stub for
+      a function {renderCode("sum")}, which should compute the sum of a{" "}
+      {renderCode("List Int")}. Implement {renderCode("sum")} by using{" "}
+      {renderCode("fold")}. Note that, by using {renderCode("fold")} correctly,
+      you will <i>not</i> need to {renderCode("match")} on the input{" "}
+      {renderCode("List")}.
+    </>,
+    <>Run should output {renderCode("10")}.</>,
+  ]),
   text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
     fun f => fun n => fun ls =>
         match ls with
@@ -794,22 +972,30 @@ sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 };
 
 const sumFromViaFold: BiExercise = {
-  instructions: (
-    <div>
-      {renderExerciseTitle("Sum From via Fold")}
-      <div>
-        You have been provided with a <i>correct</i> implementation of {renderCode("sum")}.
-        Edit {renderCode("sum")} to be {renderCode("sumFrom")}, which takes as input the starting amount add the sum of the list to.
-        This requires the following edits:
-        <ol>
-          <li>Rename {renderCode("sum")} to {renderCode("sumFrom")}</li>
-          <li>Delete the last argument of {renderCode("fold")} in the body of {renderCode("sumFrom")} and edit {renderCode("sumFrom")}'s type to be {renderCode("Int -> List Int -> Int")}</li>
-          <li>Insert {renderCode("7")} as a new first argument of {renderCode("sumFrom")} on the last line.</li>
-        </ol>
-      </div>
-      <div>Run should output {renderCode("17")}.</div>
-    </div>
-  ),
+  instructions: renderParagraphs([
+    renderExerciseTitle("Sum From via Fold"),
+    <>
+      You have been provided with a <i>correct</i> implementation of{" "}
+      {renderCode("sum")}. Edit {renderCode("sum")} to be{" "}
+      {renderCode("sumFrom")}, which takes as input the starting amount add the
+      sum of the list to. This requires the following edits:
+      <ol>
+        <li>
+          Rename {renderCode("sum")} to {renderCode("sumFrom")}
+        </li>
+        <li>
+          Delete the last argument of {renderCode("fold")} in the body of{" "}
+          {renderCode("sumFrom")} and edit {renderCode("sumFrom")}'s type to be{" "}
+          {renderCode("Int -> List Int -> Int")}
+        </li>
+        <li>
+          Insert {renderCode("7")} as a new first argument of{" "}
+          {renderCode("sumFrom")} on the last line.
+        </li>
+      </ol>
+    </>,
+    <>Run should output {renderCode("17")}.</>,
+  ]),
   text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
   fun f => fun n => fun ls =>
       match ls with
@@ -823,57 +1009,78 @@ in
 
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))`,
   pantograph_program_index: "sumFromViaFold",
-  expected_output: ""
-}
+  expected_output: "",
+};
 
 const allEvenViaFold: BiExercise = {
   instructions: renderParagraphs([
     renderExerciseTitle("All Even via Fold"),
     <>
-      You have been provided with a <i>correct</i> implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Int")} result.
+      You have been provided with a <i>correct</i> implementation of{" "}
+      {renderCode("fold")}, which is a function that folds over a{" "}
+      {renderCode("List Int")} to produce an {renderCode("Int")} result.
     </>,
     <>
-      You have also been provided for a stub for a function {renderCode("allEven")}, which should evaluate to {renderCode("true")} if the input list only contains even numbers, and {renderCode("false")} otherwise.
+      You have also been provided for a stub for a function{" "}
+      {renderCode("allEven")}, which should evaluate to {renderCode("true")} if
+      the input list only contains even numbers, and {renderCode("false")}{" "}
+      otherwise.
     </>,
     <>
-      Implement {renderCode("allEven")} by using {renderCode("fold")}. Note that, by using {renderCode("fold")} correctly, you will not need to {renderCode("match")} on the input list.
-    </>
+      Implement {renderCode("allEven")} by using {renderCode("fold")}. Note
+      that, by using {renderCode("fold")} correctly, you will not need to{" "}
+      {renderCode("match")} on the input list.
+    </>,
   ]),
-  text_program: '',
-  pantograph_program_index: 'allEvenViaFold',
-  expected_output: ''
-}
+  text_program: "",
+  pantograph_program_index: "allEvenViaFold",
+  expected_output: "",
+};
 
 const allViaFold: BiExercise = {
   instructions: renderParagraphs([
     renderExerciseTitle("All via Fold"),
     <>
-      You have been provided with a <i>correct</i> implementation of {renderCode("allEven")}, which checks whether all the numbers in the input list are even.
+      You have been provided with a <i>correct</i> implementation of{" "}
+      {renderCode("allEven")}, which checks whether all the numbers in the input
+      list are even.
     </>,
     <>
-      Edit {renderCode("allEven")} to be {renderCode("all")}, which is the same as {renderCode("allEven")} except it takes an arbitrary condition of type {renderCode("Int -> Bool")} as a new first input, and checks whether all the numbers in the input list satisfy that condition.
+      Edit {renderCode("allEven")} to be {renderCode("all")}, which is the same
+      as {renderCode("allEven")} except it takes an arbitrary condition of type{" "}
+      {renderCode("Int -> Bool")} as a new first input, and checks whether all
+      the numbers in the input list satisfy that condition.
     </>,
     <>
       This requires the following edits:
       <ol>
-        <li>Change the name of {renderCode("allEven")} to {renderCode("all")}.</li>
-        <li>Insert a new input to {renderCode("all")} called {renderCode("cond")} of type {renderCode("Int -> Bool")}</li>
-        <li>Replace {renderCode("isEven")} with {renderCode("cond")} in the body of {renderCode("all")}.</li>
-        <li>On the last line, insert {renderCode("(fun x => (! (isEven x)))")} as a new second argument to {renderCode("all")}.</li>
+        <li>
+          Change the name of {renderCode("allEven")} to {renderCode("all")}.
+        </li>
+        <li>
+          Insert a new input to {renderCode("all")} called {renderCode("cond")}{" "}
+          of type {renderCode("Int -> Bool")}
+        </li>
+        <li>
+          Replace {renderCode("isEven")} with {renderCode("cond")} in the body
+          of {renderCode("all")}.
+        </li>
+        <li>
+          On the last line, insert {renderCode("(fun x => (! (isEven x)))")} as
+          a new second argument to {renderCode("all")}.
+        </li>
       </ol>
     </>,
     <>
       When you're done the type of {renderCode("all")} should be
       {renderCodeblock("(Int -> Bool) -> List Int -> Bool")}
     </>,
-    <>
-      Run should output {renderCode("false")}.
-    </>
+    <>Run should output {renderCode("false")}.</>,
   ]),
-  text_program: '',
-  pantograph_program_index: 'allViaFold',
-  expected_output: ''
-}
+  text_program: "",
+  pantograph_program_index: "allViaFold",
+  expected_output: "",
+};
 
 export const all_biexercises: BiExercise[] = [
   allEvenViaFold,
@@ -888,4 +1095,4 @@ export const all_biexercises: BiExercise[] = [
   transcribe2,
   reverse,
   // prime,
-]
+];
