@@ -14,9 +14,14 @@ export type BiExercise = {
 }
 export type Exercise = { case: 'pantograph' | 'text' } & BiExercise
 
-export default function App() {
+export default function App({ debug }: { debug?: boolean }) {
+  function log(...msg: any) {
+    if (debug) console.log(...msg)
+  }
+
   useEffect(() => {
-    console.log("[pantograph-user-study]")
+    log("[pantograph-user-study]")
+    log(JSON.stringify({ debug }))
   })
 
   const [exercises, set_exercises] = useState<Exercise[] | undefined>(undefined);
@@ -50,7 +55,7 @@ export default function App() {
     initExercises(false)
   }
 
-  // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
+  // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('begin');
   const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('text-tutorial');
 
   const [check_result, set_check_result] = useState<boolean | undefined>(undefined);
@@ -69,7 +74,7 @@ export default function App() {
     const intervalId = setInterval(() => {
       const exercise_status = exercise_status_ref.current;
       const exercises = exercises_ref.current;
-      console.log(`checking exercise_status ${exercise_status}`)
+      log(`checking exercise_status ${exercise_status}`)
       if (typeof exercise_status === 'number') {
         if (exercises === undefined) return console.error("BUG: `typeof exercise_status === 'number'` but `exercises === undefined`")
         else if (!(0 <= exercise_status && exercise_status < exercises.length)) return console.error("BUG: `typeof exercise_status === 'number'` but `!(0 <= exercise_status && exercise_status < exercises.length)`")
@@ -78,7 +83,7 @@ export default function App() {
         function checkText() {
           const evaluation = document.getElementById('evaluation')?.innerText.trim()
           if (evaluation === undefined) throw new Error("#evaluation not found")
-          console.log({ evaluation })
+          log({ evaluation })
           if (evaluation === "") {
             set_check_result(undefined)
             return
@@ -90,7 +95,7 @@ export default function App() {
           const iframe = document.getElementById('pantograph-iframe') as HTMLIFrameElement;
           const evaluation = iframe?.contentWindow?.document.getElementById('evaluation')?.innerText
           if (evaluation === undefined) throw new Error("#evaluation not found")
-          console.log({ evaluation })
+          log({ evaluation })
           if (evaluation === "") {
             set_check_result(undefined)
             return
@@ -200,9 +205,9 @@ square ? == a2
             }
           }
         })();
-        console.log("next_exercise_ix", next_exercise_status);
+        log("next_exercise_ix", next_exercise_status);
         if (exercises !== undefined && typeof next_exercise_status === 'number') {
-          console.log("exercises[next_exercise_ix].case", exercises[next_exercise_status].case)
+          log("exercises[next_exercise_ix].case", exercises[next_exercise_status].case)
         }
         return next_exercise_status
       })
@@ -224,9 +229,9 @@ square ? == a2
             }
           }
         })();
-        console.log("prev_exercise_ix", prev_exercise_status);
+        log("prev_exercise_ix", prev_exercise_status);
         if (exercises !== undefined && typeof prev_exercise_status === 'number') {
-          console.log("exercises[prev_exercise_ix].case", exercises[prev_exercise_status].case)
+          log("exercises[prev_exercise_ix].case", exercises[prev_exercise_status].case)
         }
         return prev_exercise_status
       })
@@ -278,7 +283,7 @@ square ? == a2
           back
         </button>,
         <button onClick={nextExercise}
-          disabled={check_result !== true}
+          disabled={check_result !== true && !(debug === true)}
           style={{
             backgroundColor: check_result === undefined ? 'inherit' : check_result === false ? 'pink' : 'lightgreen'
           }}>
@@ -713,6 +718,39 @@ filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
   expected_output: "(cons 2 (cons 4 nil)",
 };
 
+const filterWithIndex: BiExercise = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Filter with Index")}
+      <div>You have been provided with a <i>correct</i> implementation of {renderCode("filter")}.</div>
+      <div>Edit {renderCode("filter")} to be {renderCode("filterWithIndex")}, which is the same as {renderCode("filter")} except the filter condition can also use the index of the element in the list.</div>
+      <div>In order to accomplish this, you must do the following edits:</div>
+      <ol>
+        <li>Insert a new second argument {renderCode("i")} of type {renderCode("Int")}, which is the starting index.</li>
+        <li>Change the argument type {renderCode("Bool -> Bool")} to be {renderCode("Int -> Bool -> Bool")}, where the {renderCode("Int")} is the current index.</li>
+        <li>Use the new argument {renderCode("i")} as </li>
+      </ol>
+      <div>So, the type of {renderCode("filterWithIndex")} should be</div>
+      {renderCodeblock("(Int -> Bool -> Bool) -> Int -> List Bool -> List Bool")}
+      <div>Run should output {renderCode("(cons true nil)")}.</div>
+    </div>
+  ),
+  text_program: `let filter : (Bool -> Bool) -> List Bool -> List Bool =
+  fun cond => fun l => 
+  match l with 
+  | nil => nil 
+  | cons h t => if cond h then cons h (filter cond t) else filter cond t
+in
+
+filter
+  (fun i => fun b => b && ((i % 2) == 0))
+  0
+  (cons true (cons true (cons false (cons true nil))))
+`,
+  pantograph_program_index: "filterWithIndex",
+  expected_output: "(cons true nil)",
+}
+
 const sumviafold: BiExercise = {
   instructions: (
     <div>
@@ -747,12 +785,13 @@ sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 };
 
 export const all_biexercises: BiExercise[] = [
+  filterWithIndex,
   transcribe1,
   demorgan,
   filter,
-  collatz,
+  // collatz,
   transcribe2,
   sumviafold,
   reverse,
-  prime,
+  // prime,
 ]
