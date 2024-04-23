@@ -3,7 +3,7 @@ import React, { JSX } from "react";
 import Demonaco from "./Demonaco";
 
 const pantograph_url = "./pantograph.html";
-const mode = "pantograph" as "mixed" | "pantograph" | "text";
+const mode = "mixed" as "mixed" | "pantograph" | "text";
 const check_tick = 500;
 
 export type BiExercise = {
@@ -925,10 +925,10 @@ const filterWithIndex: BiExercise = {
     <>Run should output {renderCode("(cons true nil)")}.</>,
   ]),
   text_program: `let filter : (Bool -> Bool) -> List Bool -> List Bool =
-  fun cond => fun l =>
-  match l with
-  | nil => nil
-  | cons h t => if cond h then cons h (filter cond t) else filter cond t
+    fun cond => fun l =>
+        match l with
+        | nil => nil
+        | cons h t => if cond h then cons h (filter cond t) else filter cond t
 in
 
 filter
@@ -968,7 +968,7 @@ in
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 `,
   pantograph_program_index: "sumViaFold",
-  expected_output: "17",
+  expected_output: "10",
 };
 
 const sumFromViaFold: BiExercise = {
@@ -997,10 +997,10 @@ const sumFromViaFold: BiExercise = {
     <>Run should output {renderCode("17")}.</>,
   ]),
   text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
-  fun f => fun n => fun ls =>
-      match ls with
-      | nil => n
-      | cons h t => fold f (f n h) t
+    fun f => fun n => fun ls =>
+        match ls with
+        | nil => n
+        | cons h t => fold f (f n h) t
 in
 
 let sum : List Int -> Int =
@@ -1009,7 +1009,7 @@ in
 
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))`,
   pantograph_program_index: "sumFromViaFold",
-  expected_output: "",
+  expected_output: "17",
 };
 
 const allEvenViaFold: BiExercise = {
@@ -1032,9 +1032,20 @@ const allEvenViaFold: BiExercise = {
       {renderCode("match")} on the input list.
     </>,
   ]),
-  text_program: "",
+  text_program: `let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
+    fun f => fun n => fun l =>
+        match l with
+        | nil => n
+        | cons h t => fold f (f n h) t
+in
+
+let isEven = fun x => (x % 2) == 0 in
+
+let allEven : List Int -> Bool = ? in
+
+allEven (cons 0 (cons 2 (cons 4 nil)))`,
   pantograph_program_index: "allEvenViaFold",
-  expected_output: "",
+  expected_output: "true",
 };
 
 const allViaFold: BiExercise = {
@@ -1077,22 +1088,32 @@ const allViaFold: BiExercise = {
     </>,
     <>Run should output {renderCode("false")}.</>,
   ]),
-  text_program: "",
+  text_program: `let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
+    fun f => fun n => fun l =>
+        match l with
+        | nil => n
+        | cons h t => fold f (f n h) t
+in
+
+let isEven = fun x => (x % 2) == 0 in
+
+let allEven : List Int -> Bool = fold (fun b => fun x => b && isEven x) true in
+
+allEven (cons 0 (cons 2 (cons 4 nil)))`,
   pantograph_program_index: "allViaFold",
-  expected_output: "",
+  expected_output: "true",
 };
 
 export const all_biexercises: BiExercise[] = [
+  transcribe1,
   allEvenViaFold,
   allViaFold,
   sumViaFold,
   sumFromViaFold,
+  // ----------
+  demorgan,
+  transcribe2,
   filter,
   filterWithIndex,
-  transcribe1,
-  demorgan,
-  // collatz,
-  transcribe2,
   reverse,
-  // prime,
 ];
