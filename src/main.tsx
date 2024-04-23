@@ -5,6 +5,6 @@ import './main.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App debug={true} />
+    <App debug={false} />
   </React.StrictMode>,
 )
