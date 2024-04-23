@@ -933,13 +933,13 @@ const filterWithIndex: BiExercise = {
         call to {renderCode("filterWithIndex")}.
       </li>
       <li>
-        On the last line, insert a new first input to the second argument of{" "}
-        {renderCode("filter")}, and use that input to fill in the hole of type{" "}
-        {renderCode("Int")}.
-      </li>
-      <li>
         On the last line, give {renderCode("0")} as the new second argument to{" "}
         {renderCode("filterWithIndex")}.
+      </li>
+      <li>
+        On the last line, there should now be two {renderCode("fun")}s in the second argument of{" "}
+        {renderCode("filterWithIndex")}. Name the variable, and place it in the hole of type{" "}
+        {renderCode("Int")}.
       </li>
     </ol>,
     <>
@@ -1128,16 +1128,33 @@ allEven (cons 0 (cons 2 (cons 4 nil)))`,
   expected_output: "true",
 };
 
-export const all_biexercises: BiExercise[] = [
-  transcribe1,
-  allEvenViaFold,
-  allViaFold,
-  sumViaFold,
-  sumFromViaFold,
-  // ----------
-  demorgan,
-  transcribe2,
-  filter,
-  filterWithIndex,
-  reverse,
-];
+const all_pairs_of_biiexercises : [BiExercise, BiExercise][] = [
+  [
+    transcribe1,
+    transcribe2
+  ],
+  [
+    allEvenViaFold,
+    sumViaFold
+  ],
+  [
+    allViaFold,
+    sumFromViaFold
+  ],
+  [
+    demorgan,
+    demorgan // TODO: Need a pair for demorgan
+  ],
+  [
+    filter,
+    reverse
+  ],
+  [
+    filterWithIndex,
+    filterWithIndex // TODO: Need a pair for filterWithIndex
+  ]
+]
+
+export const all_biexercises: BiExercise[] =
+  all_pairs_of_biiexercises.map((pair) => pair[0])
+  .concat(all_pairs_of_biiexercises.map((pair) => pair[1]));
