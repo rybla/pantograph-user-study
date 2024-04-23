@@ -870,7 +870,7 @@ in
 filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 `,
   pantograph_program_index: "filter",
-  expected_output: "(cons 2 (cons 4 nil)",
+  expected_output: "(cons 2 (cons 4 nil))",
 };
 
 const filterWithIndex: BiExercise = {
@@ -1077,7 +1077,7 @@ const allViaFold: BiExercise = {
           of {renderCode("all")}.
         </li>
         <li>
-          On the last line, insert {renderCode("(fun x => (! (isEven x)))")} as
+          On the last line, insert {renderCode("(fun x => isEven x)")} as
           a new second argument to {renderCode("all")}.
         </li>
       </ol>
