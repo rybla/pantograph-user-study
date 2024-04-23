@@ -3,7 +3,7 @@ import React, { JSX } from "react";
 import Demonaco from "./Demonaco";
 
 const pantograph_url = "./pantograph.html";
-const mode = "mixed" as "mixed" | "pantograph" | "text";
+type Mode = "mixed" | "pantograph" | "text";
 const check_tick = 500;
 
 export type BiExercise = {
@@ -28,7 +28,8 @@ export default function App({ debug }: { debug?: boolean }) {
     undefined,
   );
 
-  function initExercises(start_with_pantograph: boolean) {
+  function initExercises(start_with_pantograph: boolean, mode?: Mode) {
+    if (mode === undefined) mode = 'mixed'
     switch (mode) {
       case "mixed": {
         if (start_with_pantograph) {
@@ -69,6 +70,14 @@ export default function App({ debug }: { debug?: boolean }) {
 
   function initGroupB() {
     initExercises(false);
+  }
+
+  function initGroupPantograph() {
+    initExercises(true, 'pantograph')
+  }
+
+  function initGroupText() {
+    initExercises(true, 'text')
   }
 
   // const [exercise_status, set_exercise_status] = useState<'text-tutorial' | 'begin' | number | 'end'>('begin');
@@ -371,6 +380,22 @@ square ? == a2
           >
             Begin Group B
           </button>,
+          <button
+            onClick={() => {
+              initGroupPantograph();
+              nextExercise();
+            }}
+          >
+            All Pantograph
+          </button>,
+          <button
+            onClick={() => {
+              initGroupText();
+              nextExercise();
+            }}
+          >
+            All Text
+          </button>,
         ]);
       case "end":
         return renderContainer([<button onClick={prevExercise}>back</button>]);
@@ -379,11 +404,10 @@ square ? == a2
           <button onClick={prevExercise}>back</button>,
           <button
             onClick={nextExercise}
-            disabled={check_result !== true && !(debug === true)}
             style={{
               backgroundColor:
                 check_result === undefined
-                  ? "inherit"
+                  ? "gray"
                   : check_result === false
                     ? "pink"
                     : "lightgreen",
@@ -847,7 +871,7 @@ in
 reverse (cons 1 (cons 2 (cons 3 (cons 4 nil))))
 `,
   pantograph_program_index: "reverse",
-  expected_output: "(cons 4 (cons 3 (cons 2 (cons 1))))",
+  expected_output: "(cons 4 (cons 3 (cons 2 (cons 1 nil))))",
 };
 
 const filter: BiExercise = {
