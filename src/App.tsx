@@ -764,7 +764,7 @@ const associativity: BiExercise = {
       <br />
       <div>Edit {renderCode("fAssociativity")} to be correct.</div>
       <br />
-      <div>Run should output {renderCode("true")}</div>
+      <div>Run should output {renderCode("true")}.</div>
     </div>
   ),
   text_program: `
