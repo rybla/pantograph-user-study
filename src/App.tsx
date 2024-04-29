@@ -737,18 +737,55 @@ const demorgan: BiExercise = {
       <div>Run should output {renderCode("true")}.</div>
     </div>
   ),
-  text_program: `let deMorgansLaw : Bool -> Bool -> Bool =
+  text_program: `
+let deMorgansLaw : Bool -> Bool -> Bool =
     fun p => fun q =>
-      p && q == p || q
+        p && q == p || q
 in
 
 deMorgansLaw true true &&
 deMorgansLaw true false &&
 deMorgansLaw false true &&
-deMorgansLaw false false`,
+deMorgansLaw false false
+  `.trim(),
   pantograph_program_index: "deMorgan",
   expected_output: "true",
 };
+
+const associativity: BiExercise = {
+  instructions: (
+    <div>
+      {renderExerciseTitle("Associativity")}
+      <div>
+        You have been provided with an <i>incorrect</i> implementation of {renderCode("fAssociativity")}, which should check that {renderCode("f")} is associative with the 3 given arguments.
+        Recall that associativity of {renderCode("f")} should state that
+        {renderCodeblock("(f a (f b c)) = (f (f a b) c)")}
+      </div>
+      <br />
+      <div>Edit {renderCode("fAssociativity")} to be correct.</div>
+      <br />
+      <div>Run should output {renderCode("true")}</div>
+    </div>
+  ),
+  text_program: `
+let f = fun x => fun y => (x ^ y) % 3 in
+
+let fAssociativity : Int -> Int -> Int -> Bool = 
+    fun x => fun y => fun z =>
+        ( (f x (f y z)) == (f x (f z y)) )
+in
+
+(fAssociativity 1 2 3) &&
+(fAssociativity 2 3 4) &&
+(fAssociativity 3 4 5) &&
+(fAssociativity 4 5 6) &&
+(fAssociativity 5 6 7) &&
+(fAssociativity 6 7 8) &&
+(fAssociativity 7 8 9)
+  `.trim(),
+  pantograph_program_index: "associativity",
+  expected_output: "true",
+}
 
 const collatz: BiExercise = {
   instructions: (
@@ -781,16 +818,18 @@ const collatz: BiExercise = {
       <div>Run should output {renderCode("5")}.</div>
     </div>
   ),
-  text_program: `let collatz : Int -> Int =
+  text_program: `
+let collatz : Int -> Int =
     fun n =>
-      if n == 1
-      then 0
-      else if (n % 2) == 0
-      then collatz (n / 2)
-      else (collatz (n + 1)) * 3
+        if n == 1
+        then 0
+        else if (n % 2) == 0
+        then collatz (n / 2)
+        else (collatz (n + 1)) * 3
 in
 
-collatz 5`,
+collatz 5
+  `.trim(),
   pantograph_program_index: "collatz",
   expected_output: "5",
 };
@@ -811,7 +850,8 @@ const prime: BiExercise = {
       <div>Run should output {renderCode("true")}.</div>
     </div>
   ),
-  text_program: `let isPrime : Int -> Bool =
+  text_program: `
+let isPrime : Int -> Bool =
     let helper : Int -> Bool =
         fun x =>
             if x == 1 then false
@@ -828,7 +868,7 @@ isPrime 5 &&
 ! (isPrime 6) &&
 isPrime 7 &&
 ! (isPrime 8)
-`,
+`.trim(),
   pantograph_program_index: "isPrime",
   expected_output: "true",
 };
@@ -864,12 +904,13 @@ const reverse: BiExercise = {
       </div>
     </div>
   ),
-  text_program: `let reverse : List Int -> List Int =
+  text_program: `
+let reverse : List Int -> List Int =
     ?
 in
 
 reverse (cons 1 (cons 2 (cons 3 (cons 4 nil))))
-`,
+  `.trim(),
   pantograph_program_index: "reverse",
   expected_output: "(cons 4 (cons 3 (cons 2 (cons 1 nil))))",
 };
@@ -887,12 +928,13 @@ const filter: BiExercise = {
     </>,
     <>Run should output {renderCode("(cons 2 (cons 4 nil))")}.</>,
   ]),
-  text_program: `let filter : (Int -> Bool) -> List Int -> List Int =
+  text_program: `
+let filter : (Int -> Bool) -> List Int -> List Int =
     ?
 in
 
 filter (fun x => (x % 2) == 0) (cons 1 (cons 2 (cons 3 (cons 4 nil))))
-`,
+  `.trim(),
   pantograph_program_index: "filter",
   expected_output: "(cons 2 (cons 4 nil))",
 };
@@ -948,7 +990,8 @@ const filterWithIndex: BiExercise = {
     renderCodeblock("(Int -> Bool -> Bool) -> Int -> List Bool -> List Bool"),
     <>Run should output {renderCode("(cons true nil)")}.</>,
   ]),
-  text_program: `let filter : (Bool -> Bool) -> List Bool -> List Bool =
+  text_program: `
+let filter : (Bool -> Bool) -> List Bool -> List Bool =
     fun cond => fun l =>
         match l with
         | nil => nil
@@ -958,7 +1001,7 @@ in
 filter
   (fun b => b && ((? % 2) == 0))
   (cons true (cons true (cons false (cons true nil))))
-`,
+  `.trim(),
   pantograph_program_index: "filterWithIndex",
   expected_output: "(cons true nil)",
 };
@@ -978,7 +1021,8 @@ const sumViaFold: BiExercise = {
     </>,
     <>Run should output {renderCode("10")}.</>,
   ]),
-  text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
+  text_program: `
+let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
     fun f => fun n => fun ls =>
         match ls with
         | nil => n
@@ -990,7 +1034,7 @@ let sum : List Int -> Int =
 in
 
 sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
-`,
+  `.trim(),
   pantograph_program_index: "sumViaFold",
   expected_output: "10",
 };
@@ -1020,7 +1064,8 @@ const sumFromViaFold: BiExercise = {
     </>,
     <>Run should output {renderCode("17")}.</>,
   ]),
-  text_program: `let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
+  text_program: `
+let fold : (Int -> Int -> Int) -> Int -> List Int -> Int =
     fun f => fun n => fun ls =>
         match ls with
         | nil => n
@@ -1031,7 +1076,8 @@ let sum : List Int -> Int =
   fold (fun x => fun y => x + y) 0
 in
 
-sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))`,
+sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
+  `.trim(),
   pantograph_program_index: "sumFromViaFold",
   expected_output: "17",
 };
@@ -1056,7 +1102,8 @@ const allEvenViaFold: BiExercise = {
       {renderCode("match")} on the input list.
     </>,
   ]),
-  text_program: `let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
+  text_program: `
+let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
     fun f => fun n => fun l =>
         match l with
         | nil => n
@@ -1067,7 +1114,8 @@ let isEven = fun x => (x % 2) == 0 in
 
 let allEven : List Int -> Bool = ? in
 
-allEven (cons 0 (cons 2 (cons 4 nil)))`,
+allEven (cons 0 (cons 2 (cons 4 nil)))
+  `.trim(),
   pantograph_program_index: "allEvenViaFold",
   expected_output: "true",
 };
@@ -1112,7 +1160,8 @@ const allViaFold: BiExercise = {
     </>,
     <>Run should output {renderCode("false")}.</>,
   ]),
-  text_program: `let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
+  text_program: `
+let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
     fun f => fun n => fun l =>
         match l with
         | nil => n
@@ -1123,12 +1172,13 @@ let isEven = fun x => (x % 2) == 0 in
 
 let allEven : List Int -> Bool = fold (fun b => fun x => b && isEven x) true in
 
-allEven (cons 0 (cons 2 (cons 4 nil)))`,
+allEven (cons 0 (cons 2 (cons 4 nil)))
+  `.trim(),
   pantograph_program_index: "allViaFold",
   expected_output: "true",
 };
 
-const all_pairs_of_biiexercises : [BiExercise, BiExercise][] = [
+const all_pairs_of_biiexercises: [BiExercise, BiExercise][] = [
   [
     transcribe1,
     transcribe2
@@ -1143,7 +1193,7 @@ const all_pairs_of_biiexercises : [BiExercise, BiExercise][] = [
   ],
   [
     demorgan,
-    demorgan // TODO: Need a pair for demorgan
+    associativity
   ],
   [
     filter,
@@ -1151,10 +1201,10 @@ const all_pairs_of_biiexercises : [BiExercise, BiExercise][] = [
   ],
   [
     filterWithIndex,
-    filterWithIndex // TODO: Need a pair for filterWithIndex
+    filterWithIndex // TODO: Need a pair for mapWithIndex
   ]
 ]
 
 export const all_biexercises: BiExercise[] =
   all_pairs_of_biiexercises.map((pair) => pair[0])
-  .concat(all_pairs_of_biiexercises.map((pair) => pair[1]));
+    .concat(all_pairs_of_biiexercises.map((pair) => pair[1]));
