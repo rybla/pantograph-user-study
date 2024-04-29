@@ -724,11 +724,7 @@ const demorgan: BiExercise = {
     <div>
       {renderExerciseTitle("DeMorgan's Law")}
       <div>
-        You have been provided with an <i>incorrect</i> implementation of{" "}
-        {renderCode("deMorgansLaw")}, which should be a function that takes as
-        input two {renderCode("Bool")}s and output whether or not
-        DeMorgan&apos;s Law holds for the inputs. Recall that DeMorgan&apos;s
-        Law states that
+        You have been provided with an <i>incorrect</i> implementation of {renderCode("deMorgansLaw")}, which is supposed to check if DeMorgan&apos;s law holds of the inputs. Recall that DeMorgan&apos;s Law states that
         {renderCodeblock("!(p && q) == !p || !q")}
       </div>
       <br />
@@ -757,7 +753,7 @@ const associativity: BiExercise = {
     <div>
       {renderExerciseTitle("Associativity")}
       <div>
-        You have been provided with an <i>incorrect</i> implementation of {renderCode("associativity")}, which should check that a given function {renderCode("f")} is associative on 3 example inputs.
+        You have been provided with an <i>incorrect</i> implementation of {renderCode("associativity")}, which should test if a given function {renderCode("f")} is associative on some example inputs.
         Recall that associativity should state that
         {renderCodeblock("(f a (f b c)) = (f (f a b) c)")}
       </div>
@@ -872,11 +868,7 @@ const reverse: BiExercise = {
     <div>
       {renderExerciseTitle("Reverse")}
       <div>
-        You have been provided with a stub for {renderCode("reverse")}, which
-        should be a function that takes as input a list{" "}
-        {renderCode("ls : List Int")} and outputs the reversed{" "}
-        {renderCode("List Int")} -- that is, the {renderCode("List Int")} which
-        has all the same elements as {renderCode("ls")} but in reversed order.
+        You have been provided with a stub for {renderCode("reverse")}, which should be a function that reverses it's input list.
       </div>
       <br />
       <div>
@@ -884,9 +876,7 @@ const reverse: BiExercise = {
       </div>
       <br />
       <div>
-        <i>Note.</i> There is a built-in function{" "}
-        {renderCode("append : List Int -> List Int -> List Int")} which appends
-        two {renderCode("List Int")}s together.
+        <i>Note.</i> There is a built-in function {renderCode("append : List Int -> List Int -> List Int")} which appends two {renderCode("List Int")}s together.
       </div>
       <br />
       <div>
@@ -913,12 +903,7 @@ const filter: BiExercise = {
   instructions: renderParagraphs([
     renderExerciseTitle("Filter"),
     <>
-      You have been provided with a stub for {renderCode("filter")}, which
-      should be a function that takes as input a condition{" "}
-      {renderCode("cond : Int -> Bool")} and a list{" "}
-      {renderCode("ls : List Int")}, and output a {renderCode("List Int")} which
-      is the same as {renderCode("ls")} except without each element{" "}
-      {renderCode("x")} such that {renderCode("not (cond x)")}.
+      You have been provided with a stub for {renderCode("filter")}, which should be a function that takes as input a condition {renderCode("cond : Int -> Bool")} and a list {renderCode("ls : List Int")}, and outputs a {renderCode("List Int")} with only the elements that satisfy {renderCode("cond")}.
     </>,
     <>Run should output {renderCode("(cons 2 (cons 4 nil))")}.</>,
   ]),
@@ -1004,14 +989,16 @@ const sumViaFold: BiExercise = {
   instructions: renderParagraphs([
     renderExerciseTitle("Sum via Fold"),
     <>
-      You have been provided with an implementation of {renderCode("fold")},
-      which is a function that folds over a {renderCode("List Int")} to produce
-      an {renderCode("Int")} result. You have also been provided with a stub for
-      a function {renderCode("sum")}, which should compute the sum of a{" "}
-      {renderCode("List Int")}. Implement {renderCode("sum")} by using{" "}
-      {renderCode("fold")}. Note that, by using {renderCode("fold")} correctly,
-      you will <i>not</i> need to {renderCode("match")} on the input{" "}
-      {renderCode("List")}.
+      You have been provided with an implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Int")} result.
+    </>,
+    <>
+      You have also been provided with a stub for a function {renderCode("sum")}, which should compute the sum of a {renderCode("List Int")}.
+    </>,
+    <>
+      Implement {renderCode("sum")} by using {renderCode("fold")}.
+    </>,
+    <>
+      Note that, by using {renderCode("fold")} correctly, you will <i>not</i> need to {renderCode("match")} on the input {renderCode("List")}.
     </>,
     <>Run should output {renderCode("10")}.</>,
   ]),
@@ -1035,24 +1022,18 @@ sum (cons 0 (cons 1 (cons 2 (cons 3 (cons 4 nil)))))
 
 const sumFromViaFold: BiExercise = {
   instructions: renderParagraphs([
-    renderExerciseTitle("Sum From via Fold"),
+    renderExerciseTitle("Sum-from via Fold"),
     <>
-      You have been provided with a <i>correct</i> implementation of{" "}
-      {renderCode("sum")}. Edit {renderCode("sum")} to be{" "}
-      {renderCode("sumFrom")}, which takes as input the starting amount add the
-      sum of the list to. This requires the following edits:
+      You have been provided with a <i>correct</i> implementation of {renderCode("sum")}. Edit {renderCode("sum")} to be {renderCode("sumFrom")}, which takes as input the starting amount to add the sum of the list to. This requires the following edits:
       <ol>
         <li>
           Rename {renderCode("sum")} to {renderCode("sumFrom")}
         </li>
         <li>
-          Delete the last argument of {renderCode("fold")} in the body of{" "}
-          {renderCode("sumFrom")} and edit {renderCode("sumFrom")}'s type to be{" "}
-          {renderCode("Int -> List Int -> Int")}
+          Delete the last argument of {renderCode("fold")} in the body of {renderCode("sumFrom")}, so that {renderCode("fold")} is partially applied and {renderCode("sumFrom")}'s type is {renderCode("Int -> List Int -> Int")}.
         </li>
         <li>
-          Insert {renderCode("7")} as a new first argument of{" "}
-          {renderCode("sumFrom")} on the last line.
+          Insert {renderCode("7")} as a new first argument of {renderCode("sumFrom")} on the last line.
         </li>
       </ol>
     </>,
@@ -1080,21 +1061,17 @@ const allEvenViaFold: BiExercise = {
   instructions: renderParagraphs([
     renderExerciseTitle("All Even via Fold"),
     <>
-      You have been provided with a <i>correct</i> implementation of{" "}
-      {renderCode("fold")}, which is a function that folds over a{" "}
-      {renderCode("List Int")} to produce an {renderCode("Int")} result.
+      You have been provided with a <i>correct</i> implementation of {renderCode("fold")}, which is a function that folds over a {renderCode("List Int")} to produce an {renderCode("Bool")} result.
     </>,
     <>
-      You have also been provided for a stub for a function{" "}
-      {renderCode("allEven")}, which should evaluate to {renderCode("true")} if
-      the input list only contains even numbers, and {renderCode("false")}{" "}
-      otherwise.
+      You have also been provided with a stub for a function {renderCode("allEven")}, which checks that all a list's elements are even.
     </>,
     <>
-      Implement {renderCode("allEven")} by using {renderCode("fold")}. Note
-      that, by using {renderCode("fold")} correctly, you will not need to{" "}
-      {renderCode("match")} on the input list.
+      Implement {renderCode("allEven")} by using {renderCode("fold")}.
     </>,
+    <>
+      Note that, by using {renderCode("fold")} correctly, you will not need to {renderCode("match")} on the input list.
+    </>
   ]),
   text_program: `
 let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
@@ -1118,15 +1095,10 @@ const allViaFold: BiExercise = {
   instructions: renderParagraphs([
     renderExerciseTitle("All via Fold"),
     <>
-      You have been provided with a <i>correct</i> implementation of{" "}
-      {renderCode("allEven")}, which checks whether all the numbers in the input
-      list are even.
+      You have been provided with a <i>correct</i> implementation of {renderCode("allEven")}, which checks whether all the numbers in the input list are even.
     </>,
     <>
-      Edit {renderCode("allEven")} to be {renderCode("all")}, which is the same
-      as {renderCode("allEven")} except it takes an arbitrary condition of type{" "}
-      {renderCode("Int -> Bool")} as a new first input, and checks whether all
-      the numbers in the input list satisfy that condition.
+      Edit {renderCode("allEven")} to be {renderCode("all")}, which instead checks that all a list's elements satisfy a given predicate of type {renderCode("Int -> Bool")} instead of {renderCode("isEven")}.
     </>,
     <>
       This requires the following edits:
@@ -1135,22 +1107,18 @@ const allViaFold: BiExercise = {
           Change the name of {renderCode("allEven")} to {renderCode("all")}.
         </li>
         <li>
-          Insert a new input to {renderCode("all")} called {renderCode("cond")}{" "}
-          of type {renderCode("Int -> Bool")}
+          Insert a new input to {renderCode("all")} called {renderCode("cond")} of type {renderCode("Int -> Bool")}
         </li>
         <li>
-          Replace {renderCode("isEven")} with {renderCode("cond")} in the body
-          of {renderCode("all")}.
+          Replace {renderCode("isEven")} with {renderCode("cond")} in the body of {renderCode("all")}.
         </li>
         <li>
-          On the last line, insert {renderCode("(fun x => isEven x)")} as
-          a new second argument to {renderCode("all")}.
+          On the last line, insert {renderCode("(fun x => isEven x)")} as a new second argument to {renderCode("all")}.
         </li>
       </ol>
     </>,
     <>
-      When you're done the type of {renderCode("all")} should be
-      {renderCodeblock("(Int -> Bool) -> List Int -> Bool")}
+      When you're done the type of {renderCode("all")} should be {renderCodeblock("(Int -> Bool) -> List Int -> Bool")}
     </>,
     <>Run should output {renderCode("false")}.</>,
   ]),
@@ -1172,7 +1140,61 @@ allEven (cons 0 (cons 2 (cons 4 nil)))
   expected_output: "true",
 };
 
+const example: BiExercise = {
+  instructions: renderParagraphs([
+    renderExerciseTitle("Example"),
+    <>
+      This exercise is just an example so you know what to do.
+    </>,
+    <>
+      In each exercise:
+      <ul>
+        <li>You will be given some instructions and possibly some starting code.</li>
+        <li>The starting code will often have a test at the bottom. Do not modify the test.</li>
+        <li>Follow the instructions to complete each exercise, then click the "run" button to check that your program is correct.</li>
+        <li>Click "next" to continue once your program is checked correct.</li>
+      </ul>
+    </>,
+    <>
+      To complete this example exercise:
+      <ol>
+        <li>Click "run". Notice the the "next" button is red since the output is not correct.</li>
+        <li>Fill the hole with {renderCode("1")}.</li>
+        <li>Click "run" again. Now the "next" button is green since the output is correct.</li>
+        <li>Click "next" to continue.</li>
+      </ol>
+    </>
+  ]),
+  pantograph_program_index: "example",
+  text_program: `
+let x : Int = ? in
+
+(x == 1)
+  `.trim(),
+  expected_output: "true"
+}
+
+const example_trans: BiExercise = {
+  instructions: renderParagraphs([
+    renderExerciseTitle("Example"),
+    <>
+      In this second half of the study, you will be using a different editor.
+    </>,
+    <>
+      To complete this example exercise, fill the hole with {renderCode("1")}
+    </>
+  ]),
+  pantograph_program_index: "example",
+  text_program: `
+let x : Int = ? in
+
+(x == 1)
+  `.trim(),
+  expected_output: "true"
+}
+
 const all_pairs_of_biiexercises: [BiExercise, BiExercise][] = [
+  [example, example_trans],
   [
     transcribe1,
     transcribe2
@@ -1199,6 +1221,8 @@ const all_pairs_of_biiexercises: [BiExercise, BiExercise][] = [
   // ]
 ]
 
+
+
 export const all_biexercises: BiExercise[] =
   all_pairs_of_biiexercises.map((pair) => pair[0])
-    .concat(all_pairs_of_biiexercises.map((pair) => pair[1]));
+    .concat(all_pairs_of_biiexercises.map((pair) => pair[1]))
