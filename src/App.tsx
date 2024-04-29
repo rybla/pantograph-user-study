@@ -757,31 +757,25 @@ const associativity: BiExercise = {
     <div>
       {renderExerciseTitle("Associativity")}
       <div>
-        You have been provided with an <i>incorrect</i> implementation of {renderCode("fAssociativity")}, which should check that {renderCode("f")} is associative with the 3 given arguments.
-        Recall that associativity of {renderCode("f")} should state that
+        You have been provided with an <i>incorrect</i> implementation of {renderCode("associativity")}, which should check that a given function {renderCode("f")} is associative on 3 example inputs.
+        Recall that associativity should state that
         {renderCodeblock("(f a (f b c)) = (f (f a b) c)")}
       </div>
       <br />
-      <div>Edit {renderCode("fAssociativity")} to be correct.</div>
+      <div>Edit {renderCode("associativity")} to be correct.</div>
       <br />
       <div>Run should output {renderCode("true")}.</div>
     </div>
   ),
   text_program: `
-let f = fun x => fun y => (x ^ y) % 3 in
-
-let fAssociativity : Int -> Int -> Int -> Bool = 
-    fun x => fun y => fun z =>
-        ( (f x (f y z)) == (f x (f z y)) )
+let associativity =
+    fun f =>
+        ((f 1 (f 2 3)) == (f 1 (f 2 3)))
 in
 
-(fAssociativity 1 2 3) &&
-(fAssociativity 2 3 4) &&
-(fAssociativity 3 4 5) &&
-(fAssociativity 4 5 6) &&
-(fAssociativity 5 6 7) &&
-(fAssociativity 6 7 8) &&
-(fAssociativity 7 8 9)
+(associativity (fun x => fun y => (x + y))) &&
+(!(associativity (fun x => fun y => (x - y)))) &&
+(associativity (fun x => fun y => (x * y)))
   `.trim(),
   pantograph_program_index: "associativity",
   expected_output: "true",
@@ -1199,10 +1193,10 @@ const all_pairs_of_biiexercises: [BiExercise, BiExercise][] = [
     filter,
     reverse
   ],
-  [
-    filterWithIndex,
-    filterWithIndex // TODO: Need a pair for mapWithIndex
-  ]
+  // [
+  //   filterWithIndex,
+  //   filterWithIndex // TODO: Need a pair for mapWithIndex
+  // ]
 ]
 
 export const all_biexercises: BiExercise[] =
