@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 import React, { JSX } from "react";
 import Demonaco from "./Demonaco";
 
@@ -360,49 +360,66 @@ square ? == a2
 
     switch (exercise_status) {
       case "text-tutorial":
-        return renderContainer([<button onClick={nextExercise}>next</button>]);
+        return renderContainer([
+          <Button
+            key={`next.${exercise_status}`}
+            onClick={nextExercise}
+          >
+            next
+          </Button>
+        ]);
       case "begin":
         return renderContainer([
-          <button onClick={prevExercise}>back</button>,
-          <button
+          <Button key={`back.${exercise_status}`} onClick={prevExercise}>back</Button>,
+          <Button
+            key={`group-a.${exercise_status}`}
             onClick={() => {
               initGroupA();
               nextExercise();
             }}
           >
             Begin Group A
-          </button>,
-          <button
+          </Button>,
+          <Button
+            key={`group-b.${exercise_status}`}
             onClick={() => {
               initGroupB();
               nextExercise();
             }}
           >
             Begin Group B
-          </button>,
-          <button
+          </Button>,
+          <Button
+            key={`all-pantograph.${exercise_status}`}
             onClick={() => {
               initGroupPantograph();
               nextExercise();
             }}
           >
             All Pantograph
-          </button>,
-          <button
+          </Button>,
+          <Button
+            key={`all-text.${exercise_status}`}
             onClick={() => {
               initGroupText();
               nextExercise();
             }}
           >
             All Text
-          </button>,
+          </Button>,
         ]);
       case "end":
-        return renderContainer([<button onClick={prevExercise}>back</button>]);
+        return renderContainer([<Button onClick={prevExercise}>back</Button>]);
       default:
         return renderContainer([
-          <button onClick={prevExercise}>back</button>,
-          <button
+          <Button
+            key={`back.${exercise_status}`}
+            onClick={prevExercise}
+          >
+            back
+          </Button>,
+          <Button
+            key={`next.${exercise_status}`}
             onClick={nextExercise}
             style={{
               backgroundColor:
@@ -414,7 +431,7 @@ square ? == a2
             }}
           >
             next
-          </button>,
+          </Button>,
         ]);
     }
   }
@@ -578,11 +595,12 @@ square ? == a2
 }
 
 const Button = (props: {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-  children: JSX.Element[];
+  onClick: React.MouseEventHandler<HTMLButtonElement>,
+  style?: CSSProperties,
+  children: ReactNode,
 }) => {
   return (
-    <button onClick={props.onClick} onFocus={(event) => event.target.blur()}>
+    <button onClick={props.onClick} onFocus={(event) => event.target.blur()} style={props.style}>
       {props.children}
     </button>
   );
