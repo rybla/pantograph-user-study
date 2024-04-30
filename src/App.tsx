@@ -448,7 +448,7 @@ square ? == a2
       {renderExerciseTitle("Text Editor Introduction")}
       <div>
         To the left of these instructions is a text editor with the basic
-        editing features of programming-focussed text editors such as VS Code,
+        editing features of programming-focus text editors such as VS Code,
         Sublime Text, etc. This text editor also has a few extra features:
         <ul>
           <li>Checks syntax automatically</li>
@@ -1218,12 +1218,12 @@ const all_pairs_of_biiexercises: [BiExercise, BiExercise][] = [
     transcribe2
   ],
   [
+    sumViaFold,
     allEvenViaFold,
-    sumViaFold
   ],
   [
+    sumFromViaFold,
     allViaFold,
-    sumFromViaFold
   ],
   [
     demorgan,
