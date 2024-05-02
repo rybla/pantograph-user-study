@@ -28,6 +28,8 @@ export default function App({ debug }: { debug?: boolean }) {
     undefined,
   );
 
+  const [fresh_i, set_fresh_i] = useState(0)
+
   function initExercises(start_with_pantograph: boolean, mode?: Mode) {
     if (mode === undefined) mode = 'mixed'
     switch (mode) {
@@ -227,7 +229,7 @@ export default function App({ debug }: { debug?: boolean }) {
           case "text": {
             return (
               <Demonaco
-                key={exercise_status}
+                key={`${exercise_status}_${fresh_i}`}
                 start_program={exercise.text_program}
               />
             );
@@ -235,7 +237,7 @@ export default function App({ debug }: { debug?: boolean }) {
           case "pantograph": {
             return (
               <iframe
-                key={exercise_status}
+                key={`${exercise_status}_${fresh_i}`}
                 id="pantograph-iframe"
                 style={{
                   width: "100%",
@@ -417,6 +419,15 @@ square ? == a2
             onClick={prevExercise}
           >
             back
+          </Button>,
+          <Button
+            key={`reset.${exercise_status}`}
+            onClick={() => {
+              set_fresh_i(i => i + 1)
+              set_exercise_status(state => state)
+            }}
+          >
+            reset
           </Button>,
           <Button
             key={`next.${exercise_status}`}
