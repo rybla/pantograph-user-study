@@ -575,7 +575,7 @@ square ? == a2
           flexDirection: "column",
           flexGrow: 0,
           flexShrink: 0,
-          width: "30em",
+          width: "40em",
           overflow: "scroll",
         }}
       >
@@ -909,11 +909,20 @@ const reverse: BiExercise = {
       </div>
       <br />
       <div>
-        <i>Note.</i> You can match on a list {renderCode("ls")} with the
-        following syntax:
-        {renderCodeblock(`match ls with
+        <i>Note.</i> You can match on a list {renderCode("ls")} with the following syntax:
+        {renderCodeblock(`
+match ls with
     | nil => ...
-    | cons h t => ...`)}
+    | cons h t => ...
+        `.trim())}
+      </div>
+      <div>
+        <i>Note.</i> There is <em>no</em> {renderCode("[]")} or {renderCode("[a]")} construct in the language.
+        <br />
+        You can construct an empty list via
+        {renderCodeblock(`nil`)}
+        You can construct a list of just one element, {renderCode("a")}, via
+        {renderCodeblock(`(cons a nil)`)}
       </div>
     </div>
   ),
@@ -1059,7 +1068,10 @@ const sumFromViaFold: BiExercise = {
           Rename {renderCode("sum")} to {renderCode("sumFrom")}
         </li>
         <li>
-          Change {renderCode("sumFrom")} to be <i>partially applied</i> to only one argument by deleting its application to it's second argument. Symbolically: {renderCode("sumFrom X Y")} to {renderCode("sumFrom X")}
+          In the body of {renderCode("sumFrom")}, make {renderCode("fold")} be <i>partially applied</i> to only <i>one</i> argument i.e. change
+          {renderCodeblock("fold (fun x => fun y => x + y) 0")}
+          to
+          {renderCodeblock("fold (fun x => fun y => x + y)")}
         </li>
         <li>
           At this point, the type of {renderCode("sumFrom")} should be {renderCode("Int -> List Int -> Int")}
@@ -1152,7 +1164,7 @@ const allViaFold: BiExercise = {
     <>
       When you're done the type of {renderCode("all")} should be {renderCodeblock("(Int -> Bool) -> List Int -> Bool")}
     </>,
-    <>Run should output {renderCode("false")}.</>,
+    <>Run should output {renderCode("true")}.</>,
   ]),
   text_program: `
 let fold : (Bool -> Int -> Bool) -> Bool -> List Int -> Bool =
