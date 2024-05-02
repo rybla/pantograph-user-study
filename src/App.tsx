@@ -1048,7 +1048,10 @@ const sumFromViaFold: BiExercise = {
           Rename {renderCode("sum")} to {renderCode("sumFrom")}
         </li>
         <li>
-          Delete the last argument of {renderCode("fold")} in the body of {renderCode("sumFrom")}, so that {renderCode("fold")} is partially applied and {renderCode("sumFrom")}'s type is {renderCode("Int -> List Int -> Int")}.
+          Change {renderCode("sumFrom")} to be <i>partially applied</i> to only one argument by deleting its application to it's second argument. Symbolically: {renderCode("sumFrom X Y")} to {renderCode("sumFrom X")}
+        </li>
+        <li>
+          At this point, the type of {renderCode("sumFrom")} should be {renderCode("Int -> List Int -> Int")}
         </li>
         <li>
           Insert {renderCode("7")} as a new first argument of {renderCode("sumFrom")} on the last line.
